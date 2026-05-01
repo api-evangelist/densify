@@ -1,0 +1,73 @@
+name: Densify Vocabulary
+description: >-
+  Shared vocabulary of terms used across the Densify cloud and container
+  optimization platform and its REST APIs.
+terms:
+  - term: Densify Platform
+    definition: >-
+      The Densify SaaS platform that ingests utilization data and produces
+      machine-learned right-sizing recommendations for cloud and container
+      workloads.
+  - term: Account
+    definition: >-
+      A cloud provider account such as an AWS account, Azure subscription, or
+      GCP project that has been onboarded into Densify.
+  - term: System
+    definition: >-
+      A virtual machine or instance under analysis, identified by provider,
+      region, and instance ID.
+  - term: Cluster
+    definition: >-
+      A Kubernetes cluster onboarded into Densify for container right-sizing.
+  - term: Namespace
+    definition: >-
+      A Kubernetes namespace inside a cluster used to scope container
+      recommendations.
+  - term: Controller
+    definition: >-
+      A Deployment, StatefulSet, DaemonSet, or other Kubernetes controller
+      whose pods are analyzed for right-sizing.
+  - term: Container Group
+    definition: >-
+      The grouping of identical containers across the pods of a controller
+      that share a recommendation.
+  - term: Recommendation
+    definition: >-
+      A right-sizing or rehosting suggestion produced by Densify analytics for
+      a system or container.
+  - term: Current Size
+    definition: >-
+      The instance type or container request/limit currently in effect for a
+      workload.
+  - term: Recommended Size
+    definition: >-
+      The instance type or container request/limit Densify recommends based
+      on observed utilization patterns.
+  - term: Savings
+    definition: >-
+      The estimated monthly or annual cost reduction associated with applying
+      a recommendation.
+  - term: Confidence
+    definition: >-
+      The level of statistical confidence in a recommendation, reflecting
+      data quality and pattern strength.
+  - term: Analysis
+    definition: >-
+      A scheduled run of Densify's machine learning models against ingested
+      utilization data that produces a fresh set of recommendations.
+  - term: Token
+    definition: >-
+      A short-lived JSON Web Token issued by /authorize and required for
+      subsequent API calls.
+  - term: Postman Collection
+    definition: >-
+      A published collection of example API requests provided to accelerate
+      Densify integrations.
+  - term: Continuous Optimization
+    definition: >-
+      The CI/CD-integrated process of continuously applying right-sizing
+      recommendations to live workloads.
+  - term: FinOps
+    definition: >-
+      The practice of bringing financial accountability to the variable
+      spending model of cloud, which Densify supports through optimization.

@@ -1,0 +1,62 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "densify": "https://www.densify.com/docs-api/",
+    "Account": {
+      "@id": "densify:WebHelp_Densify_API_Cloud/Content/API_Guide/Accounts.htm",
+      "@context": {
+        "name": "https://schema.org/name",
+        "accountId": "https://schema.org/identifier",
+        "provider": "https://schema.org/provider",
+        "region": "https://schema.org/areaServed"
+      }
+    },
+    "System": {
+      "@id": "densify:WebHelp_Densify_API_Cloud/Content/API_Guide/Systems.htm",
+      "@context": {
+        "name": "https://schema.org/name",
+        "instanceId": "https://schema.org/identifier",
+        "instanceType": "https://schema.org/category",
+        "currentSize": "https://schema.org/size",
+        "recommendedSize": "https://schema.org/suggestedAnswer"
+      }
+    },
+    "Recommendation": {
+      "@id": "densify:WebHelp_Densify_API_Cloud/Content/API_Guide/Recommendations.htm",
+      "@context": {
+        "system": "https://schema.org/about",
+        "currentCost": "https://schema.org/price",
+        "recommendedCost": "https://schema.org/lowPrice",
+        "savings": "https://schema.org/discount",
+        "confidence": "https://schema.org/ratingValue"
+      }
+    },
+    "Cluster": {
+      "@id": "densify:WebHelp_Densify_API/Content/Clusters.htm",
+      "@context": {
+        "name": "https://schema.org/name",
+        "provider": "https://schema.org/provider",
+        "region": "https://schema.org/areaServed",
+        "version": "https://schema.org/softwareVersion"
+      }
+    },
+    "ContainerRecommendation": {
+      "@id": "densify:WebHelp_Densify_API/Content/Recommendations.htm",
+      "@context": {
+        "cluster": "https://schema.org/isPartOf",
+        "namespace": "https://schema.org/category",
+        "controller": "https://schema.org/owner",
+        "container": "https://schema.org/about",
+        "cpuRequest": "https://schema.org/value",
+        "memoryRequest": "https://schema.org/value"
+      }
+    },
+    "Token": {
+      "@id": "densify:WebHelp_Densify_API_Cloud/Content/API_Guide/Authorize.htm",
+      "@context": {
+        "value": "https://schema.org/accessCode",
+        "expiresAt": "https://schema.org/expires"
+      }
+    }
+  }
+}
