@@ -1,0 +1,13 @@
+{
+  "repo": "densify",
+  "feeds": [
+    {
+      "source": "https://www.densify.com/blog",
+      "feed_url": "https://www.densify.com/blog/feed/",
+      "title": "Blog - Kubex",
+      "saved": 10
+    }
+  ],
+  "fetched": "2026-05-09T20:17:51Z",
+  "post_count": 10
+}
