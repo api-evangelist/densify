@@ -5,9 +5,10 @@
       "source": "https://www.densify.com/blog",
       "feed_url": "https://www.densify.com/blog/feed/",
       "title": "Blog - Kubex",
-      "saved": 10
+      "saved": 0,
+      "last_error": "req_err:SSLError"
     }
   ],
-  "fetched": "2026-05-09T20:17:51Z",
+  "fetched": "2026-05-17T20:20:35Z",
   "post_count": 10
 }
