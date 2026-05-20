@@ -84,6 +84,8 @@ apis:
         email: support@densify.com
         url: https://www.densify.com/contact
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/densify
   - type: Website
     url: https://www.densify.com
   - type: Portal
