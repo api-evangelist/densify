@@ -120,6 +120,8 @@ common:
     url: vocabulary/densify-vocabulary.yml
   - type: Capabilities
     url: capabilities/densify-capabilities.yml
+  - type: LLMsTxt
+    url: https://api.densify.com/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
