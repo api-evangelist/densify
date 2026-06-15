@@ -2,7 +2,7 @@
   "repo": "densify",
   "feeds": [
     {
-      "source": "https://www.densify.com/blog/feed/",
+      "source": "https://kubex.ai/blog/feed/",
       "error": "URLError"
     },
     {
@@ -10,6 +10,6 @@
       "error": "URLError"
     }
   ],
-  "fetched": "2026-06-01T23:35:02Z",
-  "post_count": 10
+  "post_count": 11,
+  "fetched": "2026-06-14T20:42:17Z"
 }

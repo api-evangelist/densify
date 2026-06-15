@@ -1,0 +1,210 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Densify / Kubex Public Cloud API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authorize and obtain JWT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/authorize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit valid credentials for an active, API-enabled Kubex user. Returns a JWT bearer token for subsequent calls."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Connectivity check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/ping"
+          },
+          "docs": "Verify the API subsystem is reachable."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cloud Analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start AWS data collection / analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/aws",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start AWS data collection / analysis"
+        },
+        {
+          "info": {
+            "name": "Start Azure data collection / analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/azure",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start Azure data collection / analysis"
+        },
+        {
+          "info": {
+            "name": "Start GCP data collection / analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/gcp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start GCP data collection / analysis"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Recommendations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve AWS optimization recommendations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/aws/:analysisId/recommendations",
+            "params": [
+              {
+                "name": "analysisId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve AWS optimization recommendations"
+        },
+        {
+          "info": {
+            "name": "Retrieve Azure optimization recommendations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/azure/:analysisId/recommendations",
+            "params": [
+              {
+                "name": "analysisId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve Azure optimization recommendations"
+        },
+        {
+          "info": {
+            "name": "Retrieve GCP optimization recommendations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/gcp/:analysisId/recommendations",
+            "params": [
+              {
+                "name": "analysisId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve GCP optimization recommendations"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Kubernetes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List monitored Kubernetes clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/kubernetes/clusters"
+          },
+          "docs": "List monitored Kubernetes clusters"
+        },
+        {
+          "info": {
+            "name": "Get container recommendations for a cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/kubernetes/clusters/:clusterName/containers",
+            "params": [
+              {
+                "name": "clusterName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get container recommendations for a cluster"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
