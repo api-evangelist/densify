@@ -9,7 +9,7 @@ description: >-
   optimization can be embedded into CI/CD pipelines, infrastructure as code
   templates, and FinOps workflows.
 type: Index
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Cloud Cost
   - Container Optimization
@@ -36,7 +36,7 @@ apis:
       design under the /api/v2/ path, and authenticates with JWT bearer tokens
       obtained from the /authorize endpoint. Common use cases include integrating
       right-sizing recommendations into Terraform, CloudFormation, and CI/CD pipelines.
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
     baseURL: https://api.densify.com/api/v2
     tags:
@@ -65,7 +65,7 @@ apis:
       for clusters, namespaces, controllers, container groups, and recommended
       requests/limits for CPU and memory based on machine learned utilization
       patterns.
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.densify.com/docs-api/WebHelp_Densify_API/Content/Densify_API.htm
     baseURL: https://api.densify.com/api/v2
     tags:
