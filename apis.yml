@@ -120,7 +120,7 @@ common:
     url: vocabulary/densify-vocabulary.yml
   - type: Capabilities
     url: capabilities/densify-capabilities.yml
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://api.densify.com/llms.txt
 maintainers:
   - FN: Kin Lane

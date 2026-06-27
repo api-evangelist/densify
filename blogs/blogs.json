@@ -3,13 +3,19 @@
   "feeds": [
     {
       "source": "https://kubex.ai/blog/feed/",
-      "error": "URLError"
+      "feed_url": "https://kubex.ai/blog/feed/",
+      "title": "",
+      "saved": 3,
+      "method": "feed"
     },
     {
       "source": "https://www.densify.com/resources",
-      "error": "URLError"
+      "feed_url": "https://www.densify.com/resources",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "post_count": 11,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 14,
+  "fetched": "2026-06-27T12:03:07Z"
 }
