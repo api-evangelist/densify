@@ -84,6 +84,12 @@ apis:
         email: support@densify.com
         url: https://www.densify.com/contact
 common:
+  - type: TrustCenter
+    url: security/densify-trust-center.yml
+  - type: DomainSecurity
+    url: security/densify-domain-security.yml
+  - type: Authentication
+    url: authentication/densify-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/densify
   - type: Website
