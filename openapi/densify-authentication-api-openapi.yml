@@ -1,0 +1,74 @@
+openapi: 3.1.0
+info:
+  title: Densify / Kubex Public Cloud Authentication API
+  description: 'REST API for the Densify (now Kubex) cloud and container optimization platform.
+
+    Exposes optimization analysis triggers and recommendation retrieval for AWS, Azure,
+
+    GCP, and Kubernetes environments so that resource right-sizing can be embedded into
+
+    CI/CD pipelines and FinOps workflows.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Kubex
+    url: https://docs.kubex.ai/
+servers:
+- url: https://{instance}.densify.com/CIRBA/api/v2
+  description: Densify / Kubex tenant instance
+  variables:
+    instance:
+      default: customer
+      description: Customer-specific subdomain
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+paths:
+  /authorize:
+    post:
+      summary: Authorize and obtain JWT
+      description: Submit valid credentials for an active, API-enabled Kubex user. Returns a JWT bearer token for subsequent calls.
+      operationId: authorize
+      security: []
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - user
+              - password
+              properties:
+                user:
+                  type: string
+                  description: Kubex username
+                password:
+                  type: string
+                  format: password
+                  description: Kubex password
+      responses:
+        '200':
+          description: Token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  apiToken:
+                    type: string
+                    description: JWT bearer token
+        '401':
+          description: Invalid credentials
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

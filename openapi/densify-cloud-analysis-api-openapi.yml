@@ -1,0 +1,110 @@
+openapi: 3.1.0
+info:
+  title: Densify / Kubex Public Cloud Authentication Cloud Analysis API
+  description: 'REST API for the Densify (now Kubex) cloud and container optimization platform.
+
+    Exposes optimization analysis triggers and recommendation retrieval for AWS, Azure,
+
+    GCP, and Kubernetes environments so that resource right-sizing can be embedded into
+
+    CI/CD pipelines and FinOps workflows.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Kubex
+    url: https://docs.kubex.ai/
+servers:
+- url: https://{instance}.densify.com/CIRBA/api/v2
+  description: Densify / Kubex tenant instance
+  variables:
+    instance:
+      default: customer
+      description: Customer-specific subdomain
+security:
+- bearerAuth: []
+tags:
+- name: Cloud Analysis
+paths:
+  /analysis/aws:
+    post:
+      summary: Start AWS data collection / analysis
+      operationId: startAwsAnalysis
+      tags:
+      - Cloud Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalysisRequest'
+      responses:
+        '200':
+          description: Analysis started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisAccepted'
+  /analysis/azure:
+    post:
+      summary: Start Azure data collection / analysis
+      operationId: startAzureAnalysis
+      tags:
+      - Cloud Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalysisRequest'
+      responses:
+        '200':
+          description: Analysis started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisAccepted'
+  /analysis/gcp:
+    post:
+      summary: Start GCP data collection / analysis
+      operationId: startGcpAnalysis
+      tags:
+      - Cloud Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalysisRequest'
+      responses:
+        '200':
+          description: Analysis started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisAccepted'
+components:
+  schemas:
+    AnalysisAccepted:
+      type: object
+      properties:
+        analysisId:
+          type: string
+        status:
+          type: string
+    AnalysisRequest:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        connection:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

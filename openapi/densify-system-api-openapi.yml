@@ -1,0 +1,51 @@
+openapi: 3.1.0
+info:
+  title: Densify / Kubex Public Cloud Authentication System API
+  description: 'REST API for the Densify (now Kubex) cloud and container optimization platform.
+
+    Exposes optimization analysis triggers and recommendation retrieval for AWS, Azure,
+
+    GCP, and Kubernetes environments so that resource right-sizing can be embedded into
+
+    CI/CD pipelines and FinOps workflows.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Kubex
+    url: https://docs.kubex.ai/
+servers:
+- url: https://{instance}.densify.com/CIRBA/api/v2
+  description: Densify / Kubex tenant instance
+  variables:
+    instance:
+      default: customer
+      description: Customer-specific subdomain
+security:
+- bearerAuth: []
+tags:
+- name: System
+paths:
+  /ping:
+    get:
+      summary: Connectivity check
+      description: Verify the API subsystem is reachable.
+      operationId: ping
+      tags:
+      - System
+      responses:
+        '200':
+          description: API is up
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

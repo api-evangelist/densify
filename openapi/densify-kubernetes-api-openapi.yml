@@ -1,0 +1,101 @@
+openapi: 3.1.0
+info:
+  title: Densify / Kubex Public Cloud Authentication Kubernetes API
+  description: 'REST API for the Densify (now Kubex) cloud and container optimization platform.
+
+    Exposes optimization analysis triggers and recommendation retrieval for AWS, Azure,
+
+    GCP, and Kubernetes environments so that resource right-sizing can be embedded into
+
+    CI/CD pipelines and FinOps workflows.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Kubex
+    url: https://docs.kubex.ai/
+servers:
+- url: https://{instance}.densify.com/CIRBA/api/v2
+  description: Densify / Kubex tenant instance
+  variables:
+    instance:
+      default: customer
+      description: Customer-specific subdomain
+security:
+- bearerAuth: []
+tags:
+- name: Kubernetes
+paths:
+  /kubernetes/clusters:
+    get:
+      summary: List monitored Kubernetes clusters
+      operationId: listKubernetesClusters
+      tags:
+      - Kubernetes
+      responses:
+        '200':
+          description: Cluster list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cluster'
+  /kubernetes/clusters/{clusterName}/containers:
+    get:
+      summary: Get container recommendations for a cluster
+      operationId: getKubernetesContainers
+      tags:
+      - Kubernetes
+      parameters:
+      - name: clusterName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Container recommendations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContainerRecommendation'
+components:
+  schemas:
+    ContainerRecommendation:
+      type: object
+      properties:
+        namespace:
+          type: string
+        workload:
+          type: string
+        container:
+          type: string
+        cpuRequest:
+          type: string
+        cpuLimit:
+          type: string
+        memoryRequest:
+          type: string
+        memoryLimit:
+          type: string
+        recommendedCpuRequest:
+          type: string
+        recommendedMemoryRequest:
+          type: string
+    Cluster:
+      type: object
+      properties:
+        name:
+          type: string
+        provider:
+          type: string
+        nodes:
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

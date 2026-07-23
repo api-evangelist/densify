@@ -1,0 +1,109 @@
+openapi: 3.1.0
+info:
+  title: Densify / Kubex Public Cloud Authentication Recommendations API
+  description: 'REST API for the Densify (now Kubex) cloud and container optimization platform.
+
+    Exposes optimization analysis triggers and recommendation retrieval for AWS, Azure,
+
+    GCP, and Kubernetes environments so that resource right-sizing can be embedded into
+
+    CI/CD pipelines and FinOps workflows.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Kubex
+    url: https://docs.kubex.ai/
+servers:
+- url: https://{instance}.densify.com/CIRBA/api/v2
+  description: Densify / Kubex tenant instance
+  variables:
+    instance:
+      default: customer
+      description: Customer-specific subdomain
+security:
+- bearerAuth: []
+tags:
+- name: Recommendations
+paths:
+  /analysis/aws/{analysisId}/recommendations:
+    get:
+      summary: Retrieve AWS optimization recommendations
+      operationId: getAwsRecommendations
+      tags:
+      - Recommendations
+      parameters:
+      - $ref: '#/components/parameters/AnalysisId'
+      responses:
+        '200':
+          description: List of recommendations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationList'
+  /analysis/azure/{analysisId}/recommendations:
+    get:
+      summary: Retrieve Azure optimization recommendations
+      operationId: getAzureRecommendations
+      tags:
+      - Recommendations
+      parameters:
+      - $ref: '#/components/parameters/AnalysisId'
+      responses:
+        '200':
+          description: List of recommendations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationList'
+  /analysis/gcp/{analysisId}/recommendations:
+    get:
+      summary: Retrieve GCP optimization recommendations
+      operationId: getGcpRecommendations
+      tags:
+      - Recommendations
+      parameters:
+      - $ref: '#/components/parameters/AnalysisId'
+      responses:
+        '200':
+          description: List of recommendations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationList'
+components:
+  schemas:
+    RecommendationList:
+      type: object
+      properties:
+        recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recommendation'
+    Recommendation:
+      type: object
+      properties:
+        name:
+          type: string
+        currentType:
+          type: string
+        recommendedType:
+          type: string
+        currentCost:
+          type: number
+        recommendedCost:
+          type: number
+        savingsEstimate:
+          type: number
+  parameters:
+    AnalysisId:
+      name: analysisId
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
