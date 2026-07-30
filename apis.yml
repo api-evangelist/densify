@@ -9,7 +9,20 @@ description: >-
   optimization can be embedded into CI/CD pipelines, infrastructure as code
   templates, and FinOps workflows.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/densify.png
 tags:
   - Cloud Cost
   - Container Optimization
@@ -27,62 +40,117 @@ kind: company
 position: Producer
 access: 3rd-Party
 apis:
-  - aid: densify:public-cloud-api
-    name: Densify Public Cloud API
-    description: >-
-      The Densify Public Cloud REST API exposes optimization analysis, recommendations,
-      account and instance inventory, and systems data for AWS, Azure, and Google
-      Cloud environments. The API uses JSON over HTTPS, follows a resource-oriented
-      design under the /api/v2/ path, and authenticates with JWT bearer tokens
-      obtained from the /authorize endpoint. Common use cases include integrating
-      right-sizing recommendations into Terraform, CloudFormation, and CI/CD pipelines.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
-    baseURL: https://api.densify.com/api/v2
-    tags:
-      - Cloud
-      - FinOps
-      - Optimization
-      - Recommendations
-      - Right-Sizing
-    properties:
-      - type: Documentation
-        url: https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
-      - type: Reference
-        url: https://www.densify.com/docs/WebHelp_Densify_Cloud/Content/Resources/PDFs/Densify-API-Reference-Guide.pdf
-      - type: Postman
-        url: https://www.densify.com/dev
-    contact:
-      - FN: Densify Support
-        email: support@densify.com
-        url: https://www.densify.com/contact
-  - aid: densify:container-api
-    name: Densify Container Optimization API
-    description: >-
-      The Densify Container Optimization REST API provides programmatic access
-      to container right-sizing recommendations across Amazon EKS, AKS, GKE,
-      OpenShift, and self-managed Kubernetes footprints. It exposes endpoints
-      for clusters, namespaces, controllers, container groups, and recommended
-      requests/limits for CPU and memory based on machine learned utilization
-      patterns.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.densify.com/docs-api/WebHelp_Densify_API/Content/Densify_API.htm
-    baseURL: https://api.densify.com/api/v2
-    tags:
-      - Containers
-      - Kubernetes
-      - Optimization
-      - Recommendations
-      - Right-Sizing
-    properties:
-      - type: Documentation
-        url: https://www.densify.com/docs-api/WebHelp_Densify_API/Content/Densify_API.htm
-      - type: Developer Resources
-        url: https://www.densify.com/dev
-    contact:
-      - FN: Densify Support
-        email: support@densify.com
-        url: https://www.densify.com/contact
+- aid: densify:public-cloud-api
+  name: Densify Public Cloud API
+  description: >-
+    The Densify Public Cloud REST API exposes optimization analysis, recommendations, account and instance
+    inventory, and systems data for AWS, Azure, and Google Cloud environments. The API uses JSON over
+    HTTPS, follows a resource-oriented design under the /api/v2/ path, and authenticates with JWT bearer
+    tokens obtained from the /authorize endpoint. Common use cases include integrating right-sizing recommendations
+    into Terraform, CloudFormation, and CI/CD pipelines.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: >-
+    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
+  baseURL: https://api.densify.com/api/v2
+  tags:
+  - Cloud
+  - FinOps
+  - Optimization
+  - Recommendations
+  - Right-Sizing
+  properties:
+  - type: Documentation
+    url: >-
+      https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
+  - type: Reference
+    url: >-
+      https://www.densify.com/docs/WebHelp_Densify_Cloud/Content/Resources/PDFs/Densify-API-Reference-Guide.pdf
+  - type: Postman
+    url: https://www.densify.com/dev
+  contact:
+  - FN: Densify Support
+    email: support@densify.com
+    url: https://www.densify.com/contact
+- aid: densify:container-api
+  name: Densify Container Optimization API
+  description: >-
+    The Densify Container Optimization REST API provides programmatic access to container right-sizing
+    recommendations across Amazon EKS, AKS, GKE, OpenShift, and self-managed Kubernetes footprints. It
+    exposes endpoints for clusters, namespaces, controllers, container groups, and recommended requests/limits
+    for CPU and memory based on machine learned utilization patterns.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.densify.com/docs-api/WebHelp_Densify_API/Content/Densify_API.htm
+  baseURL: https://api.densify.com/api/v2
+  tags:
+  - Containers
+  - Kubernetes
+  - Optimization
+  - Recommendations
+  - Right-Sizing
+  properties:
+  - type: Documentation
+    url: https://www.densify.com/docs-api/WebHelp_Densify_API/Content/Densify_API.htm
+  - type: Developer Resources
+    url: https://www.densify.com/dev
+  contact:
+  - FN: Densify Support
+    email: support@densify.com
+    url: https://www.densify.com/contact
+- aid: densify:densify-authentication-api
+  name: Densify Authentication API
+  description: The Authentication API from Densify — 1 operation(s) for authentication.
+  humanURL: >-
+    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
+  baseURL: https://api.densify.com/api/v2
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-authentication-api-openapi.yml
+- aid: densify:densify-cloud-analysis-api
+  name: Densify Cloud Analysis API
+  description: The Cloud Analysis API from Densify — 3 operation(s) for cloud analysis.
+  humanURL: >-
+    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
+  baseURL: https://api.densify.com/api/v2
+  tags:
+  - Cloud Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-cloud-analysis-api-openapi.yml
+- aid: densify:densify-kubernetes-api
+  name: Densify Kubernetes API
+  description: The Kubernetes API from Densify — 2 operation(s) for kubernetes.
+  humanURL: >-
+    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
+  baseURL: https://api.densify.com/api/v2
+  tags:
+  - Kubernetes
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-kubernetes-api-openapi.yml
+- aid: densify:densify-recommendations-api
+  name: Densify Recommendations API
+  description: The Recommendations API from Densify — 3 operation(s) for recommendations.
+  humanURL: >-
+    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
+  baseURL: https://api.densify.com/api/v2
+  tags:
+  - Recommendations
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-recommendations-api-openapi.yml
+- aid: densify:densify-system-api
+  name: Densify System API
+  description: The System API from Densify — 1 operation(s) for system.
+  humanURL: >-
+    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
+  baseURL: https://api.densify.com/api/v2
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-system-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/densify-agentic-access.yml
