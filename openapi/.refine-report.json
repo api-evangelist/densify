@@ -1,0 +1,22 @@
+{
+  "provider": "densify",
+  "sources": [
+    "densify-authentication-api-openapi.yml",
+    "densify-cloud-analysis-api-openapi.yml",
+    "densify-kubernetes-api-openapi.yml",
+    "densify-recommendations-api-openapi.yml",
+    "densify-system-api-openapi.yml"
+  ],
+  "outputs": [
+    "densify-authentication-api-openapi.yml",
+    "densify-cloud-analysis-api-openapi.yml",
+    "densify-kubernetes-api-openapi.yml",
+    "densify-recommendations-api-openapi.yml",
+    "densify-system-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
