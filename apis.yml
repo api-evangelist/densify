@@ -194,8 +194,6 @@ common:
     url: json-ld/densify-context.jsonld
   - type: Vocabulary
     url: vocabulary/densify-vocabulary.yml
-  - type: Capabilities
-    url: capabilities/densify-capabilities.yml
   - type: LlmsText
     url: https://api.densify.com/llms.txt
 maintainers:
