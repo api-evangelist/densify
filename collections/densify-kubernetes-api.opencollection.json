@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Densify / Kubex Public Cloud Authentication Kubernetes API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Kubernetes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List monitored Kubernetes clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/kubernetes/clusters"
+          },
+          "docs": "List monitored Kubernetes clusters"
+        },
+        {
+          "info": {
+            "name": "Get container recommendations for a cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/kubernetes/clusters/:clusterName/containers",
+            "params": [
+              {
+                "name": "clusterName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get container recommendations for a cluster"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

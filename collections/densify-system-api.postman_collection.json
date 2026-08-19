@@ -1,0 +1,142 @@
+{
+  "item": [
+    {
+      "id": "3b1538ca-c979-49cb-a735-99d8fff7ad7f",
+      "name": "System",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6186b752-ec4c-4f0a-b46f-2e9a9cbe1d2e",
+          "name": "Connectivity check",
+          "request": {
+            "name": "Connectivity check",
+            "description": {
+              "content": "Verify the API subsystem is reachable.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ping"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Customer-specific subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cbb382f6-0830-4691-b4a4-76f16e8e384f",
+              "name": "API is up",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Customer-specific subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Customer-specific subdomain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "customer",
+      "key": "instance"
+    },
+    {
+      "type": "string",
+      "value": "https://{{instance}}.densify.com/CIRBA/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "31b84934-b7dd-4dc2-b0ca-3692390b2e98",
+    "name": "Densify / Kubex Public Cloud Authentication System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Densify (now Kubex) cloud and container optimization platform.\nExposes optimization analysis triggers and recommendation retrieval for AWS, Azure,\nGCP, and Kubernetes environments so that resource right-sizing can be embedded into\nCI/CD pipelines and FinOps workflows.\n\n\nContact Support:\n Name: Kubex",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Densify / Kubex Public Cloud Authentication Cloud Analysis API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cloud Analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start AWS data collection / analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/aws",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start AWS data collection / analysis"
+        },
+        {
+          "info": {
+            "name": "Start Azure data collection / analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/azure",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start Azure data collection / analysis"
+        },
+        {
+          "info": {
+            "name": "Start GCP data collection / analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/gcp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start GCP data collection / analysis"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

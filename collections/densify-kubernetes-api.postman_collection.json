@@ -1,0 +1,250 @@
+{
+  "item": [
+    {
+      "id": "522a863d-7b05-4279-a9a8-c2c4bea035da",
+      "name": "Kubernetes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "81e7e57b-77fd-4670-86ac-20c2c34e1906",
+          "name": "List monitored Kubernetes clusters",
+          "request": {
+            "name": "List monitored Kubernetes clusters",
+            "description": {},
+            "url": {
+              "path": [
+                "kubernetes",
+                "clusters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Customer-specific subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "be086ae1-b1b2-4ab0-b2ad-94b11dc8d0d2",
+              "name": "Cluster list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Customer-specific subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"provider\": \"string\",\n    \"nodes\": 8453\n  },\n  {\n    \"name\": \"string\",\n    \"provider\": \"string\",\n    \"nodes\": 5410\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d06ae602-20bc-4dc6-ba4d-8b90486be5f4",
+          "name": "Get container recommendations for a cluster",
+          "request": {
+            "name": "Get container recommendations for a cluster",
+            "description": {},
+            "url": {
+              "path": [
+                "kubernetes",
+                "clusters",
+                ":clusterName",
+                "containers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clusterName",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Customer-specific subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f00fb2d8-6a68-43ae-bec7-b11dee48cb08",
+              "name": "Container recommendations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kubernetes",
+                    "clusters",
+                    ":clusterName",
+                    "containers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clusterName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Customer-specific subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"namespace\": \"string\",\n    \"workload\": \"string\",\n    \"container\": \"string\",\n    \"cpuRequest\": \"string\",\n    \"cpuLimit\": \"string\",\n    \"memoryRequest\": \"string\",\n    \"memoryLimit\": \"string\",\n    \"recommendedCpuRequest\": \"string\",\n    \"recommendedMemoryRequest\": \"string\"\n  },\n  {\n    \"namespace\": \"string\",\n    \"workload\": \"string\",\n    \"container\": \"string\",\n    \"cpuRequest\": \"string\",\n    \"cpuLimit\": \"string\",\n    \"memoryRequest\": \"string\",\n    \"memoryLimit\": \"string\",\n    \"recommendedCpuRequest\": \"string\",\n    \"recommendedMemoryRequest\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Customer-specific subdomain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "customer",
+      "key": "instance"
+    },
+    {
+      "type": "string",
+      "value": "https://{{instance}}.densify.com/CIRBA/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7f015490-1c17-40d3-8fee-31dc2ca134bb",
+    "name": "Densify / Kubex Public Cloud Authentication Kubernetes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Densify (now Kubex) cloud and container optimization platform.\nExposes optimization analysis triggers and recommendation retrieval for AWS, Azure,\nGCP, and Kubernetes environments so that resource right-sizing can be embedded into\nCI/CD pipelines and FinOps workflows.\n\n\nContact Support:\n Name: Kubex",
+      "type": "text/plain"
+    }
+  }
+}

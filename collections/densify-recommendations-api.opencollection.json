@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Densify / Kubex Public Cloud Authentication Recommendations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Recommendations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve AWS optimization recommendations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/aws/:analysisId/recommendations",
+            "params": [
+              {
+                "name": "analysisId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve AWS optimization recommendations"
+        },
+        {
+          "info": {
+            "name": "Retrieve Azure optimization recommendations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/azure/:analysisId/recommendations",
+            "params": [
+              {
+                "name": "analysisId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve Azure optimization recommendations"
+        },
+        {
+          "info": {
+            "name": "Retrieve GCP optimization recommendations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.densify.com/CIRBA/api/v2/analysis/gcp/:analysisId/recommendations",
+            "params": [
+              {
+                "name": "analysisId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve GCP optimization recommendations"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,377 @@
+{
+  "item": [
+    {
+      "id": "fa3ff757-a6bc-493f-b829-4ee48ed965fa",
+      "name": "Recommendations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8012fbfa-20d7-4fe8-a2b0-534d2739adee",
+          "name": "Retrieve AWS optimization recommendations",
+          "request": {
+            "name": "Retrieve AWS optimization recommendations",
+            "description": {},
+            "url": {
+              "path": [
+                "analysis",
+                "aws",
+                ":analysisId",
+                "recommendations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "analysisId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Customer-specific subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a9f6030-da79-4fb5-9789-e5588e8564e2",
+              "name": "List of recommendations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analysis",
+                    "aws",
+                    ":analysisId",
+                    "recommendations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "analysisId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Customer-specific subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"recommendations\": [\n    {\n      \"name\": \"string\",\n      \"currentType\": \"string\",\n      \"recommendedType\": \"string\",\n      \"currentCost\": 8164.311993168731,\n      \"recommendedCost\": 5818.085956680043,\n      \"savingsEstimate\": 5315.253904545303\n    },\n    {\n      \"name\": \"string\",\n      \"currentType\": \"string\",\n      \"recommendedType\": \"string\",\n      \"currentCost\": 9253.20269953625,\n      \"recommendedCost\": 7511.256472298814,\n      \"savingsEstimate\": 9779.777672374703\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f670230-6e88-4d18-a8e8-bcacc28782b3",
+          "name": "Retrieve Azure optimization recommendations",
+          "request": {
+            "name": "Retrieve Azure optimization recommendations",
+            "description": {},
+            "url": {
+              "path": [
+                "analysis",
+                "azure",
+                ":analysisId",
+                "recommendations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "analysisId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Customer-specific subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "faa91468-1d0b-4467-b12c-854d740af90f",
+              "name": "List of recommendations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analysis",
+                    "azure",
+                    ":analysisId",
+                    "recommendations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "analysisId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Customer-specific subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"recommendations\": [\n    {\n      \"name\": \"string\",\n      \"currentType\": \"string\",\n      \"recommendedType\": \"string\",\n      \"currentCost\": 8164.311993168731,\n      \"recommendedCost\": 5818.085956680043,\n      \"savingsEstimate\": 5315.253904545303\n    },\n    {\n      \"name\": \"string\",\n      \"currentType\": \"string\",\n      \"recommendedType\": \"string\",\n      \"currentCost\": 9253.20269953625,\n      \"recommendedCost\": 7511.256472298814,\n      \"savingsEstimate\": 9779.777672374703\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f3b50ae9-dcb0-4734-8c5d-e299b0fcc7e7",
+          "name": "Retrieve GCP optimization recommendations",
+          "request": {
+            "name": "Retrieve GCP optimization recommendations",
+            "description": {},
+            "url": {
+              "path": [
+                "analysis",
+                "gcp",
+                ":analysisId",
+                "recommendations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "analysisId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Customer-specific subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d114b8d4-a436-45a1-9eb5-42b0eddf3db9",
+              "name": "List of recommendations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analysis",
+                    "gcp",
+                    ":analysisId",
+                    "recommendations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "analysisId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Customer-specific subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"recommendations\": [\n    {\n      \"name\": \"string\",\n      \"currentType\": \"string\",\n      \"recommendedType\": \"string\",\n      \"currentCost\": 8164.311993168731,\n      \"recommendedCost\": 5818.085956680043,\n      \"savingsEstimate\": 5315.253904545303\n    },\n    {\n      \"name\": \"string\",\n      \"currentType\": \"string\",\n      \"recommendedType\": \"string\",\n      \"currentCost\": 9253.20269953625,\n      \"recommendedCost\": 7511.256472298814,\n      \"savingsEstimate\": 9779.777672374703\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Customer-specific subdomain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "customer",
+      "key": "instance"
+    },
+    {
+      "type": "string",
+      "value": "https://{{instance}}.densify.com/CIRBA/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f9525f8e-3d3e-44d8-9424-485256745ce8",
+    "name": "Densify / Kubex Public Cloud Authentication Recommendations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Densify (now Kubex) cloud and container optimization platform.\nExposes optimization analysis triggers and recommendation retrieval for AWS, Azure,\nGCP, and Kubernetes environments so that resource right-sizing can be embedded into\nCI/CD pipelines and FinOps workflows.\n\n\nContact Support:\n Name: Kubex",
+      "type": "text/plain"
+    }
+  }
+}
