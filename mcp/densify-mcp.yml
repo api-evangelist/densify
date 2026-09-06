@@ -1,0 +1,89 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/MCP
+  (provider MCP documentation) and https://docs.kubex.ai/.well-known/mcp.json
+provider: Densify
+providerId: densify
+status: published
+summary: >-
+  Densify (trading as Kubex) publishes TWO distinct MCP servers. The product server is a
+  per-tenant remote endpoint derived from the customer's dashboard hostname and is the one
+  that exposes optimization data; the documentation server is a public, unauthenticated
+  Mintlify docs server. Only the documentation server could be introspected anonymously.
+deployment:
+  mode: remote
+  endpoint: https://{company}-mcp.kubex.ai/
+  auth: oauth
+  verified: searched
+  note: >-
+    Per-tenant URL, published as a template by the provider: if the Kubex dashboard is
+    https://corp.kubex.ai then the MCP endpoint is https://corp-mcp.kubex.ai/; customers on a
+    densify.com host (https://corp.densify.com/kubex) use https://corp-mcp.densify.com/.
+    Streamable HTTP transport, OAuth 2.1 with dynamic client registration. Authorization is
+    temporary and must be refreshed daily. NOT probed — no tenant hostname exists to probe
+    anonymously, and no shared/demo endpoint is published.
+servers:
+- id: kubex-product-mcp
+  name: Kubex MCP
+  role: product
+  transport: streamable-http
+  endpoint_template: https://{company}-mcp.kubex.ai/
+  alternate_endpoint_template: https://{company}-mcp.densify.com/
+  auth:
+    type: oauth2.1
+    dynamic_client_registration: true
+    session: reauthorization required daily
+  docs: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/MCP
+  clients_documented:
+  - Claude for Web (claude.ai connectors)
+  - Claude Desktop
+  - Claude Code (claude mcp add --transport http kubex https://corp-mcp.kubex.ai/)
+  - Codex (codex mcp add kubex --url https://corp-mcp.kubex.ai/)
+  - Cursor (via npx -y mcp-remote)
+  - Visual Studio Code (MCP: Add Server, HTTP)
+  - Devin Desktop (formerly Windsurf)
+  - Zed
+  capabilities_documented:
+  - Detailed operational information about containers, nodes and cloud instances
+  - Kubex optimization recommendations
+  - Review optimization insights, identify risks and plan remediation interactively
+  - Apply Kubex recommendations to infrastructure-as-code definitions from a coding agent
+  tools:
+    status: not-introspected
+    reason: >-
+      tools/list requires a tenant endpoint and an OAuth 2.1 authorization; the provider
+      publishes no anonymous or demo server. Tool names and input schemas therefore need
+      authenticated introspection against a customer instance and are NOT recorded here.
+- id: kubex-docs-mcp
+  name: Kubex Docs MCP
+  role: documentation
+  transport: streamable-http
+  endpoint: https://docs.kubex.ai/mcp
+  auth:
+    type: none
+  discovery: https://docs.kubex.ai/.well-known/mcp.json
+  verified: probed
+  probe:
+    method: POST tools/list
+    status: 200
+    fetched: '2026-09-06'
+    file: densify-docs-mcp-tools.json
+  tools:
+  - name: search_kubex_docs
+    title: Search documentation
+    description: Search the Kubex Docs knowledge base for pages, code examples and API references.
+    read_only: true
+  - name: query_docs_filesystem_kubex_docs
+    description: >-
+      Read-only shell-like query (rg/grep/find/tree/ls/cat/head/tail/jq) against a virtual
+      in-memory filesystem containing the Kubex documentation pages and OpenAPI specs.
+    read_only: true
+  - name: submit_feedback
+    description: Submit feedback about the Kubex documentation.
+    read_only: false
+  note: >-
+    /.well-known/mcp.json advertises the endpoint as
+    https://densify.main-kill-isr.mintlify.me/mcp — a Mintlify preview hostname leaking into
+    the published discovery document. https://docs.kubex.ai/mcp serves the identical tool set
+    and is the address to use.

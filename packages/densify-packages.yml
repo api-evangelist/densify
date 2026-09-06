@@ -1,0 +1,199 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://densify-dev.github.io/helm-charts/index.yaml (Helm repository index),
+  https://proxy.golang.org (Go module proxy), https://registry.terraform.io/v1/modules
+  (Terraform Registry), https://api.github.com/orgs/densify-dev/repos
+provider: Densify
+providerId: densify
+note: >-
+  Densify now trades as Kubex; the engineering org remains github.com/densify-dev and
+  the Helm repository is still published at densify-dev.github.io/helm-charts. There is
+  no first-party REST client library (no npm / PyPI / Maven / NuGet / RubyGems / crates.io
+  package) — the packages Densify actually ships are Kubernetes deployment charts, Go
+  libraries for the in-cluster collector, and a Terraform module for optimization-as-code.
+  The npm `densify`, PyPI `densify` and PyPI `kubex` packages are unrelated third-party
+  projects and are NOT listed here.
+summary:
+  total: 17
+  official: 17
+  registries:
+    helm: 12
+    go: 4
+    terraform: 1
+  client_sdks: 0
+packages:
+- name: kubex-automation-engine
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.9.1
+  published: '2026-09-01'
+  description: Helm chart deploying the Kubex Automation Engine for automated workload rightsizing.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: kubex-crds
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.9.0
+  published: '2026-09-01'
+  description: CRDs for the Kubex Automation Engine (AutomationStrategy, ProactivePolicy, StaticPolicy, GlobalConfiguration).
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: kubex-automation-controller
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.0.9
+  published: '2026-09-01'
+  description: Helm chart for deploying the Kubex Automation Controller.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: kubex-automation-stack
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.1.7
+  published: '2026-09-01'
+  description: Kubex Collection Stack — bundles the components required for container data collection.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: kubex-collection-openshift
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.0.7
+  published: '2026-09-01'
+  description: Kubex Collection Stack for OpenShift clusters.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: kubex-collection-gke-autopilot
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.0.7
+  published: '2026-09-01'
+  description: Kubex Collection Stack for GKE Autopilot clusters.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: kubex-connector
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.2.0
+  published: '2026-09-01'
+  description: Stack-managed in-cluster connector used for the cluster data interface.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: kubex-ai-cdi
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.2.0
+  published: '2026-09-01'
+  description: In-cluster Kubex cluster data interface service exposed over HTTP.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: container-optimization-data-forwarder
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 4.0.9
+  published: '2026-09-01'
+  description: Densify Container Optimization Data Forwarder utility.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: gpu-process-exporter
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.1.4
+  published: '2026-09-01'
+  description: Helm chart for the Kubex GPU process exporter.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: k8s-ephemeral-storage-metrics
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 1.22.1
+  published: '2026-09-01'
+  description: Prometheus ephemeral storage metrics exporter.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: node-labeler
+  registry: helm
+  repository: https://densify-dev.github.io/helm-charts
+  official: true
+  language: Kubernetes/Helm
+  version: 0.1.2
+  published: '2026-09-01'
+  description: Helm chart for deploying the node-labeler controller.
+  source: https://densify-dev.github.io/helm-charts/index.yaml
+- name: github.com/densify-dev/container-data-collection
+  registry: go
+  official: true
+  language: Go
+  version: v0.0.0-20260818210151-e266bd13e5eb
+  published: '2026-08-18'
+  description: Container data collection agent that forwards Kubernetes workload metrics to Kubex.
+  source: https://proxy.golang.org/github.com/densify-dev/container-data-collection/@latest
+- name: github.com/densify-dev/container-config
+  registry: go
+  official: true
+  language: Go
+  version: v1.0.22
+  published: '2026-07-09'
+  description: Shared configuration library for the Densify/Kubex container components.
+  source: https://proxy.golang.org/github.com/densify-dev/container-config/@latest
+- name: github.com/densify-dev/net-utils
+  registry: go
+  official: true
+  language: Go
+  version: v1.0.10
+  published: '2026-07-09'
+  description: Networking helpers shared by the Densify/Kubex Go components.
+  source: https://proxy.golang.org/github.com/densify-dev/net-utils/@latest
+- name: github.com/densify-dev/container-automation-model
+  registry: go
+  official: true
+  language: Go
+  version: v1.0.4
+  published: '2025-09-02'
+  description: Go data model for the Kubex container automation CRDs.
+  source: https://proxy.golang.org/github.com/densify-dev/container-automation-model/@latest
+- name: densify-dev/optimization-as-code/null
+  registry: terraform
+  repository: https://registry.terraform.io/modules/densify-dev/optimization-as-code/null
+  official: true
+  language: HCL/Terraform
+  version: 2.0.3
+  published: '2022-07-26'
+  description: >-
+    Terraform module that pulls Densify machine-learning recommendations into Terraform so
+    cloud and container workloads become self-optimizing. This is the closest thing Densify
+    publishes to an API client library — it calls the Densify REST API directly.
+  decay_signal: >-
+    Last published 2022-07-26, more than four years before this probe, while the REST API it
+    consumes shipped new Kubernetes endpoints in the 3.0.0 (2025-04-23) and 5.0 (2026-08-12)
+    releases. A first-party integration library that has not moved in four years is a real
+    abandonment signal for consumers.
+  source: https://registry.terraform.io/v1/modules/densify-dev/optimization-as-code/null
+absent:
+- registry: terraform-providers
+  name: densify-dev/densify
+  status: not published
+  note: >-
+    github.com/densify-dev/terraform-provider-densify exists and was pushed 2026-07-24, but
+    registry.terraform.io returns "provider not found" and the GitHub repo has no releases —
+    the provider is source-only and cannot be installed by `terraform init`.
+  probed:
+  - url: https://registry.terraform.io/v1/providers/densify-dev/densify
+    status: 404
+- registry: npm
+  note: no first-party Densify/Kubex package found (npm `densify` 1.0.0 2018 is an unrelated project)
+- registry: pypi
+  note: >-
+    no first-party package; PyPI `densify` is shobrook's point-cloud oversampler and PyPI
+    `kubex` is an unrelated async Kubernetes client

@@ -1,0 +1,105 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/New_Features_Cloud,
+  https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/release_notes_k8s_automation_engine,
+  https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/release_notes_k8s_data_collector
+provider: Densify
+providerId: densify
+scheme: semver-ish
+format: dated accordion entries in the documentation Release Notes section
+feed: none
+note: >-
+  Three separate dated release-note streams, all inside the docs site, none of them offering an
+  RSS/Atom feed or a machine-readable changelog endpoint. There is no API-specific changelog:
+  API changes appear as "API Enhancements" bullets inside the platform release notes.
+streams:
+- id: platform
+  name: Kubex Features (platform / cloud)
+  url: https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/New_Features_Cloud
+  current_version: '5.0'
+  current_date: '2026-08-12'
+  entries:
+  - version: '5.0'
+    date: '2026-08-12'
+    breaking: unknown
+    highlights:
+    - New Container Analysis Framework — near real-time analysis with hourly updates for very large clusters
+    - Updated Analysis Policy Framework — policy assignment at cluster or namespace level, or dynamically by Kubernetes label
+    - Enhanced Container Cost Estimates — container cost and waste calculated from the cost of the node it runs on
+  - version: 4.5.0
+    date: '2026-05-27'
+    highlights:
+    - Fractional GPU recommendations on the current GPU model
+    - GKE Autopilot recommendations are compute-class aware
+    - Guaranteed QoS support
+    - Container automation policy
+    - RBAC for the AI Agent
+  - version: 4.4.0
+    date: '2026-04-29'
+    highlights:
+    - Oracle Cloud Infrastructure (OCI) support
+    - Container ephemeral storage optimization
+    - API enhancements
+    - Policy enhancements
+    - Access control and security changes
+  - version: 4.2.0
+    date: '2026-03-11'
+    highlights:
+    - Kubernetes dashboard
+    - API enhancements
+    - Google Cloud (GCP) connection support
+    - AWS RDS connection data support
+    - Multi AI-agent support
+  - version: 4.1.0
+    date: '2026-01-21'
+  - version: 4.0.0
+    date: '2025-12-03'
+  - version: 3.8.0
+    date: '2025-11-26'
+  - version: 3.7.0
+    date: '2025-11-06'
+  api_relevant_history:
+  - version: 3.0.0
+    date: '2025-04-23'
+    breaking: false
+    api_changes:
+    - Added GET /kubernetes/clusters, /kubernetes/clusters/{clusterName}, /kubernetes/clusters/{clusterName}/containers, /kubernetes/clusters/{clusterName}/containers?details=true and /kubernetes/clusters/{clusterName}/automation
+    - API token expiry raised from 5 minutes to 60 minutes, removing mid-run re-authorization in long pipelines
+    - Added the "Kubex Automation" and "Kubex Policy" container attributes
+- id: automation-engine
+  name: Kubex Automation Engine
+  url: https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/release_notes_k8s_automation_engine
+  current_version: 1.11.2
+  current_date: '2026-08-27'
+  cadence: weekly to fortnightly
+  entries:
+  - {version: 1.11.2, date: '2026-08-27'}
+  - {version: 1.11.1, date: '2026-08-26'}
+  - {version: 1.11.0, date: '2026-08-19'}
+  - {version: 1.10.0, date: '2026-08-11'}
+  - {version: 1.9.1, date: '2026-08-06'}
+  - {version: 1.9.0, date: '2026-07-28'}
+  - {version: 1.8.0, date: '2026-07-22'}
+  - {version: 1.7.0, date: '2026-07-14'}
+- id: data-collector
+  name: Kubernetes Data Collector
+  url: https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/release_notes_k8s_data_collector
+  current_version: 4.4.0
+  current_date: '2026-03-23'
+  entries:
+  - version: 4.4.0
+    date: '2026-03-23'
+    highlights:
+    - Ephemeral storage metrics collection (opt-in)
+    - Node group detection
+  - version: 4.3.0
+    date: '2025-11-28'
+    highlights:
+    - Google Managed Prometheus (GMP) support
+    - Enhanced job configuration
+  - version: 4.2.2
+    date: '2025-06-16'
+    highlights:
+    - Added GPU metrics
+    - Updated Helm charts

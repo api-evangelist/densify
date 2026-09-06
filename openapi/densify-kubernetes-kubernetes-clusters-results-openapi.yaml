@@ -1,0 +1,292 @@
+openapi: 3.0.3
+info:
+  title: Kubex API – Kubernetes Clusters Results
+  version: 1.0.0
+  description: |
+    Container right-sizing recommendations at the cluster level.
+    Returns all analyzed containers in the specified cluster.
+
+servers:
+  - url: https://{host}/api/v2
+    variables:
+      host:
+        default: api.example.com
+        description: Replace with your Kubex API host
+
+tags:
+  - name: Kubernetes Cluster Results
+    description: Container recommendations for a given cluster
+
+paths:
+  /kubernetes/clusters/{clusterName}/containers:
+    get:
+      tags: [Kubernetes Cluster Results]
+      summary: List container recommendations for a cluster
+      operationId: getKubernetesClusterContainers
+      description: |
+        Returns recommendation details for container manifests in the specified cluster.
+        This endpoint returns the base set of fields. For additional details including uptime predictions,
+        OOM kill counts, and audit history, use the detailed endpoint with details=true.
+        Fields with no value may be omitted from the response.
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/k8s_clusterName'
+      responses:
+        '200':
+          description: Array of container recommendations (base fields)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/ContainerRecommendation'
+                    - $ref: '#/components/schemas/ContainerRecommendationDetailed'
+                  description: Returns ContainerRecommendation by default, or ContainerRecommendationDetailed when details=true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Cluster not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /kubernetes/clusters/{clusterName}/containers?details=true:
+    get:
+      tags: [Kubernetes Cluster Results]
+      summary: List container recommendations with additional details
+      operationId: getKubernetesClusterContainersDetailed
+      description: |
+        Returns recommendation details for container manifests in the specified cluster with additional fields.
+        This endpoint includes all base fields plus: predictedUptime, configLastChangedOn, nodeGroup,
+        oomKills_last7days, dateFirstAudited, and dateLastAudited.
+        Fields with no value may be omitted from the response.
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/k8s_clusterName'
+        - name: details
+          in: query
+          required: true
+          description: Must be set to true to get additional fields
+          schema:
+            type: boolean
+            enum: [true]
+      responses:
+        '200':
+          description: Array of container recommendations with additional details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContainerRecommendationDetailed'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Cluster not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  # ===== Parameters (no examples here) =====
+  parameters:
+    k8s_clusterName:
+      name: clusterName
+      in: path
+      required: true
+      description: Unique cluster name from `/kubernetes/clusters` or the Kubex UI Connections tab.
+      schema:
+        type: string
+    details:
+      name: details
+      in: query
+      required: false
+      description: Include additional fields (`predictedUptime`, `configLastChangedOn`, `nodeGroup`, `oomKills_last7days`, `dateFirstAudited`, `dateLastAudited`).
+      schema:
+        type: boolean
+        default: false
+
+  # ===== Schemas =====
+  schemas:
+    ContainerRecommendation:
+      type: object
+      description: Container recommendation entry (base fields). Fields without values may be omitted.
+      properties:
+        cluster:
+          type: string
+          description: Cluster name as specified in the config.yaml files.
+        namespace:
+          type: string
+          description: Namespace associated with the container.
+        podOwnerName:
+          type: string
+          description: Name of the controller or pod owning the container.
+        podOwnerKind:
+          type: string
+          description: Controller type (e.g., DaemonSet, Deployment, ReplicaSet, ReplicationController, StatefulSet).
+        container:
+          type: string
+          description: Container manifest name.
+        entityId:
+          type: string
+          description: Unique identifier for the selected cluster assigned by Kubex.
+        containerId:
+          type: string
+          description: Unique identifier for the listed container.
+        avgContainerCount:
+          type: integer
+          description: Average number of containers from the "In Service Instances" metric.
+        currentCpuRequestmCores:
+          type: integer
+          description: Current CPU request (mCores).
+        currentCpuLimitmCores:
+          type: integer
+          description: Current CPU limit (mCores).
+        currentMemRequestBytes:
+          type: integer
+          description: Current memory request (bytes).
+        currentMemLimitBytes:
+          type: integer
+          description: Current memory limit (bytes).
+        recommendedCpuRequestmCores:
+          type: integer
+          description: Recommended CPU request (mCores).
+        recommendedCpuLimitmCores:
+          type: integer
+          description: Recommended CPU limit (mCores).
+        recommendedMemRequestBytes:
+          type: integer
+          description: Recommended memory request (bytes).
+        recommendedMemLimitBytes:
+          type: integer
+          description: Recommended memory limit (bytes).
+        estimatedSavingsPerContainer:
+          type: number
+          format: float
+          description: Estimated savings per container when applying the recommendations.
+        analyzedOn:
+          type: string
+          format: date-time
+          description: Most recent analysis refresh (UTC, `YYYY-MM-DDTHH:mm:ssZ`).
+        hpaMetricName:
+          type: string
+          description: HPA metric name (e.g., cpu, memory).
+        hpaMetricThreshold:
+          type: string
+          description: HPA metric threshold (e.g., 75%).
+        currentEphemeralStorageRequestBytes:
+          type: number
+          description: Current ephemeral storage request (bytes).
+        currentEphemeralStorageLimitBytes:
+          type: number
+          description: Current ephemeral storage limit (bytes).
+        recommendedEphemeralStorageRequestBytes:
+          type: number
+          description: Recommended ephemeral storage request (bytes).
+        recommendedEphemeralStorageLimitBytes:
+          type: number
+          description: Recommended ephemeral storage limit (bytes).
+        gpu:
+          type: object
+          description: GPU-related recommendations and metrics (present for GPU workloads).
+          properties:
+            currentGpuModel:
+              type: string
+              description: Current GPU model.
+            currentGpuSharingStrategy:
+              type: string
+              description: Current GPU sharing strategy (e.g., kai-scheduler, time-slicing).
+            currentGpuRequest:
+              type: number
+              format: float
+              description: Current GPU request (fractional GPU units).
+            gpuComputeOptimal:
+              type: number
+              format: float
+              description: Optimal GPU compute utilization.
+            gpuMemoryOptimalBytes:
+              type: number
+              description: Optimal GPU memory usage (bytes).
+            gpuOverallOptimal:
+              type: number
+              format: float
+              description: Overall optimal GPU utilization.
+            recommendedGpuModel:
+              type: string
+              description: Recommended GPU model.
+            recommendedGpuSharingStrategy:
+              type: string
+              description: Recommended GPU sharing strategy.
+            recommendedGpuRequest:
+              type: number
+              format: float
+              description: Recommended GPU request (fractional GPU units).
+
+    ContainerRecommendationDetailed:
+      allOf:
+        - $ref: '#/components/schemas/ContainerRecommendation'
+        - type: object
+          description: Container recommendation entry with additional detail fields (returned when details=true).
+          properties:
+            predictedUptime:
+              type: number
+              format: float
+              description: Predicted uptime percentage for the container.
+            configLastChangedOn:
+              type: string
+              format: date-time
+              description: Timestamp of the most recent change to requests/limits.
+            nodeGroup:
+              type: array
+              items:
+                type: string
+              description: Names of associated node groups.
+            oomKills_last7days:
+              type: integer
+              description: Number of OOM events in the last 7 days.
+            dateFirstAudited:
+              type: string
+              format: date-time
+              description: When this container was first audited (from workload history).
+            dateLastAudited:
+              type: string
+              format: date-time
+              description: When this container was last audited (from workload history).
+
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

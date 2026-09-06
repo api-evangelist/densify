@@ -1,0 +1,90 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/New_Features_Cloud,
+  https://kubex.statuspage.io/api/v2/status.json,
+  https://kubex.ai/kubex-pricing.md
+provider: Densify
+providerId: densify
+versioning:
+  scheme: path
+  current: v2
+  pattern: https://{host}/api/v2
+  note: >-
+    The REST surface is pinned at /api/v2 across every published spec; the health endpoint sits
+    one level up at /api/ping. Platform releases (5.0, 4.5.0, 4.4.0 …) version the PRODUCT, not
+    the API path — the API path has not moved through any of them.
+  evidence: openapi/ servers[] in all 21 specs
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  note: >-
+    No deprecation or sunset policy is published, no operation in the 21 specs carries
+    `deprecated: true`, and no RFC 8594 Sunset/Deprecation header is documented. Backward
+    compatibility is handled informally instead: several endpoints are shipped as explicit
+    aliases (listSubscriptionsDefaultPlatform, getSubscriptionResultsDefaultPlatform,
+    getSubscriptionStatusDefaultPlatform, listSubscriptionPropertiesDefaultPlatform,
+    listSubscriptionTagsDefaultPlatform, listSuppressionsDefaultPlatform) whose descriptions
+    say they exist for backward compatibility with the pre-platform-scoped paths.
+  checked: '2026-09-06'
+status_page:
+  present: true
+  url: https://kubex.statuspage.io
+  provider: Atlassian Statuspage
+  api: https://kubex.statuspage.io/api/v2/status.json
+  probed:
+  - url: https://kubex.statuspage.io/api/v2/status.json
+    status: 200
+  - url: https://kubex.statuspage.io/api/v2/components.json
+    status: 200
+  observed:
+    page_name: Kubex
+    page_id: 6gyx5dhmsyq8
+    indicator: none
+    description: All Systems Operational
+    updated_at: '2026-04-26T00:20:35.870Z'
+  caveat: >-
+    The page is real, machine-readable and reachable, but it is still carrying Statuspage's
+    starter content: its two components are literally named "API (example)" and
+    "Management Portal (example)", and the page has not been updated since 2026-04-26. It is
+    not linked from kubex.ai or from the docs. Treat it as published-but-unmaintained.
+  not_a_status_page:
+  - url: https://status.kubex.ai
+    status: 200
+    note: resolves to the kubex.ai WordPress wildcard and returns the marketing HTML shell
+  - url: https://status.densify.com
+    status: 200
+    note: same wildcard shell
+  - url: https://densify.statuspage.io
+    status: 200
+    note: redirects to atlassian.com/software/statuspage — not a Densify page
+sla:
+  published: false
+  note: No SLA or uptime commitment is published on kubex.ai, the docs, or the pricing document.
+support:
+  channels:
+  - email
+  - slack
+  - live
+  source: https://kubex.ai/kubex-pricing.md
+  contact_email: answers@kubex.ai
+  api_support_email: Support@Kubex.ai
+  phone:
+  - '+1 866 731 0090 (North America, toll-free)'
+  - '+44 203 576 2432 (Europe, Middle East & Africa)'
+release_cadence:
+  platform: >-
+    Roughly every 4–10 weeks: 5.0 (2026-08-12), 4.5.0 (2026-05-27), 4.4.0 (2026-04-29),
+    4.2.0 (2026-03-11), 4.1.0 (2026-01-21), 4.0.0 (2025-12-03).
+  automation_engine: >-
+    Weekly to fortnightly: 1.11.2 (2026-08-27) back through 0.2.0 (2026-03-01) — 20 dated
+    releases in under six months.
+  data_collector: >-
+    Slower: 4.4.0 (2026-03-23), 4.3.0 (2025-11-28), 4.2.2 (2025-06-16).
+  see: changelog/densify-changelog.yml
+trial:
+  free_days: 60
+  self_serve: true
+  url: https://kubex.ai/product/trial/

@@ -1,0 +1,101 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  openapi/densify-public-cloud-analysis-webhook-openapi.yaml,
+  openapi/densify-public-cloud-subscriptions-openapi.yaml,
+  openapi/densify-public-cloud-subscriptions-status-openapi.yaml,
+  https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Webhook,
+  https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions
+provider: Densify
+providerId: densify
+asyncapi_spec:
+  published: false
+  note: >-
+    Kubex publishes no AsyncAPI document. Probed for /asyncapi.yaml and /asyncapi.json on
+    docs.kubex.ai, kubex.ai, www.densify.com and api.densify.com — all 404 — and no event or
+    streaming catalog exists in the docs. The event surface below is REAL but is described only
+    as REST management endpoints plus prose, so it is recorded as a webhook catalog rather than
+    converted into an AsyncAPI document (which would be fabrication).
+event_surface:
+  style: outbound HTTP webhooks, registered per analysis or per subscription
+  direction: Kubex -> customer endpoint
+  delivery_trigger: >-
+    Analyses run on a nightly schedule after data collection; results are delivered to the
+    registered webhook when the analysis completes. Subscription results can additionally be
+    delivered on a schedule or pulled on demand.
+  security_note: >-
+    Webhook credentials are supplied by the CUSTOMER as `authType` + `authValue` on the
+    registration body ("user:pass or token"), i.e. Kubex stores and replays a static credential
+    the customer hands it. There is no signing secret, no HMAC signature header and no
+    timestamp/replay protection documented — a receiver cannot verify that a delivery came from
+    Kubex other than by the shared credential and by network origin.
+webhooks:
+- id: analysis-results
+  name: Analysis result delivery
+  platforms:
+    platformType: [cloud, containers]
+    platformSubType: [aws, gcp, azure, kubernetes]
+  registration:
+    inline: >-
+      A webHook URL can also be supplied directly on analyzeAws / analyzeAzure / analyzeGcp when
+      the analysis is created or re-run.
+    manage_operations:
+    - operationId: listAnalysisWebhooksByPlatform
+      method: GET
+      path: /webhook/analysis/{platformType}
+    - operationId: getAnalysisWebhook
+      method: GET
+      path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+    - operationId: addAnalysisWebhook
+      method: POST
+      path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+      constraint: rejected with 400 "Analysis webhook already exists." if one is already bound
+    - operationId: updateAnalysisWebhook
+      method: PUT
+      path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+    - operationId: deleteAnalysisWebhook
+      method: DELETE
+      path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+  registration_payload:
+    schema: WebhookRequest
+    fields:
+    - {name: uri, type: string, format: uri, required: true, description: fully-qualified webhook URI reachable by Kubex}
+    - {name: authType, type: string, required: false, description: 'e.g. Basic, Bearer'}
+    - {name: authValue, type: string, required: false, description: credential (user:pass or token)}
+  definition_payload:
+    schema: WebhookDefinition
+    fields: [analysisId, analysisName, href, uri, webHookStatus]
+  observability:
+    operationId: getSubscriptionStatus
+    returns: >-
+      `webHookStatus` (Success/Failure with timestamp) and `lastTriggered`
+      (On-Demand / Scheduled Success / Failure with timestamp)
+    note: >-
+      This is the only delivery telemetry published. There is no retry policy, no dead-letter
+      behaviour and no delivery-attempt log documented.
+- id: subscription-results
+  name: Subscription result delivery
+  description: >-
+    Subscriptions are customizable, saved views of analysis results. Each carries an optional
+    `webhook` and `schedule`; when active, results are pushed to the webhook on schedule.
+    Calling getSubscriptionResults on demand ignores `active`, `webhook` and `schedule` and
+    returns the results inline instead.
+  manage_operations:
+  - {operationId: createSubscriptions, method: POST, path: '/subscriptions/{platformType}'}
+  - {operationId: listSubscriptions, method: GET, path: '/subscriptions/{platformType}'}
+  - {operationId: replaceSubscription, method: PUT, path: '/subscriptions/{platformType}/{subscriptionRef}'}
+  - {operationId: deleteSubscription, method: DELETE, path: '/subscriptions/{platformType}/{subscriptionRef}'}
+  - {operationId: getSubscriptionResults, method: GET, path: '/subscriptions/{platformType}/{subscriptionRef}'}
+  - {operationId: getSubscriptionStatus, method: GET, path: '/subscriptions/{platformType}/{subscriptionRef}/status'}
+  payload_shaping:
+    properties: /subscriptions/{platformType}/properties — which fields appear in the delivered payload
+    tags: /subscriptions/{platformType}/tags — which resource tags / container labels are carried through
+    suppressions: /subscriptions/{platformType}/suppressions — which attributes or properties are withheld
+    note: >-
+      The delivered event payload is customer-defined at runtime through the properties, tags and
+      suppressions catalogs. That is precisely why no fixed event schema is publishable and why
+      an AsyncAPI document would have to be invented rather than harvested.
+counts:
+  webhook_management_operations: 5
+  subscription_operations: 27
+  event_schemas_published: 0

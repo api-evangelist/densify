@@ -1,0 +1,138 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  openapi/ (21 first-party Kubex specs), https://kubex.ai/kubex-pricing.md,
+  https://kubex.ai/product/security/,
+  https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/MCP,
+  https://docs.kubex.ai/.well-known/agent-card.json
+provider: Densify
+providerId: densify
+conformance:
+- id: openapi
+  name: OpenAPI Specification
+  conforms: true
+  versions: ['3.0.3', '3.1.0']
+  evidence: >-
+    21 first-party specs published under https://docs.kubex.ai/openapi/ — 12 at 3.1.0 and
+    9 at 3.0.3 — covering 65 operations. Mixed versions across a single API surface.
+- id: oauth2
+  name: OAuth 2.1
+  conforms: true
+  scope: MCP surface only
+  evidence: >-
+    "Kubex MCP supports the streamable HTTP transport, using OAuth 2.1 with dynamic client
+    registration for authentication." — docs.kubex.ai API Guide / MCP. The REST API does NOT
+    use OAuth; it uses a username/password to JWT exchange.
+- id: rfc7591
+  name: OAuth 2.0 Dynamic Client Registration
+  conforms: true
+  scope: MCP surface only
+  evidence: MCP documentation states dynamic client registration is used.
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-authorization-server and /.well-known/oauth-protected-resource return 404
+    on docs.kubex.ai, kubex.ai, www.densify.com, portal.densify.com and api.densify.com
+    (probed 2026-09-06). The OAuth 2.1 flow the MCP docs describe is not anonymously discoverable.
+- id: oidc
+  name: OpenID Connect
+  conforms: partial
+  scope: console login only, not the API
+  evidence: >-
+    Docs cover external user authentication for the Kubex console against Azure Active Directory,
+    Google OpenID and Okta. No /.well-known/openid-configuration is served on any Kubex or
+    Densify host.
+- id: jwt
+  name: JSON Web Token (RFC 7519)
+  conforms: true
+  evidence: >-
+    POST /authorize returns `apiToken` as a JWT with an `expires` epoch-millis field; every other
+    operation authenticates with `Authorization: Bearer <apiToken>`. Token lifetime 60 minutes.
+- id: rfc9457
+  name: Problem Details for HTTP APIs
+  conforms: false
+  evidence: >-
+    No application/problem+json media type and no type/title/detail/instance members anywhere in
+    the 21 specs. Errors are a vendor `{message, status}` JSON object.
+- id: rfc8594
+  name: Sunset HTTP Header
+  conforms: false
+  evidence: No Sunset or Deprecation header is documented, and no operation is marked deprecated.
+- id: idempotency
+  name: Idempotency-Key (draft-ietf-httpapi-idempotency-key-header)
+  conforms: false
+  evidence: >-
+    No idempotency header on any of the 23 mutating operations. See
+    conventions/densify-conventions.yml (idempotency.coverage = none).
+- id: pagination
+  name: Cursor or offset pagination
+  conforms: false
+  evidence: >-
+    No limit/offset/page/cursor parameters and no next/prev links on any collection endpoint;
+    filtering by flat query pairs is offered instead.
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    A public documentation MCP server at https://docs.kubex.ai/mcp answered a live tools/list
+    with 3 tools (probed 2026-09-06, HTTP 200), and a per-tenant product MCP server is
+    documented at https://{company}-mcp.kubex.ai/ over streamable HTTP.
+- id: a2a
+  name: Agent2Agent Protocol
+  conforms: partial
+  version_declared: '0.3'
+  evidence: >-
+    https://docs.kubex.ai/.well-known/agent-card.json returns a valid AgentCard declaring
+    protocolVersion 0.3 with an object `capabilities` and an array `skills`. Graded
+    near-conformant against A2A 1.0.0 in a2a/densify-a2a.yml.
+- id: agent-skills
+  name: Agent Skills
+  conforms: true
+  evidence: >-
+    A provider-authored skill is served at
+    https://docs.kubex.ai/.well-known/agent-skills/kubex/skill.md and referenced from the agent
+    card's skills[0].url.
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: >-
+    Served on four hosts — docs.kubex.ai (205 lines, per-operation entries), kubex.ai,
+    www.densify.com and api.densify.com (Yoast-generated site indexes).
+- id: soc2
+  name: SOC 2
+  conforms: true
+  evidence: >-
+    "SOC 2 compliant" — https://kubex.ai/kubex-pricing.md; also asserted on
+    https://kubex.ai/product/security/.
+- id: iso27001
+  name: ISO/IEC 27001
+  conforms: true
+  evidence: keyword match on https://kubex.ai/product/security/ (see security/densify-trust-center.yml)
+- id: focus
+  name: FinOps FOCUS
+  conforms: unknown
+  evidence: >-
+    Kubex states membership of the FinOps Foundation (https://kubex.ai/kubex-pricing.md) but
+    publishes no FOCUS-conformant billing export or FOCUS column mapping. Membership is not
+    conformance; recorded as unknown rather than claimed.
+domain_standards:
+  market: cloud cost / Kubernetes resource optimization (FinOps)
+  candidate_standard: FOCUS 1.3 (FinOps Open Cost and Usage Specification)
+  declared_in_contract: false
+  evidence: >-
+    No FOCUS column names, no billing/cost-export endpoint and no FOCUS schema reference appear
+    in any of the 21 specs. Kubex reads cloud billing data as an input and emits optimization
+    recommendations, not a cost dataset, so there is no FOCUS surface to declare. The one
+    domain-shaped convention the contract DOES declare is the `application/terraform-map`
+    representation on the three cloud recommendation endpoints — a Terraform-native output for
+    infrastructure-as-code consumers — but that is a vendor media type, not an industry standard.
+  reward: none
+  note: >-
+    Reward-only check. Recorded as absent rather than invented; nothing in this market has a
+    contract-level standard that Kubex is failing to implement.
+memberships:
+- FinOps Foundation
+- Cloud Native Computing Foundation (CNCF)
+- Linux Foundation
+memberships_source: https://kubex.ai/kubex-pricing.md

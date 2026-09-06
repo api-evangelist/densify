@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Kubex API – AWS Delete Connection
+  version: "1.0"
+servers:
+  - url: https://{host}/api/v2
+    variables:
+      host:
+        default: hostname.kubex.ai
+
+paths:
+  /analysis/cloud/aws/{analysisId}:
+    delete:
+      operationId: deleteAwsAnalysis
+      tags: [AWS Analysis]
+      summary: Delete AWS Cloud Connection and Analysis
+      description: |
+        Deletes the Cloud Connection and Analysis for the specified AWS account. 
+
+        This API only supports deletion for AWS accounts that have a valid analysisId. If the AWS
+        account was not analyzed (for example, unsupported resources or insufficient data), no
+        analysisId exists and this API cannot be used. In those cases, delete the cloud connection
+        manually and contact support@kubex.ai if assistance is required.
+      parameters:
+        - in: path
+          name: analysisId
+          required: true
+          description: The unique referenced ID of the AWS analysis.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Delete request acknowledged / completed
+        "400":
+          description: Invalid parameter or conflicting in-progress operation
+        "401":
+          description: Authentication failed
+        "404":
+          description: Analysis not found.
+        "405":
+          description: Method not allowed
+        "500":
+          description: Internal server error (e.g., data collection in progress).

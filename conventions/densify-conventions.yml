@@ -1,0 +1,201 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  openapi/ (21 first-party Kubex OpenAPI specs, 65 operations), cross-checked against
+  https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+provider: Densify
+providerId: densify
+authentication:
+  style: bearer JWT obtained from POST /authorize
+  lifetime: 60 minutes
+  unauthenticated: GET /api/ping only
+  see: authentication/densify-authentication.yml
+base_url:
+  form: https://{host}/api/v2
+  host_variable: the customer's own Kubex instance hostname (e.g. corp.kubex.ai or corp.densify.com)
+  exception: the health endpoint is served one level up at https://{host}/api/ping
+  note: >-
+    Every published spec templates the host. There is no shared multi-tenant API hostname —
+    api.densify.com resolves to the marketing WordPress edge, not to an API.
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  evidence: >-
+    No Idempotency-Key (or equivalent) header appears in any of the 21 specs or anywhere in the
+    API documentation, and no operation declares a client-supplied request identifier. There
+    are 23 mutating operations (POST/PUT/DELETE) and none of them offers replay protection.
+  partial_natural_idempotence: >-
+    Some writes are naturally idempotent by shape rather than by mechanism: PUT replace
+    operations (replaceSubscription, replaceSubscriptionProperty, replaceSubscriptionTag,
+    replaceSuppression and their bulk siblings) are full replacements, and analyzeAws /
+    analyzeAzure / analyzeGcp re-run analysis rather than creating a duplicate when the same
+    account/subscription/project is submitted again. That is not a replay guarantee — a
+    duplicated analyzeAws with a different webHook silently rebinds the webhook.
+reversibility:
+  grade: documented
+  summary: >-
+    Reversal paths exist for every durable object the API creates, but no time window is stated
+    for any of them, so this grades `documented` rather than `verified`.
+  write_surfaces:
+  - operation: analyzeAws
+    creates: AWS Cloud Connection + Analysis
+    reversal: deleteAwsAnalysis
+    reversal_path: DELETE /analysis/cloud/aws/{analysisId}
+    window: not stated
+    docs: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_AWS_Delete/deleteAwsAnalysis
+    note: Deletes the Cloud Connection AND the Analysis. No restore or undelete operation exists.
+  - operation: analyzeAzure
+    creates: Azure Cloud Connection + Analysis
+    reversal: deleteAzureAnalysisAudit
+    reversal_path: DELETE /analysis/cloud/azure/{analysisId}
+    window: not stated
+  - operation: analyzeGcp
+    creates: GCP Cloud Connection + Analysis
+    reversal: deleteGcpAnalysisAudit
+    reversal_path: DELETE /analysis/cloud/gcp/{analysisId}
+    window: not stated
+  - operation: addAnalysisWebhook
+    creates: analysis webhook binding
+    reversal: deleteAnalysisWebhook
+    reversal_path: DELETE /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+    window: not stated
+    note: addAnalysisWebhook is rejected when a webhook already exists; updateAnalysisWebhook replaces it.
+  - operation: createSubscriptions
+    creates: subscriptions (bulk, all-or-nothing)
+    reversal: deleteSubscriptions / deleteSubscription
+    window: not stated
+  - operation: addSubscriptionProperties
+    creates: catalog properties
+    reversal: deleteSubscriptionProperties / deleteSubscriptionProperty
+    window: not stated
+    guard: properties referenced by a subscription cannot be deleted (returns propertyRef + message + status)
+  - operation: addSubscriptionTags
+    creates: catalog tags
+    reversal: deleteSubscriptionTags / deleteSubscriptionTag
+    window: not stated
+    guard: tags referenced by subscriptions cannot be deleted
+  - operation: createSuppressions
+    creates: suppression entries
+    reversal: deleteSuppressions / deleteSuppression
+    window: not stated
+    guard: suppressions referenced by subscriptions cannot be deleted
+  - operation: modifySystemAttributes
+    mutates: system attributes
+    reversal: deleteSystemAttributes
+    reversal_path: DELETE /systems/{id}/attributes
+    window: not stated
+    note: >-
+      Delete removes the attribute rather than restoring its prior value — this is a reversal of
+      the ADD case only. There is no rollback for an overwrite.
+  irreversible: >-
+    No operation in the API applies a change to a customer's live infrastructure, so nothing
+    here can spend money directly. Infrastructure changes are applied by the in-cluster
+    Automation Engine under its own policy guardrails, not through this REST surface.
+dry_run:
+  available: false
+  note: >-
+    No preview/dry-run/validate-only mode is exposed. The closest analogue is that
+    recommendations are read-only by construction: GET results endpoints return what WOULD be
+    changed, and applying it is a separate, out-of-band action.
+pagination:
+  style: none
+  evidence: >-
+    No limit / offset / page / cursor / page_size parameter appears on any collection endpoint,
+    and no response envelope carries next/prev links or a total. Collections
+    (listKubernetesClusters, listSystems, listAwsAnalyses, getAwsRecommendations,
+    listSubscriptions …) return the full array.
+  exception:
+    operation: getSubscriptionResults
+    parameter: limit
+    note: >-
+      `limit` controls the maximum number of results returned for a subscription, but there is
+      no matching offset or cursor, so it truncates rather than paginates.
+  filtering: >-
+    Filtering is done with flat query pairs instead — e.g. recommendationType=Upsize, region,
+    serviceType, entityId, accountIdRef, dataQuality, currentType, recommendedType. This is the
+    documented substitute for paging a large recommendation set.
+field_expansion:
+  style: boolean flags on the operation, not a generic expand/fields grammar
+  parameters:
+  - name: details
+    operation: getKubernetesClusterContainersDetailed
+    effect: >-
+      Adds predictedUptime, configLastChangedOn, nodeGroup, oomKills_last7days, dateFirstAudited
+      and dateLastAudited to each container row.
+  - name: includeAttributes
+    operations: [getAwsRecommendations, listAzureRecommendations, listGcpRecommendations]
+    effect: returns the `attributes` block on each recommendation
+  sparse_fields: not supported
+  note: Fields with no value may be omitted from the response entirely — absence is not null.
+content_negotiation:
+  header: Accept
+  representations:
+  - media_type: application/json
+    note: default; array of recommendation objects
+  - media_type: application/terraform-map
+    note: >-
+      Terraform-style map keyed by each system's provisioningId, for direct consumption by the
+      optimization-as-code Terraform module. Offered by getAwsRecommendations,
+      listAzureRecommendations and listGcpRecommendations.
+  - media_type: application/octet-stream
+    note: downloadAnalysisReport returns the Impact Analysis and Recommendation Report as a PDF
+  significance: >-
+    Content negotiation, not a separate endpoint, is how Kubex serves infrastructure-as-code
+    consumers. An agent that wants Terraform output changes the Accept header, not the URL.
+request_id:
+  header: null
+  note: No request/correlation identifier is documented on requests or responses.
+versioning:
+  style: path
+  current: v2
+  see: lifecycle/densify-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  shape: '{ message: string, status: integer }'
+  rfc9457: false
+  bulk_shape: >-
+    Bulk deletes return an array of per-entry results keyed by propertyRef / tagRef /
+    suppressionRef / subscriptionRef.
+  see: errors/densify-problem-types.yml
+bulk_semantics:
+  all_or_nothing:
+  - createSubscriptions
+  - addSubscriptionProperties
+  - replaceSubscriptionProperties
+  - addSubscriptionTags
+  - replaceSubscriptionTags
+  - createSuppressions
+  - replaceSuppressions
+  independent_per_entry:
+  - deleteSubscriptions
+  - deleteSubscriptionProperties
+  - deleteSubscriptionTags
+  - deleteSuppressions
+  note: >-
+    This split is load-bearing for an agent: a failed bulk CREATE rolls the whole batch back,
+    while a failed bulk DELETE leaves the successful deletions applied and returns a per-entry
+    result array. Retrying a failed bulk delete verbatim is safe; retrying a failed bulk create
+    verbatim is also safe (nothing was written) — but the two failure reports look different.
+rate_limit_signaling:
+  headers: none documented
+  status_on_exhaustion: 429
+  scope: authorization failures only
+  note: >-
+    The only 429 in the entire contract set is on POST /authorize, described as
+    "rate limiting / progressive delay". No X-RateLimit-* or RateLimit-* headers are documented
+    anywhere. See rate-limits/densify-rate-limits.yml.
+ownership_model:
+  concepts: [global, private, owner, admin]
+  note: >-
+    Subscriptions, properties, tags and suppressions each carry an `owner`. Non-admins may only
+    create and modify private (self-owned) entries; admins may create global entries
+    (owner: "") and may promote a private entry to global by setting owner to the empty string.
+    Any agent acting on this API must know whether its credential is an admin before writing.
+cross_links:
+  errors: errors/densify-problem-types.yml
+  lifecycle: lifecycle/densify-lifecycle.yml
+  authentication: authentication/densify-authentication.yml
+  rate_limits: rate-limits/densify-rate-limits.yml
+  data_model: data-model/densify-data-model.yml

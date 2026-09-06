@@ -1,0 +1,44 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Kubex Ping API
+  version: 1.0.0
+extends: densify-ping-openapi.yaml
+x-provenance:
+  generated: '2026-09-06'
+  method: generated
+  source: openapi/densify-ping-openapi.yaml
+  note: Captures API Evangelist annotations only. The harvested contract under openapi/ is never mutated.
+x-source-openapi-version: 3.0.3
+actions:
+- target: $.info
+  description: Record API Evangelist provenance for this harvested contract.
+  update:
+    x-apis-io:
+      provider: densify
+      harvested: '2026-09-06'
+      source: https://docs.kubex.ai/openapi/ping.yaml
+      note: Saved verbatim from the Kubex documentation host. Densify trades as Kubex.
+- target: $.servers[0]
+  description: Document what the templated {host} variable actually is.
+  update:
+    x-host-note: 'The customer tenant hostname, e.g. corp.kubex.ai or corp.densify.com. There is no shared multi-tenant
+      API host: api.densify.com serves the marketing site.'
+- target: $
+  description: Cross-link the derived artifacts built from this contract.
+  update:
+    x-artifacts:
+      authentication: authentication/densify-authentication.yml
+      conventions: conventions/densify-conventions.yml
+      errors: errors/densify-problem-types.yml
+      lifecycle: lifecycle/densify-lifecycle.yml
+      data-model: data-model/densify-data-model.yml
+      rate-limits: rate-limits/densify-rate-limits.yml
+- target: $
+  description: Record the runtime semantics the contract does not express.
+  update:
+    x-runtime-semantics:
+      idempotency: none — no Idempotency-Key header on any of the 23 mutating operations
+      pagination: none — no limit/offset/page/cursor on any collection endpoint
+      rate-limit-headers: none published; the only 429 is on POST /authorize (progressive delay)
+      error-format: vendor {message, status} JSON, not RFC 9457
+      token-lifetime-seconds: 3600

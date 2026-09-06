@@ -1,0 +1,127 @@
+generated: '2026-09-06'
+method: derived
+source: openapi/ (21 first-party Kubex specs — 67 component schemas across 65 operations)
+provider: Densify
+providerId: densify
+note: >-
+  Derived from the $ref graph and the id-reference fields in the published specs. Kubex has no
+  single global object reference page, and the specs are split one-per-doc-section rather than
+  bundled, so entities recur across files under slightly different names — Recommendation (AWS),
+  AzureRecommendation and GcpRecommendation are the same concept with per-cloud field sets.
+identifiers:
+  style: opaque string references, no type prefix
+  fields:
+  - {name: analysisId, refers_to: Analysis, note: returned by list*Analyses; required by every result, delete and webhook call}
+  - {name: subscriptionRef, refers_to: Subscription}
+  - {name: propertyRef, refers_to: SubscriptionProperty}
+  - {name: tagRef, refers_to: SubscriptionTag}
+  - {name: suppressionRef, refers_to: Suppression}
+  - {name: clusterName, refers_to: Cluster, note: natural key, not an opaque id}
+  - {name: id, refers_to: System, note: 'Kubex unique system ID; also appears as entityId on recommendations'}
+  - {name: provisioningId, refers_to: System, note: the key of each entry in an application/terraform-map response}
+  - {name: accountIdRef, refers_to: CloudAccount}
+entities:
+- name: Analysis
+  schemas: [AnalysisItem, AwsAnalysisSummary, GcpAnalysisItem, AnalyzeResponse, AwsAnalyzeResponse]
+  key: analysisId
+  created_by: [analyzeAws, analyzeAzure, analyzeGcp, historicalAuditGcp]
+  description: >-
+    A per-account/subscription/project onboarding of a cloud environment. Creating one starts
+    data collection and schedules nightly re-analysis.
+  relationships:
+  - {type: has_many, target: Recommendation, via: analysisId}
+  - {type: has_one, target: Webhook, via: analysisId}
+  - {type: belongs_to, target: CloudAccount, via: accountIdRef}
+- name: CloudAccount
+  description: The AWS account, Azure subscription or GCP project an Analysis is bound to.
+  keys: [accountId, subscriptionId, projectId]
+  relationships:
+  - {type: has_many, target: Analysis, via: accountIdRef}
+- name: Recommendation
+  schemas: [Recommendation, AzureRecommendation, GcpRecommendation, TerraformRecommendation, TerraformMapRecommendation]
+  key: entityId
+  field_counts: {aws: 35, azure: 39, gcp: 30, terraform_map: 17}
+  description: >-
+    One optimization recommendation for a cloud system (EC2/RDS/ASG, Azure VM/VMSS, GCE). The
+    same object is served as JSON or, under Accept: application/terraform-map, as a map keyed by
+    provisioningId.
+  relationships:
+  - {type: belongs_to, target: Analysis, via: analysisId}
+  - {type: belongs_to, target: System, via: entityId}
+  - {type: has_many, target: AuditInfo, via: embedded}
+  - {type: has_many, target: DataQualityItem, via: embedded}
+- name: System
+  schemas: [System, AttributeTriple, ControlEnvironmentRef, InfrastructureGroupRef, CpuBenchmark, IoBenchmark]
+  key: id
+  description: >-
+    A managed cloud system in the Kubex inventory, carrying attributes, control environment,
+    infrastructure group and CPU/IO benchmarks.
+  relationships:
+  - {type: has_many, target: AttributeTriple, via: attributes}
+  - {type: has_one, target: ControlEnvironmentRef, via: controlEnvironment}
+  - {type: has_one, target: InfrastructureGroupRef, via: infrastructureGroup}
+  - {type: has_one, target: AnalysisReport, via: 'GET /systems/{id}/analysis-report (PDF)'}
+- name: Cluster
+  schemas: [ClusterSummary, ClusterDetails]
+  key: clusterName
+  description: A Kubernetes cluster Kubex is collecting from.
+  relationships:
+  - {type: has_many, target: Namespace, via: embedded}
+  - {type: has_many, target: ContainerRecommendation, via: clusterName}
+- name: Namespace
+  schemas: [Namespace]
+  relationships:
+  - {type: belongs_to, target: Cluster}
+  - {type: has_many, target: Pod, via: embedded}
+- name: Pod
+  schemas: [Pod]
+  relationships:
+  - {type: belongs_to, target: Namespace}
+  - {type: has_many, target: Container, via: embedded}
+- name: ContainerRecommendation
+  schemas: [ContainerRecommendation, ContainerRecommendationDetailed]
+  field_counts: {base: 25, detailed: 'base + predictedUptime, configLastChangedOn, nodeGroup, oomKills_last7days, dateFirstAudited, dateLastAudited'}
+  description: Recommended CPU/memory requests and limits for a container manifest.
+  relationships:
+  - {type: belongs_to, target: Cluster, via: clusterName}
+- name: Subscription
+  schemas: [Subscription, SubscriptionUpsert, SubscriptionHeader, SubscriptionResults, SubscriptionResultItem, SubscriptionStatus]
+  key: subscriptionRef
+  scope: {platformType: [cloud, containers], ownership: [global, private]}
+  description: A saved, customer-shaped view of analysis results, optionally scheduled and webhooked.
+  relationships:
+  - {type: has_many, target: SubscriptionProperty, via: propertyRef}
+  - {type: has_many, target: SubscriptionTag, via: tagRef}
+  - {type: has_many, target: Suppression, via: suppressionRef}
+  - {type: has_one, target: Schedule, via: embedded}
+  - {type: has_one, target: WebHook, via: embedded}
+  - {type: has_one, target: SubscriptionStatus, via: subscriptionRef}
+- name: SubscriptionProperty
+  key: propertyRef
+  scope: per-platform catalog, global or owner-private
+  constraint: cannot be deleted while referenced by a Subscription
+  relationships:
+  - {type: belongs_to, target: PlatformCatalog, via: platformType}
+- name: SubscriptionTag
+  key: tagRef
+  constraint: cannot be deleted while referenced by a Subscription
+- name: Suppression
+  key: suppressionRef
+  variants: [attribute suppression (attributeName + optional key/technology), property suppression (propertyName)]
+  constraint: cannot be deleted while referenced by a Subscription
+- name: Webhook
+  schemas: [WebHook, WebhookRequest, WebhookDefinition]
+  key: composite (platformType, platformSubType, analysisId)
+  cardinality: at most one per analysis
+  relationships:
+  - {type: belongs_to, target: Analysis, via: analysisId}
+  see: asyncapi/densify-webhooks.yml
+- name: ApiToken
+  schemas: [AuthorizeRequest, AuthorizeSuccess, AuthorizeError]
+  lifetime_seconds: 3600
+  see: authentication/densify-authentication.yml
+counts:
+  schemas: 67
+  entities: 14
+  operations: 65
+render: null

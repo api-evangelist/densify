@@ -1,0 +1,61 @@
+generated: '2026-09-06'
+method: probed
+source: https://docs.kubex.ai/.well-known/agent-card.json
+provider: Densify
+providerId: densify
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: docs.kubex.ai
+  note: >-
+    Served from the Kubex documentation host. Densify now trades as Kubex — www.densify.com
+    301s to kubex.ai and docs.densify.com 301s to docs.kubex.ai — so docs.kubex.ai is a host
+    this company controls. The legacy /.well-known/agent.json path returns 404 on every host.
+x-evidence:
+  fetched: '2026-09-06'
+  url: https://docs.kubex.ai/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  bytes: 917
+card:
+  name: Kubex Docs
+  url: https://docs.kubex.ai/
+  version: 1.0.0
+  protocolVersion: '0.3'
+  preferredTransport: HTTP+JSON
+  provider:
+    organization: Kubex Docs
+    url: https://docs.kubex.ai/
+  documentationUrl: https://docs.kubex.ai/
+  skills:
+  - id: kubex
+    name: Kubex
+    url: https://docs.kubex.ai/.well-known/agent-skills/kubex/skill.md
+grade: near-conformant
+grade_basis:
+  spec: A2A 1.0.0
+  hard_checks:
+    capabilities_is_object: true
+    protocolVersion_present: true
+    skills_is_array: true
+  optional_checks:
+    preferredTransport: true
+    defaultInputModes: true
+    defaultOutputModes: true
+deviations:
+- field: protocolVersion
+  observed: '0.3'
+  note: >-
+    Declares A2A protocol 0.3, not 1.0.0 — the card is valid for the version it claims but
+    predates the 1.0.0 release, so it is graded near-conformant rather than conformant.
+- field: skills[0].tags
+  observed: []
+  note: skills[0].tags is an empty array, so the skill carries no discovery tags.
+- field: scope
+  observed: documentation agent
+  note: >-
+    The card describes the DOCUMENTATION agent (name "Kubex Docs"), not the Kubex product API
+    or the tenant MCP server. Its declared skill points at a markdown Agent Skill file rather
+    than at an executable A2A endpoint, and supportedInterfaces[0].url is the docs site root.
+files:
+  card: densify-agent-card.json

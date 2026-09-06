@@ -1,13 +1,91 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/densify-openapi.yml
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Authorize/authorize-user
+  and https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/MCP,
+  cross-checked against openapi/densify-authorize-openapi.yaml
+docs: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Authorize
+provider: Densify
+providerId: densify
 summary:
   types:
   - http
+  - oauth2
+  models: 2
+  note: >-
+    The REST API uses a username/password exchange for a short-lived JWT bearer token. The
+    MCP surface uses a different model entirely — OAuth 2.1 with dynamic client registration —
+    so an agent integrating both needs two credential paths.
+models:
+- id: rest-jwt
+  surface: REST API (openapi/)
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  token_endpoint: POST /authorize
+  token_endpoint_operationId: authorize-user
+  credential: >-
+    JSON body with `userName` and `pwd` for an ACTIVE Kubex user. Only tokens issued to
+    API-ENABLED users can be used to make authorized API calls — an active but non-API-enabled
+    user receives a token that every downstream call rejects.
+  token_lifetime_seconds: 3600
+  token_lifetime_note: >-
+    60 minutes. Raised from 5 minutes in the 3.0.0 release (2025-04-23) so longer-running
+    pipeline operations no longer need to re-authorize mid-run.
+  response_fields:
+  - apiToken
+  - expires
+  - status
+  header: 'Authorization: Bearer <apiToken>'
+  unauthenticated_operations:
+  - ping
+  failure_codes:
+  - status: 400
+    meaning: null/invalid payload; empty or invalid userName/pwd
+  - status: 401
+    meaning: user does not exist, incorrect password, or account locked
+  - status: 403
+    meaning: trial or subscription expired
+  - status: 429
+    meaning: too many requests — progressive delay applied to repeated authorization failures
+  sources:
+  - openapi/densify-authorize-openapi.yaml
+- id: mcp-oauth
+  surface: Kubex MCP server (mcp/)
+  type: oauth2
+  profile: OAuth 2.1
+  dynamic_client_registration: true
+  endpoint_template: https://{company}-mcp.kubex.ai/
+  session: >-
+    Authorization is temporary and must be refreshed daily; clients that do not re-prompt on
+    expiry surface connection errors or incomplete responses.
+  scopes:
+    published: false
+    note: >-
+      No scope or permission reference is published. No /.well-known/oauth-authorization-server
+      or /.well-known/oauth-protected-resource document is served on any Densify or Kubex host
+      (all probed 404 on 2026-09-06), so the authorization-server metadata cannot be read
+      anonymously and no scopes/ artifact is emitted.
+  sources:
+  - https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/MCP
+sso:
+  available: true
+  tier: Enterprise K8s and GPU Optimization plan only
+  source: https://kubex.ai/kubex-pricing.md
+  note: >-
+    Single sign-on with the customer's identity provider is an Enterprise-plan feature. The
+    docs also cover external user authentication against Azure AD, Google OpenID and Okta for
+    console login (not for the API).
 schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
   bearerFormat: JWT
+  description: |-
+    Apply to **other** API endpoints after obtaining a token from `/authorize`.
+    Example: `Authorization: Bearer <apiToken>`
   sources:
-  - openapi/densify-openapi.yml
+  - openapi/densify-authorize-openapi.yaml
+  - openapi/densify-kubernetes-kubernetes-clusters-openapi.yaml
+  - openapi/densify-kubernetes-kubernetes-clusters-results-openapi.yaml
+  - openapi/densify-systems-openapi.yaml

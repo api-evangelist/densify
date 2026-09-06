@@ -1,0 +1,31 @@
+generated: '2026-09-06'
+provider: Densify
+providerId: densify
+note: >-
+  densify-kubex.md is the provider's OWN Agent Skill, fetched verbatim from
+  https://docs.kubex.ai/.well-known/agent-skills/kubex/skill.md (HTTP 200, 2026-09-06) — it is
+  referenced from the Kubex A2A agent card's skills[0].url and has not been edited. The other two
+  are API Evangelist skills generated from the 21 first-party OpenAPI specs; every operationId
+  they name was grepped out of those specs.
+skills:
+- file: densify-kubex.md
+  name: Kubex
+  method: searched
+  source: https://docs.kubex.ai/.well-known/agent-skills/kubex/skill.md
+  authored_by: provider
+  verbatim: true
+  scope: >-
+    Whole-product skill — Helm install commands, automation-engine values, CRD types, the REST
+    endpoint table, and diagnostic kubectl commands.
+- file: densify-onboard-cloud-account.md
+  name: densify-onboard-cloud-account
+  method: generated
+  source: openapi/densify-public-cloud-*.yaml
+  authored_by: api-evangelist
+  operations: 14
+- file: densify-rightsize-containers.md
+  name: densify-rightsize-containers
+  method: generated
+  source: openapi/densify-kubernetes-*.yaml
+  authored_by: api-evangelist
+  operations: 6

@@ -1,13 +1,13 @@
 aid: densify
 name: Densify
-description: >-
-  Densify (now Kubex) provides a machine learning powered cloud and container
-  optimization platform that continuously right-sizes resources to reduce cost
-  and improve performance across Kubernetes, public cloud, and virtualized
-  environments. The Densify REST API exposes optimization analysis,
-  recommendations, account and cluster inventory, and systems data so that
-  optimization can be embedded into CI/CD pipelines, infrastructure as code
-  templates, and FinOps workflows.
+description: Densify — now trading as Kubex — provides a machine-learning driven cloud, GPU and container
+  optimization platform that continuously right-sizes resources to cut cost and protect performance across
+  Kubernetes, public cloud and GPU/AI infrastructure. The Kubex REST API publishes 65 operations across
+  21 first-party OpenAPI documents covering cloud account onboarding and analysis, AWS/Azure/GCP right-sizing
+  recommendations, Kubernetes cluster and container recommendations, the system inventory, analysis webhooks
+  and a customizable Subscriptions surface, so optimization can be embedded into CI/CD pipelines, Terraform
+  and other infrastructure-as-code, and FinOps workflows. Kubex also ships a per-tenant Model Context
+  Protocol server and publishes an A2A agent card and an Agent Skill from its documentation host.
 type: Index
 deliveryModel:
   model: saas
@@ -24,7 +24,7 @@ deliveryModel:
 accessModel:
   pricing: freemium
   onboarding: self-serve
-  trial: false
+  trial: true
   try_now: true
   public: false
   label: Freemium · Self-serve signup
@@ -33,47 +33,55 @@ accessModel:
   - plans
   - authentication
   - security
-  - {url: 'https://www.densify.com', status: 301, note: 'declared website redirects to https://kubex.ai/ — a different registrable domain (densify.com -> kubex.ai), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
-  generated: '2026-09-03'
+  - url: https://www.densify.com
+    status: 301
+    note: 'densify.com 301s to kubex.ai across every path — CONFIRMED rename, not an acquisition: www.densify.com/llms.txt
+      is titled "Kubex", docs.densify.com 301s to docs.kubex.ai, the GitHub org is still densify-dev,
+      and the published specs are titled "Kubex API" (re-probed 2026-09-06, supersedes the 2026-09-03
+      roadmap#169 note)'
+  - url: https://kubex.ai/kubex-pricing.md
+    status: 200
+    note: 'machine-readable pricing: $1/vCPU/month plus a custom Enterprise plan, free for the first 60
+      days'
+  generated: '2026-09-06'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/densify.png
 tags:
-  - Cloud Cost
-  - Container Optimization
-  - FinOps
-  - Kubernetes
-  - Machine-Learning
-  - Recommendations
-  - Rightsizing
+- Cloud Cost
+- Container Optimization
+- FinOps
+- Kubernetes
+- Machine-Learning
+- Recommendations
+- Rightsizing
 tags_raw:
-  - Cloud Cost
-  - Container Optimization
-  - FinOps
-  - Kubernetes
-  - Machine Learning
-  - Recommendations
-  - Right-Sizing
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/densify/refs/heads/main/apis.yml
+- Cloud Cost
+- Container Optimization
+- FinOps
+- Kubernetes
+- Machine Learning
+- Recommendations
+- Right-Sizing
+url: https://raw.githubusercontent.com/api-evangelist/densify/refs/heads/main/apis.yml
 created: '2026-03-16'
-modified: '2026-04-28'
+modified: '2026-09-06'
 specificationVersion: '0.23'
 kind: company
 position: Producing
 access: 3rd-Party
 apis:
 - aid: densify:public-cloud-api
-  name: Densify Public Cloud API
-  description: >-
-    The Densify Public Cloud REST API exposes optimization analysis, recommendations, account and instance
-    inventory, and systems data for AWS, Azure, and Google Cloud environments. The API uses JSON over
-    HTTPS, follows a resource-oriented design under the /api/v2/ path, and authenticates with JWT bearer
-    tokens obtained from the /authorize endpoint. Common use cases include integrating right-sizing recommendations
-    into Terraform, CloudFormation, and CI/CD pipelines.
+  name: Kubex (Densify) Public Cloud API
+  description: The Kubex (formerly Densify) Public Cloud REST API onboards AWS accounts, Azure subscriptions
+    and GCP projects for machine-learning optimization analysis and returns right-sizing recommendations
+    for EC2/RDS/ASG, Azure VM and VM Scale Set, and GCE resources. It also covers the system inventory,
+    catalog map, analysis webhooks and the customizable Subscriptions surface (properties, tags, suppressions,
+    results and status). JSON over HTTPS under /api/v2, authenticated with a 60-minute JWT bearer token
+    obtained from POST /authorize. Recommendation endpoints content-negotiate to application/terraform-map
+    for direct consumption by infrastructure-as-code.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: >-
-    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
-  baseURL: https://api.densify.com/api/v2
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
   tags:
   - Cloud
   - FinOps
@@ -88,27 +96,105 @@ apis:
   - Right-Sizing
   properties:
   - type: Documentation
-    url: >-
-      https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
-  - type: Reference
-    url: >-
-      https://www.densify.com/docs/WebHelp_Densify_Cloud/Content/Resources/PDFs/Densify-API-Reference-Guide.pdf
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
   - type: Postman
-    url: https://www.densify.com/dev
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: OpenAPI
+    url: openapi/densify-authorize-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-authorize-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-ping-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-ping-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-aws-analyze-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-aws-analyze-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-aws-delete-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-aws-delete-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-aws-results-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-aws-results-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-azure-analyze-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-azure-analyze-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-azure-delete-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-azure-delete-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-azure-results-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-azure-results-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-gcp-analyze-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-gcp-analyze-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-gcp-delete-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-gcp-delete-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-gcp-results-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-gcp-results-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-analysis-webhook-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-analysis-webhook-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-subscriptions-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-subscriptions-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-subscriptions-properties-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-subscriptions-properties-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-subscriptions-results-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-subscriptions-results-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-subscriptions-status-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-subscriptions-status-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-subscriptions-suppressions-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-subscriptions-suppressions-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-public-cloud-subscriptions-tags-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-public-cloud-subscriptions-tags-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-systems-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-systems-overlay.yaml
   contact:
-  - FN: Densify Support
-    email: support@densify.com
-    url: https://www.densify.com/contact
+  - FN: Kubex Support
+    email: Support@Kubex.ai
+    url: https://kubex.ai/contact/
 - aid: densify:container-api
-  name: Densify Container Optimization API
-  description: >-
-    The Densify Container Optimization REST API provides programmatic access to container right-sizing
-    recommendations across Amazon EKS, AKS, GKE, OpenShift, and self-managed Kubernetes footprints. It
-    exposes endpoints for clusters, namespaces, controllers, container groups, and recommended requests/limits
-    for CPU and memory based on machine learned utilization patterns.
+  name: Kubex (Densify) Container Optimization API
+  description: 'The Kubex (formerly Densify) Container Optimization REST API returns machine-learned right-sizing
+    recommendations for Kubernetes container manifests across EKS, AKS, GKE, OKE, OpenShift, NKP, RKE2,
+    K3S and self-managed clusters. It lists the clusters Kubex is collecting from, walks the namespace/pod/container
+    tree for one cluster, and returns recommended CPU and memory requests and limits — with a detailed
+    representation that adds predicted uptime, OOM-kill counts over the last seven days, node group and
+    audit history. Read-only with respect to the cluster: changes are applied by the in-cluster Kubex
+    Automation Engine under its own policy CRDs.'
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.densify.com/docs-api/WebHelp_Densify_API/Content/Densify_API.htm
-  baseURL: https://api.densify.com/api/v2
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  baseURL: https://{host}/api/v2
   tags:
   - Containers
   - Kubernetes
@@ -123,113 +209,113 @@ apis:
   - Right-Sizing
   properties:
   - type: Documentation
-    url: https://www.densify.com/docs-api/WebHelp_Densify_API/Content/Densify_API.htm
-  - type: Developer Resources
-    url: https://www.densify.com/dev
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+  - type: OpenAPI
+    url: openapi/densify-kubernetes-kubernetes-clusters-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-kubernetes-kubernetes-clusters-overlay.yaml
+  - type: OpenAPI
+    url: openapi/densify-kubernetes-kubernetes-clusters-results-openapi.yaml
+  - type: Overlay
+    url: overlays/densify-kubernetes-kubernetes-clusters-results-overlay.yaml
   contact:
-  - FN: Densify Support
-    email: support@densify.com
-    url: https://www.densify.com/contact
-- aid: densify:densify-authentication-api
-  name: Densify Authentication API
-  description: The Authentication API from Densify — 1 operation(s) for authentication.
-  humanURL: >-
-    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
-  baseURL: https://api.densify.com/api/v2
-  tags:
-  - Authentication
-  properties:
-  - type: OpenAPI
-    url: openapi/densify-authentication-api-openapi.yml
-- aid: densify:densify-cloud-analysis-api
-  name: Densify Cloud Analysis API
-  description: The Cloud Analysis API from Densify — 3 operation(s) for cloud analysis.
-  humanURL: >-
-    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
-  baseURL: https://api.densify.com/api/v2
-  tags:
-  - Cloud Analysis
-  properties:
-  - type: OpenAPI
-    url: openapi/densify-cloud-analysis-api-openapi.yml
-- aid: densify:densify-kubernetes-api
-  name: Densify Kubernetes API
-  description: The Kubernetes API from Densify — 2 operation(s) for kubernetes.
-  humanURL: >-
-    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
-  baseURL: https://api.densify.com/api/v2
-  tags:
-  - Kubernetes
-  properties:
-  - type: OpenAPI
-    url: openapi/densify-kubernetes-api-openapi.yml
-- aid: densify:densify-recommendations-api
-  name: Densify Recommendations API
-  description: The Recommendations API from Densify — 3 operation(s) for recommendations.
-  humanURL: >-
-    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
-  baseURL: https://api.densify.com/api/v2
-  tags:
-  - Recommendations
-  properties:
-  - type: OpenAPI
-    url: openapi/densify-recommendations-api-openapi.yml
-- aid: densify:densify-system-api
-  name: Densify System API
-  description: The System API from Densify — 1 operation(s) for system.
-  humanURL: >-
-    https://www.densify.com/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.htm
-  baseURL: https://api.densify.com/api/v2
-  tags:
-  - System
-  properties:
-  - type: OpenAPI
-    url: openapi/densify-system-api-openapi.yml
+  - FN: Kubex Support
+    email: Support@Kubex.ai
+    url: https://kubex.ai/contact/
 common:
-  - type: AgenticAccess
-    url: agentic-access/densify-agentic-access.yml
-  - type: TrustCenter
-    url: security/densify-trust-center.yml
-  - type: DomainSecurity
-    url: security/densify-domain-security.yml
-  - type: Authentication
-    url: authentication/densify-authentication.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/densify
-  - type: Website
-    url: https://www.densify.com
-  - type: Portal
-    url: https://portal.densify.com/
-  - type: Documentation
-    url: https://docs.densify.com
-  - type: Developer Resources
-    url: https://www.densify.com/dev
-  - type: Documentation Landing
-    url: https://portal.densify.com/docs-landing/
-  - type: Resources
-    url: https://www.densify.com/resources
-  - type: Blog
-    url: https://www.densify.com/blog
-  - type: Pricing
-    url: https://www.densify.com/pricing
-  - type: Free Trial
-    url: https://www.densify.com/free-trial
-  - type: Support
-    url: https://www.densify.com/support
-  - type: GitHubOrganization
-    url: https://github.com/densify-dev
-  - type: TermsOfService
-    url: https://www.densify.com/legal
-  - type: PrivacyPolicy
-    url: https://www.densify.com/privacy-policy
-  - type: Contact
-    url: https://www.densify.com/contact
-  - type: JSONLD
-    url: json-ld/densify-context.jsonld
-  - type: Vocabulary
-    url: vocabulary/densify-vocabulary.yml
-  - type: LlmsText
-    url: https://api.densify.com/llms.txt
+- type: Website
+  url: https://kubex.ai/
+- type: DeveloperPortal
+  url: https://docs.kubex.ai/
+- type: Documentation
+  url: https://docs.kubex.ai/
+- type: APIReference
+  url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+- type: GettingStarted
+  url: https://docs.kubex.ai/docs-kubex/Content/Kubex/Automation_Engine_Getting_Started
+- type: Postman
+  url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+- type: Support
+  url: https://kubex.ai/contact/
+- type: Contact
+  url: https://kubex.ai/contact/
+- type: Blog
+  url: https://kubex.ai/blog/
+- type: Resources
+  url: https://kubex.ai/resources/
+- type: Pricing
+  url: https://kubex.ai/pricing/
+- type: Plans
+  url: plans/densify-plans-pricing.yml
+- type: SignUp
+  url: https://kubex.ai/product/trial/
+- type: TermsOfService
+  url: https://kubex.ai/legal/
+- type: PrivacyPolicy
+  url: https://kubex.ai/legal/privacy/
+- type: GitHubOrganization
+  url: https://github.com/densify-dev
+- type: LinkedIn
+  url: https://ca.linkedin.com/company/kubex-ai
+- type: StatusPage
+  url: https://kubex.statuspage.io
+- type: ChangeLog
+  url: changelog/densify-changelog.yml
+- type: Lifecycle
+  url: lifecycle/densify-lifecycle.yml
+- type: Authentication
+  url: authentication/densify-authentication.yml
+- type: Conventions
+  url: conventions/densify-conventions.yml
+- type: ErrorCatalog
+  url: errors/densify-problem-types.yml
+- type: DataModel
+  url: data-model/densify-data-model.yml
+- type: RateLimits
+  url: rate-limits/densify-rate-limits.yml
+- type: Webhooks
+  url: asyncapi/densify-webhooks.yml
+- type: Packages
+  url: packages/densify-packages.yml
+- type: SDKs
+  url: packages/densify-packages.yml
+- type: Protobuf
+  url: grpc/densify-kubexrecommendation.proto
+- type: MCPServer
+  url: mcp/densify-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/densify-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/densify-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: WellKnown
+  url: well-known/densify-well-known.yml
+- type: AgenticAccess
+  url: agentic-access/densify-agentic-access.yml
+- type: Conformance
+  url: conformance/densify-conformance.yml
+- type: Compliance
+  url: conformance/densify-conformance.yml
+- type: TrustCenter
+  url: security/densify-trust-center.yml
+- type: DomainSecurity
+  url: security/densify-domain-security.yml
+- type: LlmsText
+  url: https://docs.kubex.ai/llms.txt
+- type: LLMsTxt
+  url: llms/densify-docs-llms.txt
+- type: JSONLD
+  url: json-ld/densify-context.jsonld
+- type: Vocabulary
+  url: vocabulary/densify-vocabulary.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 87
+  pass: local-v3

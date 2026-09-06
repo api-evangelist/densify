@@ -17,6 +17,13 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "densify-authentication-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "densify-cloud-analysis-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "densify-kubernetes-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "densify-recommendations-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "densify-system-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

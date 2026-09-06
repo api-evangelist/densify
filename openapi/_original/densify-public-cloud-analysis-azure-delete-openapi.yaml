@@ -1,0 +1,44 @@
+openapi: 3.1.0
+info:
+  title: Kubex API – Azure Delete Connection
+  version: "1.0.0"
+servers:
+  - url: https://{host}/api/v2
+    variables:
+      host:
+        default: hostname.kubex.ai
+tags:
+  - name: Azure Analysis
+paths:
+  /analysis/cloud/azure/{analysisId}:
+    delete:
+      tags: [Azure Analysis]
+      operationId: deleteAzureAnalysisAudit
+      summary: Delete Azure Cloud Connection and Analysis
+      description: |
+        Deletes the Cloud Connection and Analysis for the specified Azure subscription. 
+
+        This API only supports deletion for Azure subscriptions that have a valid analysisId. If the Azure
+        subscription was not analyzed (for example, unsupported resources or insufficient data), no
+        analysisId exists and this API cannot be used. In those cases, delete the cloud connection
+        manually and contact support@kubex.ai if assistance is required.
+      parameters:
+        - name: analysisId
+          in: path
+          required: true
+          description: The unique referenced ID of the Azure analysis.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Delete accepted/completed; audit removed.
+        '400':
+          description: Invalid parameter or conflicting in-progress operation
+        '401':
+          description: Authentication failed.
+        '404':
+          description: Analysis not found.
+        '405':
+          description: Method not allowed.
+        '500':
+          description: Internal server error (e.g., data collection in progress).

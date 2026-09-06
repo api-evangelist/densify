@@ -1,0 +1,313 @@
+generated: '2026-09-06'
+method: derived
+source: openapi/ (21 first-party Kubex specs) + mcp/densify-mcp.yml + https://docs.kubex.ai/mcp tools/list
+provider: Densify
+providerId: densify
+note: 'Densify/Kubex runs two MCP servers and one REST surface. The DOCUMENTATION MCP server is public
+  and was introspected live: its three tools are documentation-retrieval tools with no backing REST operation,
+  so every one of them is mcp_only. The PRODUCT MCP server (https://{company}-mcp.kubex.ai/) is OAuth-gated
+  per tenant and could not be introspected, so its tool names and input schemas are unknown and are NOT
+  guessed here — the crosswalk records that gap rather than inventing rows for it.'
+surfaces:
+  openapi:
+    files: 21
+    operations: 65
+    location: openapi/
+    gated: false
+    note: Published at https://docs.kubex.ai/openapi/*.yaml; servers[] are templated on the tenant host.
+  graphql:
+    present: false
+  mcp:
+  - id: kubex-docs-mcp
+    url: https://docs.kubex.ai/mcp
+    gated: false
+    introspected: true
+    tools: 3
+  - id: kubex-product-mcp
+    url: https://{company}-mcp.kubex.ai/
+    gated: true
+    introspected: false
+    tools: null
+    note: OAuth 2.1 + dynamic client registration, per-tenant hostname; no anonymous endpoint exists to
+      introspect.
+crosswalk: []
+mcp_only:
+- tool: search_kubex_docs
+  server: kubex-docs-mcp
+  reason: documentation search over the Mintlify knowledge base; no public REST operation backs it
+- tool: query_docs_filesystem_kubex_docs
+  server: kubex-docs-mcp
+  reason: read-only virtual filesystem over docs pages and OpenAPI files; no public REST operation backs
+    it
+- tool: submit_feedback
+  server: kubex-docs-mcp
+  reason: documentation feedback submission; no public REST operation backs it
+rest_only:
+- operationId: authorize-user
+  method: POST
+  path: /authorize
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listKubernetesClusters
+  method: GET
+  path: /kubernetes/clusters
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getKubernetesClusterDetails
+  method: GET
+  path: /kubernetes/clusters/{clusterName}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getKubernetesClusterContainers
+  method: GET
+  path: /kubernetes/clusters/{clusterName}/containers
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getKubernetesClusterContainersDetailed
+  method: GET
+  path: /kubernetes/clusters/{clusterName}/containers?details=true
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: ping
+  method: GET
+  path: /ping
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: analyzeAws
+  method: POST
+  path: /analysis/cloud/aws/analyze
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listAwsAnalyses
+  method: GET
+  path: /analysis/cloud/aws
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteAwsAnalysis
+  method: DELETE
+  path: /analysis/cloud/aws/{analysisId}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getAwsRecommendations
+  method: GET
+  path: /analysis/cloud/aws/{analysisId}/results
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: analyzeAzure
+  method: POST
+  path: /analysis/azure/analyze
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listAzureAnalyses
+  method: GET
+  path: /analysis/cloud/azure
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getAzureAnalysisStatus
+  method: GET
+  path: /analysis/azure/{subscriptionId}/status
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteAzureAnalysisAudit
+  method: DELETE
+  path: /analysis/cloud/azure/{analysisId}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listAzureRecommendations
+  method: GET
+  path: /analysis/cloud/azure/{analysisId}/results
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: analyzeGcp
+  method: POST
+  path: /analysis/gcp/analyze
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: historicalAuditGcp
+  method: POST
+  path: /analysis/cloud/gcp/analyze
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listGcpAnalyses
+  method: GET
+  path: /analysis/cloud/gcp
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteGcpAnalysisAudit
+  method: DELETE
+  path: /analysis/cloud/gcp/{analysisId}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listGcpRecommendations
+  method: GET
+  path: /analysis/cloud/gcp/{analysisId}/results
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listAnalysisWebhooksByPlatform
+  method: GET
+  path: /webhook/analysis/{platformType}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getAnalysisWebhook
+  method: GET
+  path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: addAnalysisWebhook
+  method: POST
+  path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: updateAnalysisWebhook
+  method: PUT
+  path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteAnalysisWebhook
+  method: DELETE
+  path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listSubscriptionsDefaultPlatform
+  method: GET
+  path: /subscriptions
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listSubscriptions
+  method: GET
+  path: /subscriptions/{platformType}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: createSubscriptions
+  method: POST
+  path: /subscriptions/{platformType}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteSubscriptions
+  method: DELETE
+  path: /subscriptions/{platformType}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: replaceSubscription
+  method: PUT
+  path: /subscriptions/{platformType}/{subscriptionRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteSubscription
+  method: DELETE
+  path: /subscriptions/{platformType}/{subscriptionRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listSubscriptionProperties
+  method: GET
+  path: /subscriptions/{platformType}/properties
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: addSubscriptionProperties
+  method: POST
+  path: /subscriptions/{platformType}/properties
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: replaceSubscriptionProperties
+  method: PUT
+  path: /subscriptions/{platformType}/properties
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteSubscriptionProperties
+  method: DELETE
+  path: /subscriptions/{platformType}/properties
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getSubscriptionProperty
+  method: GET
+  path: /subscriptions/{platformType}/properties/{propertyRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: replaceSubscriptionProperty
+  method: PUT
+  path: /subscriptions/{platformType}/properties/{propertyRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteSubscriptionProperty
+  method: DELETE
+  path: /subscriptions/{platformType}/properties/{propertyRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listSubscriptionPropertiesDefaultPlatform
+  method: GET
+  path: /subscriptions/properties
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getSubscriptionResults
+  method: GET
+  path: /subscriptions/{platformType}/{subscriptionRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getSubscriptionResultsDefaultPlatform
+  method: GET
+  path: /subscriptions/{subscriptionRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getSubscriptionStatus
+  method: GET
+  path: /subscriptions/{platformType}/{subscriptionRef}/status
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getSubscriptionStatusDefaultPlatform
+  method: GET
+  path: /subscriptions/{subscriptionRef}/status
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listSuppressions
+  method: GET
+  path: /subscriptions/{platformType}/suppressions
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: createSuppressions
+  method: POST
+  path: /subscriptions/{platformType}/suppressions
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: replaceSuppressions
+  method: PUT
+  path: /subscriptions/{platformType}/suppressions
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteSuppressions
+  method: DELETE
+  path: /subscriptions/{platformType}/suppressions
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getSuppression
+  method: GET
+  path: /subscriptions/{platformType}/suppressions/{suppressionRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: replaceSuppression
+  method: PUT
+  path: /subscriptions/{platformType}/suppressions/{suppressionRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteSuppression
+  method: DELETE
+  path: /subscriptions/{platformType}/suppressions/{suppressionRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listSuppressionsDefaultPlatform
+  method: GET
+  path: /subscriptions/suppressions
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listSubscriptionTags
+  method: GET
+  path: /subscriptions/{platformType}/tags
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: addSubscriptionTags
+  method: POST
+  path: /subscriptions/{platformType}/tags
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: replaceSubscriptionTags
+  method: PUT
+  path: /subscriptions/{platformType}/tags
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteSubscriptionTags
+  method: DELETE
+  path: /subscriptions/{platformType}/tags
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getSubscriptionTag
+  method: GET
+  path: /subscriptions/{platformType}/tags/{tagRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: replaceSubscriptionTag
+  method: PUT
+  path: /subscriptions/{platformType}/tags/{tagRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteSubscriptionTag
+  method: DELETE
+  path: /subscriptions/{platformType}/tags/{tagRef}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listSubscriptionTagsDefaultPlatform
+  method: GET
+  path: /subscriptions/tags
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: listSystems
+  method: GET
+  path: /systems
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getSystem
+  method: GET
+  path: /systems/{id}
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: getSystemAnalysisDetails
+  method: POST
+  path: /systems/{id}/analysis-details
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: downloadAnalysisReport
+  method: GET
+  path: /systems/{id}/analysis-report
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: modifySystemAttributes
+  method: PUT
+  path: /systems/{id}/attributes
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+- operationId: deleteSystemAttributes
+  method: DELETE
+  path: /systems/{id}/attributes
+  reason: 'no MCP tool could be bound: the docs MCP exposes no product tools and the product MCP is auth-gated'
+coverage:
+  rest_operations: 65
+  mcp_tools_introspected: 3
+  bound: 0
+  mcp_only: 3
+  rest_only: 65
+  unmeasurable: product MCP tool set (auth-gated)
+  confidence: high for what is recorded, because nothing was mapped by guesswork

@@ -1,0 +1,107 @@
+generated: '2026-09-06'
+method: probed
+source: live GET probes of /.well-known/* on every host this record knows
+note: >-
+  Densify trades as Kubex; www.densify.com, portal.densify.com, api.densify.com and
+  kubex.ai are all served by the same WordPress edge, which answers a styled HTML 404 for
+  every unknown path — none of those 404s is a document. The only host serving real
+  /.well-known/ documents is the documentation host docs.kubex.ai (Mintlify), which
+  publishes an A2A agent card, an MCP discovery manifest and an Agent Skill. No security.txt,
+  no OpenID/OAuth metadata and no api-catalog is served anywhere.
+hosts:
+- host: docs.kubex.ai
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    file: ../a2a/densify-agent-card.json
+    note: real A2A AgentCard JSON object; saved verbatim under a2a/ and graded there
+  - path: /.well-known/mcp.json
+    status: 200
+    content_type: application/json
+    file: densify-mcp.json
+    note: MCP discovery manifest for the documentation MCP server (transport http, authentication none)
+  - path: /.well-known/agent-skills/kubex/skill.md
+    status: 200
+    content_type: text/markdown
+    file: ../skills/densify-kubex.md
+    note: provider-authored Agent Skill referenced by the agent card's skills[0].url
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: www.densify.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: kubex.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: api.densify.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: portal.densify.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+checked: '2026-09-06'

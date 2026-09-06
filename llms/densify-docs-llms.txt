@@ -1,0 +1,205 @@
+# Kubex Docs
+
+- [Kubex Overview](https://docs.kubex.ai/docs-kubex/Content/General/Kubex_Overview.md): Kubex is an autonomous resource optimization platform for Kubernetes and AI infrastructure
+- [Connect Your Kubernetes Clusters](https://docs.kubex.ai/docs-kubex/Content/Kubex/Data_Collection_Overview.md)
+- [Advanced K8s Configurations](https://docs.kubex.ai/docs-kubex/Content/Kubex/Data_Collection_Alternate_Methods.md)
+- [Overview](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Data_Collection_Overview-Cloud.md)
+- [AWS Data Collection Prerequisites for an IAM Role (CloudWatch only)](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Data_Collection_for_Public_Cloud_Systems/AWS_Data_Collection_Prerequisites_for_an_IAM_Role__CloudWatch_only_.md)
+- [AWS Data Collection Using a CloudFormation Template (CFT)](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Data_Collection_for_Public_Cloud_Systems/AWS_Data_Collection_Using_a_CloudFormation_Template.md)
+- [Connecting AWS to Kubex](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Data_Collection_AWS_Connections.md)
+- [Troubleshooting AWS Data Collection](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Data_Collection_Troubleshooting/AWS_Cloud_Connections.md)
+- [Microsoft Azure Data Collection Prerequisites for a Service Principal](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Data_Collection_for_Public_Cloud_Systems/Microsoft_Azure_Data_Collection_Prerequisites_for_a_Service_Principal.md)
+- [Connecting Azure to Kubex](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Data_Collection_Azure_Connections.md)
+- [Troubleshooting Azure Data Collection](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Data_Collection_Troubleshooting/Azure_Cloud_Connections.md)
+- [Google Cloud Platform Data Collection Prerequisites](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Data_Collection_for_Public_Cloud_Systems/Google_Cloud_Platform_Data_Collection_Prerequisites.md)
+- [Connecting GCP to Kubex](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Data_Collection_GCP_Connections.md)
+- [Troubleshooting GCP Data Collection](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Data_Collection_Troubleshooting/GCP_Cloud_Connections.md)
+- [Oracle Cloud Infrastructure Data Collection Prerequisites for API Key User](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Data_Collection_for_Public_Cloud_Systems/Oracle_Cloud_Infrastructure_Data_Collection_Prerequisites.md)
+- [Connecting OCI to Kubex](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Data_Collection_OCI_Connections.md)
+- [Troubleshooting OCI Data Collection](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Data_Collection_Troubleshooting/OCI_Cloud_Connections.md)
+- [Data Collection Status](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Cloud_Connections.md)
+- [Supported Platforms and Integrations](https://docs.kubex.ai/docs-kubex/Content/General/supported_platforms.md)
+- [AI Tools: MCP Server](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/MCP.md)
+- [How Kubex Analyzes Kubernetes Containers](https://docs.kubex.ai/docs-kubex/Content/Kubex/container_optimization.md)
+- [Kubernetes Container Optimization Policy Settings](https://docs.kubex.ai/docs-kubex/Content/Kubex/k8s_container_policy.md)
+- [Optimizing Node Cost](https://docs.kubex.ai/docs-kubex/Content/Kubex/Optimizing_Node_Cost.md)
+- [Improving Node Health](https://docs.kubex.ai/docs-kubex/Content/Kubex/Improving_Node_Health.md): Understand key node health risks and how Kubex recommendations and automation reduce operational instability.
+- [GPU Optimization in Kubex](https://docs.kubex.ai/docs-kubex/Content/Kubex/gpu_optimization.md)
+- [Kubex Automation Engine Overview](https://docs.kubex.ai/docs-kubex/Content/Kubex/Automation_Engine_Overview.md)
+- [Getting Started with Automation Engine](https://docs.kubex.ai/docs-kubex/Content/Kubex/Automation_Engine_Getting_Started.md)
+- [Automation Engine Configuration Reference](https://docs.kubex.ai/docs-kubex/Content/Kubex/Automation_Engine_Configuration_Reference.md)
+- [Automation Strategy and Policy Model](https://docs.kubex.ai/docs-kubex/Content/Kubex/Automation_Engine_Policy_Model.md)
+- [Automation Safety and Operations](https://docs.kubex.ai/docs-kubex/Content/Kubex/Automation_Engine_Safety_and_Operations.md)
+- [Automation Troubleshooting and FAQ](https://docs.kubex.ai/docs-kubex/Content/Kubex/Automation_Engine_Troubleshooting_and_FAQ.md)
+- [Kubex Dashboard](https://docs.kubex.ai/docs-kubex/Content/Kubex/Kubex_Dashboard.md)
+- [Container Summary](https://docs.kubex.ai/docs-kubex/Content/Kubex/Summary_Tab.md)
+- [Resource Breakdown Summary](https://docs.kubex.ai/docs-kubex/Content/Kubex/Breakdown_Tab.md)
+- [Histograms](https://docs.kubex.ai/docs-kubex/Content/Kubex/Histograms_Tab.md)
+- [Single Container Summary](https://docs.kubex.ai/docs-kubex/Content/Kubex/Overview_Tab.md)
+- [Container GPU Summary](https://docs.kubex.ai/docs-kubex/Content/Kubex/GPU_Tab.md)
+- [Metrics Viewer](https://docs.kubex.ai/docs-kubex/Content/Kubex/Metrics_Viewer_Tab.md)
+- [Instance & ScaleGroup Optimization](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Cloud_Optimization.md): Optimize cloud infrastructure costs and performance across AWS, Azure, Google and Oracle Cloud
+- [Amazon ECS Optimization](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/ecs_optimization.md): Optimize Amazon ECS tasks and services with Kubex recommendations for CPU and memory efficiency.
+- [Cloud Cost Estimation](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/cloud_cost_estimation.md): Understand how Kubex estimates cloud instance costs from provider list prices and optional billing data.
+- [Cloud Analysis Policy](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/cloud_policy.md): Configure and understand Kubex Cloud Analysis Policies for rightsizing, risk detection, scale optimization, and Kubernetes cluster recommendations.
+- [Optimizing Public Cloud](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Cloud_Analysis.md)
+- [Using the Cloud Tree Viewer](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Using_the_Cloud_Tree_Viewer.md)
+- [Cloud Optimization Summary](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Summary_Tab-Cloud.md)
+- [Analysis Details Page](https://docs.kubex.ai/docs-kubex/Content/Cloudex/AI_Analysis_Details_Tab-Cloud.md)
+- [Analysis Details Table](https://docs.kubex.ai/docs-kubex/Content/Cloudex/AI_Analysis_Details_Table-Cloud.md)
+- [Analysis Details Modal](https://docs.kubex.ai/docs-kubex/Content/Cloudex/AI_Analysis_Details_Modal-Cloud.md)
+- [Cloud Instance Overview](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Overview_Tab-Cloud.md)
+- [Catalog Map](https://docs.kubex.ai/docs-kubex/Content/Cloudex/Catalog_Map_Tab.md)
+- [Introduction](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction.md)
+- [Postman Collection](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection.md)
+- [Ping API](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Ping.md)
+- [Ping Kubex API subsystem](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Ping/ping.md): End-to-end connectivity check to ensure the API subsystem and database are reachable.
+- [Authorize](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Authorize.md)
+- [Obtain a JWT API token](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Authorize/authorize-user.md): Returns a JWT token for any **active** Kubex user when valid credentials are provided. Only tokens for **API-enabled** users can be used to make authorized API calls.
+- [Kubernetes Clusters](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters.md)
+- [List Kubernetes clusters](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters/listKubernetesClusters.md): Returns all clusters from which data is being collected. No filtering is applied.
+- [Get details for a Kubernetes cluster](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters/getKubernetesClusterDetails.md): Returns namespaces, pods, and containers for the specified cluster.
+- [Kubernetes Clusters Results](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results.md)
+- [List container recommendations for a cluster](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results/getKubernetesClusterContainers.md): Returns recommendation details for container manifests in the specified cluster. This endpoint returns the base set of fields. For additional details including uptime predictions, OOM kill counts, and audit history, use the detailed endpoint with details=true. Fields with no value may be omitted fro…
+- [List container recommendations with additional details](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results/getKubernetesClusterContainersDetailed.md): Returns recommendation details for container manifests in the specified cluster with additional fields. This endpoint includes all base fields plus: predictedUptime, configLastChangedOn, nodeGroup, oomKills_last7days, dateFirstAudited, and dateLastAudited. Fields with no value may be omitted from th…
+- [Kubex Public Cloud Resources](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud.md)
+- [Onboard AWS Accounts](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_AWS_Analyze.md)
+- [Onboard AWS account](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_AWS_Analyze/analyzeAws.md): Initiates AWS CloudWatch data collection and runs optimization analysis. Subsequent data collection and analysis are scheduled nightly. If an analysis already exists, this endpoint re-runs analysis and can update  the webhook for result delivery.
+- [List AWS accounts being analyzed](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_AWS_Analyze/listAwsAnalyses.md): Returns the set of analyses that have been created, with details needed to reference them elsewhere.
+- [Analysis: Status](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Status.md)
+- [Offboard AWS Accounts](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_AWS_Delete.md)
+- [Delete AWS Cloud Connection and Analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_AWS_Delete/deleteAwsAnalysis.md): Deletes the Cloud Connection and Analysis for the specified AWS account.
+- [AWS Recommendations](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_AWS_Results.md)
+- [AWS recommendations using analysisId](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_AWS_Results/getAwsRecommendations.md): Returns optimization recommendations for systems (EC2, RDS, ASG) in the specified analysis. Use the `Accept` header to choose the representation: `application/json` (array of recommendation objects) or `application/terraform-map` (Terraform-style map where each key is the system's **provisioningId**…
+- [Analysis: Azure Analyze](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Azure_Analyze.md)
+- [Onboard Azure Subscription](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Azure_Analyze/analyzeAzure.md): - **Initial run**: provide subscription and credentials; schedules nightly collection and analysis.   - **Re-run analysis**: provide subscription and (optionally) a new webhook; does **not** collect data.   - **Historical audit**: set `triggerAdhocAudit=true` and optionally `startDayOffset` / `endDa…
+- [Get analysis status by subscription](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Azure_Analyze/getAzureAnalysisStatus.md): Check the status of collection/analysis for a given Azure subscription.
+- [List Azure subscriptions being analyzed](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Azure_Analyze/listAzureAnalyses.md): Returns analyses created for Azure subscriptions; obtain `analysisId` for other operations.
+- [Analysis: Azure Delete](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Azure_Delete.md)
+- [Delete Azure Cloud Connection and Analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Azure_Delete/deleteAzureAnalysisAudit.md): Deletes the Cloud Connection and Analysis for the specified Azure subscription.
+- [Analysis: Azure Recommendations](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Azure_Results.md)
+- [List recommendations for an Azure analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Azure_Results/listAzureRecommendations.md): Returns Azure recommendations for a completed analysis.
+- [Analysis: GCP Analyze](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_GCP_Analyze.md)
+- [Run GCP data collection+analysis, or re-run analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_GCP_Analyze/analyzeGcp.md): - **Initial run**: provide a GCP service account credential and `projectId`. Schedules   nightly collection and analysis; can set `connectionName` and a `webHook`. - **Re-run**: call again with the same `projectId` (+ optional new `webHook`); does **not**   collect data. - Request is rejected if col…
+- [List all generated GCP analyses](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_GCP_Analyze/listGcpAnalyses.md): Return analyses with details and links; use this to obtain `analysisId` for other calls.
+- [Analysis: Status](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Status.md)
+- [Analysis: GCP Delete](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_GCP_Delete.md)
+- [Delete GCP Cloud Connection and Analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_GCP_Delete/deleteGcpAnalysisAudit.md): Deletes the Cloud Connection and Analysis for the specified GCP project.
+- [Analysis: GCP Recommendations](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_GCP_Results.md)
+- [List recommendations for a GCP analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_GCP_Results/listGcpRecommendations.md): Returns a collection of recommendations.   Content negotiation: - `application/json` → JSON recommendation objects   - `application/terraform-map` → terraform-map objects   Element filters are standard query pairs (e.g., `recommendationType=Upsize`).   `includeAttributes=true` returns the `attribute…
+- [Compatible Instances](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/CatalogMap.md)
+- [Impact Analysis and Recommendation Report (PDF)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Systems/downloadAnalysisReport.md): Downloads the Impact Analysis and Recommendation Report (Application Owner report) as a PDF. Use `Accept: application/octet-stream` to download the file.
+- [Analysis: Webhook](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Webhook.md)
+- [Add webhook to an analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Webhook/addAnalysisWebhook.md): Only allowed if the analysis does not already have a webhook.
+- [Delete webhook from an analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Webhook/deleteAnalysisWebhook.md)
+- [Get webhook definition for an analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Webhook/getAnalysisWebhook.md)
+- [List webhooks by platform](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Webhook/listAnalysisWebhooksByPlatform.md): List all analysis webhooks for a platform (cloud or containers).
+- [Update webhook for an analysis](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Analysis_Webhook/updateAnalysisWebhook.md)
+- [Subscriptions](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions.md)
+- [Create subscriptions (bulk)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions/createSubscriptions.md): Creates a **collection** of platform-specific subscriptions in one request. The operation is committed as a whole: any creation failure rolls back the entire batch. Non-admin users are auto-assigned as `owner`; admins may create global (owner="") or assign any owner.
+- [Delete a single subscription](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions/deleteSubscription.md)
+- [Delete subscriptions (bulk)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions/deleteSubscriptions.md): Deletes a **collection** of subscriptions by ID. Each delete is independent; an error on one does not affect others. Success returns **204 No Content**; **404 Not Found** if a sub doesn't exist or you lack privilege (non-owner, non-admin). Admins may delete any global/private subs.
+- [List subscriptions for a platform](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions/listSubscriptions.md): Returns a list of existing platform-specific subscriptions. Filters: - `type` → all | global | owner - `owner` (admin only) → list another user's private subs with `type=owner` - `subscriptionRef` → return a single subscription by ID.
+- [List subscriptions (alias of /subscriptions/cloud)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions/listSubscriptionsDefaultPlatform.md): Behaves the same as `GET /subscriptions/cloud`. Backward compatibility alias.
+- [Replace an existing subscription (full PUT)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions/replaceSubscription.md): Replaces **all** parameters of an existing subscription. You must supply all body parameters required by the existing subscription. Non-admin users can only modify their own private subs; admins can also promote private→global by setting `owner: ""`.
+- [Subscriptions: Results](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Results.md)
+- [Get subscription results (on-demand)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Results/getSubscriptionResults.md): Returns the current results for the specified subscription.   Notes for on-demand calls: `active`, `webhook`, and `schedule` are ignored (results are always returned).   Optional `divider` controls whether a divider string is included between properties and tags.   `limit` controls the maximum numbe…
+- [Get subscription results (alias of cloud)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Results/getSubscriptionResultsDefaultPlatform.md)
+- [Subscriptions: Properties](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Properties.md)
+- [Add properties (bulk)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Properties/addSubscriptionProperties.md): Adds one or more properties to the platform catalog.   Bulk add is all-or-nothing; a single error rolls back the set.   `propertyName` must be unique within the catalog; `aliasName` uniqueness depends on scope (global vs private). Platform-specific properties must be added to their matching catalog.
+- [Delete properties (bulk)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Properties/deleteSubscriptionProperties.md): Deletes a collection of properties by ID.   Each delete is independent; errors for some IDs do not affect others.   Properties referenced by subscriptions cannot be deleted.
+- [Delete a property by ID](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Properties/deleteSubscriptionProperty.md): Returns 204 on success; 404 if not found; if referenced by a subscription, returns `propertyRef`, `message`, and `status`.
+- [Get a property by ID](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Properties/getSubscriptionProperty.md)
+- [List properties in the platform catalog](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Properties/listSubscriptionProperties.md)
+- [List properties (alias of cloud)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Properties/listSubscriptionPropertiesDefaultPlatform.md)
+- [Replace existing properties (bulk PUT)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Properties/replaceSubscriptionProperties.md): Replaces parameters for existing properties.   You must supply all parameters required by each property.   Admins may promote private→global by setting `owner: ""`. Bulk edit is all-or-nothing.
+- [Replace a property by ID (full PUT)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Properties/replaceSubscriptionProperty.md): Admins can promote private→global (`owner: ""`); non-admins can only set `owner` to themselves.
+- [Subscriptions: Status](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Status.md)
+- [Get subscription status (results + webhook)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Status/getSubscriptionStatus.md): Returns `lastTriggered` (On-Demand/Scheduled Success/Failure with timestamp) and `webHookStatus` (Success/Failure with timestamp) for the specified subscription.
+- [Get subscription status (alias of cloud)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Status/getSubscriptionStatusDefaultPlatform.md)
+- [Subscriptions: Suppressions](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Suppressions.md)
+- [Add suppressions (bulk; all-or-nothing)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Suppressions/createSuppressions.md): Adds one or more entries. A suppression is either an **attribute** suppression (`attributeName`, optionally with `key` + `technology` for Resource Tags / Container Labels) **or** a **property** suppression (`propertyName`). Uniqueness and owner rules apply; non-admins can only add private entries.
+- [Delete a suppression by ID](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Suppressions/deleteSuppression.md): Returns 204 on success; 404 if not found; if referenced by subscriptions (or other errors), returns an object with `suppressionRef`/`suppressionName` and `message`.
+- [Delete suppressions (bulk; independent per entry)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Suppressions/deleteSuppressions.md): Deletes a collection of entries by `suppressionRef`. If **all** succeed, returns 204. If any fail, returns an array with per-entry status/messages for failures; successful deletes may omit a message. Suppressions referenced by subscriptions cannot be deleted.
+- [Get a suppression by ID](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Suppressions/getSuppression.md)
+- [List suppressions for a platform](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Suppressions/listSuppressions.md): Returns global/private suppression entries; use `type` and (admin only) `owner` to filter.
+- [List suppressions (alias of cloud)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Suppressions/listSuppressionsDefaultPlatform.md)
+- [Replace a suppression by ID (full PUT)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Suppressions/replaceSuppression.md): Supply **all** required parameters; previous values are replaced. Admin can promote private→global by setting `owner: ""`.
+- [Replace suppressions (bulk PUT; all-or-nothing)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Suppressions/replaceSuppressions.md): Deletes and replaces parameters for existing entries. Supply **all** parameters required by each entry. Admins can promote private→global by setting `owner: ""`.
+- [Subscriptions: Tags](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Tags.md)
+- [Add tags (bulk; all-or-nothing)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Tags/addSubscriptionTags.md): Adds one or more tags. Admins may create **global** (owner empty) or private tags; non-admins can only create **private** (owner auto-set to their username). Uniqueness: `attributeName` must be unique per catalog; `tagName` and `aliasName` must be unique per ownership scope (global vs owner).
+- [Delete a tag by ID](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Tags/deleteSubscriptionTag.md): 204 on success; 404 if not found. If referenced by subscriptions (or other errors), returns an object with `tagRef`, `message`, `status`.
+- [Delete tags (bulk; independent per entry)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Tags/deleteSubscriptionTags.md): Deletes a collection of tags by `tagRef`. If **all** succeed, returns 204. If any fail (e.g., tag is referenced by subscriptions), returns an array of per-entry results with status/messages; other entries may still delete.
+- [Get a tag by ID](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Tags/getSubscriptionTag.md)
+- [List tags in the platform catalog](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Tags/listSubscriptionTags.md): Returns global/private tags. Use `type` and (admin only) `owner` to filter.
+- [List tags (alias of cloud)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Tags/listSubscriptionTagsDefaultPlatform.md)
+- [Replace a tag by ID (full PUT)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Tags/replaceSubscriptionTag.md): **All parameters must be supplied.** Admin may promote private→global by setting `owner: ""`.
+- [Replace tags (bulk PUT; all-or-nothing)](https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Subscriptions_Tags/replaceSubscriptionTags.md): Replace parameters for existing tags. **Supply all parameters** for each tag; PUT acts as delete+replace. Admins may promote private→global by setting `owner: ""`.
+- [Kubex Features](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/New_Features_Cloud.md)
+- [Container Data Collector](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/release_notes_k8s_data_collector.md)
+- [Kubex Automation Engine](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Release_Notes/release_notes_k8s_automation_engine.md)
+- [Overview](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Administration/Configuring_External_User_Authentication.md)
+- [External User Authentication for Microsoft Entra ID](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Administration/External_User_Authentication_Example_Configuration_for_Azure_Active_Directory.md)
+- [External User Authentication for Google OpenID](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Administration/External_User_Authentication_Example_Configuration_for_Google_OpenID.md)
+- [External User Authentication for Okta](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Administration/External_User_Authentication_Example_Configuration_for_Okta.md)
+- [User Access Control (RBAC)](https://docs.kubex.ai/docs/WebHelp_Densify_Cloud/Content/Administration/Kubex_User_Mgmt_RBAC.md)
+
+## OpenAPI Specs
+
+- [openapi-2](/openapi-2.yaml)
+- [authorize](/openapi/authorize.yaml)
+- [Bookings_Project_Status_Groups](/openapi/booking/Bookings_Project_Status_Groups.yaml)
+- [Bookings](/openapi/booking/Bookings.yaml)
+- [Catalog_Specifications](/openapi/booking/Catalog_Specifications.yaml)
+- [Configuration_Parameters](/openapi/booking/Configuration_Parameters.yaml)
+- [Control_Environments](/openapi/booking/Control_Environments.yaml)
+- [Helper_Utilities](/openapi/booking/Helper_Utilities.yaml)
+- [Inbound_Datastores](/openapi/booking/Inbound_Datastores.yaml)
+- [Inbound_Hosts](/openapi/booking/Inbound_Hosts.yaml)
+- [Monitored_Hosts](/openapi/booking/Monitored_Hosts.yaml)
+- [Outbound_Hosts](/openapi/booking/Outbound_Hosts.yaml)
+- [Routing_Requests_Available_Capacity_Query](/openapi/booking/Routing_Requests_Available_Capacity_Query.yaml)
+- [Routing_Requests_Available_Sensor_Capacity_Query](/openapi/booking/Routing_Requests_Available_Sensor_Capacity_Query.yaml)
+- [Routing_Requests_Candidate_Infrastructure_Groups](/openapi/booking/Routing_Requests_Candidate_Infrastructure_Groups.yaml)
+- [Routing_Requests_Constraint_Resource_Query](/openapi/booking/Routing_Requests_Constraint_Resource_Query.yaml)
+- [Routing_Requests](/openapi/booking/Routing_Requests.yaml)
+- [Sensors_including_Datastores_Physical](/openapi/booking/Sensors_including_Datastores_Physical.yaml)
+- [Timeline_Tags](/openapi/booking/Timeline_Tags.yaml)
+- [Today_Value_Date](/openapi/booking/Today_Value_Date.yaml)
+- [User_Preferences](/openapi/booking/User_Preferences.yaml)
+- [Workload_Profiles](/openapi/booking/Workload_Profiles.yaml)
+- [Workloads_Attribute_Metadata_Groups](/openapi/booking/Workloads_Attribute_Metadata_Groups.yaml)
+- [Workloads_Project_Owner_Status_Groups](/openapi/booking/Workloads_Project_Owner_Status_Groups.yaml)
+- [Workloads](/openapi/booking/Workloads.yaml)
+- [existing_systems](/openapi/existing_systems.yaml)
+- [kubernetes_clusters_results](/openapi/kubernetes/kubernetes_clusters_results.yaml)
+- [kubernetes_clusters](/openapi/kubernetes/kubernetes_clusters.yaml)
+- [ping](/openapi/ping.yaml)
+- [Analysis_AWS_Analyze](/openapi/public_cloud/Analysis_AWS_Analyze.yaml)
+- [Analysis_AWS_Delete](/openapi/public_cloud/Analysis_AWS_Delete.yaml)
+- [Analysis_AWS_Results](/openapi/public_cloud/Analysis_AWS_Results.yaml)
+- [Analysis_AWS_Systems](/openapi/public_cloud/Analysis_AWS_Systems.yaml)
+- [Analysis_Azure_Analyze](/openapi/public_cloud/Analysis_Azure_Analyze.yaml)
+- [Analysis_Azure_Delete](/openapi/public_cloud/Analysis_Azure_Delete.yaml)
+- [Analysis_Azure_Results](/openapi/public_cloud/Analysis_Azure_Results.yaml)
+- [Analysis_Azure_Systems](/openapi/public_cloud/Analysis_Azure_Systems.yaml)
+- [Analysis_Cloud](/openapi/public_cloud/Analysis_Cloud.yaml)
+- [Analysis_Container](/openapi/public_cloud/Analysis_Container.yaml)
+- [Analysis_Entity](/openapi/public_cloud/Analysis_Entity.yaml)
+- [Analysis_GCP_Analyze](/openapi/public_cloud/Analysis_GCP_Analyze.yaml)
+- [Analysis_GCP_Delete](/openapi/public_cloud/Analysis_GCP_Delete.yaml)
+- [Analysis_GCP_Results](/openapi/public_cloud/Analysis_GCP_Results.yaml)
+- [Analysis_GCP_Systems](/openapi/public_cloud/Analysis_GCP_Systems.yaml)
+- [Analysis_Kubernetes_Results](/openapi/public_cloud/Analysis_Kubernetes_Results.yaml)
+- [Analysis_Kubernetes_Systems](/openapi/public_cloud/Analysis_Kubernetes_Systems.yaml)
+- [Analysis_Status](/openapi/public_cloud/Analysis_Status.yaml)
+- [Analysis_Webhook](/openapi/public_cloud/Analysis_Webhook.yaml)
+- [Receive_Metrics_Jobs](/openapi/public_cloud/Receive_Metrics_Jobs.yaml)
+- [Subscriptions_Properties](/openapi/public_cloud/Subscriptions_Properties.yaml)
+- [Subscriptions_Results](/openapi/public_cloud/Subscriptions_Results.yaml)
+- [Subscriptions_Status](/openapi/public_cloud/Subscriptions_Status.yaml)
+- [Subscriptions_Suppressions](/openapi/public_cloud/Subscriptions_Suppressions.yaml)
+- [Subscriptions_Tags](/openapi/public_cloud/Subscriptions_Tags.yaml)
+- [Subscriptions](/openapi/public_cloud/Subscriptions.yaml)
+- [systems_analysis_details](/openapi/systems_analysis_details.yaml)
+- [systems](/openapi/systems.yaml)

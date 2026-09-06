@@ -1,0 +1,179 @@
+generated: '2026-09-06'
+method: derived
+source: openapi/ (21 first-party Kubex OpenAPI specs, 65 operations)
+provider: Densify
+providerId: densify
+format: vendor-json
+format_note: Not RFC 9457. Errors are returned as a plain application/json object with `message` and `status`
+  fields (the AuthorizeError / ErrorResponse schemas); no `type`, `title`, `detail` or `instance` members
+  and no application/problem+json media type appear anywhere in the 21 specs.
+envelope:
+  media_type: application/json
+  fields:
+  - name: message
+    type: string
+    description: Human-readable failure message.
+  - name: status
+    type: integer
+    description: HTTP status code, repeated in the body.
+  variants: Bulk delete operations (subscriptions, properties, tags, suppressions) return a per-entry
+    array instead of a single object, with a reference field — propertyRef / tagRef / suppressionRef /
+    subscriptionRef — plus message and status for each failed entry.
+no_error_code_registry: Kubex publishes no numeric or symbolic error-code registry. The catalog below
+  is the HTTP status surface actually declared in the contracts.
+problem_types:
+- status: 400
+  title: Bad Request
+  descriptions:
+  - Analysis webhook already exists.
+  - Bad Request (e.g. non-admin querying another user with `type=owner`).
+  - Bad Request (e.g. querying owner you don't own and you're not admin).
+  - Bad Request (e.g., non-admin querying another user with `type=owner`).
+  - Bad Request (e.g., result count exceeded default 3000 without raising `limit`).
+  - Bad Request (e.g., unsupported `dataQuality` workload).
+  - Bad Request (e.g., unsupported workload type in `dataQuality`)
+  - Bad request (e.g., unsupported workload name in dataQuality)
+  - Bad request (invalid parameters / logic).
+  - Bad request (null/invalid payload; empty or invalid userName/pwd)
+  - Invalid attribute delete payload
+  - Invalid attribute payload
+  - Invalid input
+  - Invalid parameter or conflicting in-progress operation
+  - Invalid parameters
+  - Invalid parameters.
+  - Malformed query (e.g., invalid sort or filter syntax)
+  - Malformed request (e.g., timeout outside the 15–180 second range).
+  - Validation error.
+  - Validation/logic error.
+  - Validation/logic error; entire batch rolled back.
+  media_types:
+  - application/json
+  occurrences: 31
+  example_operations:
+  - addAnalysisWebhook
+  - addSubscriptionTags
+  - analyzeAws
+  - analyzeAzure
+  - analyzeGcp
+  - authorize-user
+  remediation: Fix the request payload or query parameters and retry; do not retry unchanged.
+- status: 401
+  title: Unauthorized
+  descriptions:
+  - Authentication failed
+  - Authentication failed.
+  - Unauthorized
+  - Unauthorized (user does not exist, incorrect password, or account locked)
+  media_types:
+  - application/json
+  occurrences: 41
+  example_operations:
+  - addSubscriptionTags
+  - analyzeAws
+  - analyzeAzure
+  - analyzeGcp
+  - authorize-user
+  - createSubscriptions
+  remediation: Re-run POST /authorize to obtain a fresh JWT (tokens expire after 60 minutes) and retry
+    with the new bearer token.
+- status: 403
+  title: Forbidden
+  descriptions:
+  - Forbidden (trial or subscription expired)
+  media_types:
+  - application/json
+  occurrences: 1
+  example_operations:
+  - authorize-user
+  remediation: The Kubex trial or subscription has expired, or the user is not API-enabled. Resolve entitlement
+    before retrying.
+- status: 404
+  title: Not Found
+  descriptions:
+  - Analysis not found
+  - Analysis not found.
+  - Analysis webhook not found.
+  - Cluster not found
+  - Not Found / No privilege.
+  - Not found (when deleting a single entry via /suppressionRef).
+  - Not found / no privileges.
+  - Not found / not visible.
+  - Not found.
+  - Resource not found
+  - Resource not found.
+  - Subscription not found / no privilege.
+  - System not found
+  - System or report not found
+  media_types:
+  - application/json
+  occurrences: 42
+  example_operations:
+  - addAnalysisWebhook
+  - analyzeAws
+  - analyzeAzure
+  - analyzeGcp
+  - deleteAnalysisWebhook
+  - deleteAwsAnalysis
+  remediation: The referenced analysis, cluster, system, subscription, property, tag or suppression does
+    not exist or is not visible to this user. Re-list the parent collection to obtain a valid identifier.
+- status: 405
+  title: Method Not Allowed
+  descriptions:
+  - Method not allowed
+  - Method not allowed.
+  media_types:
+  - (declared without a response body)
+  occurrences: 3
+  example_operations:
+  - deleteAwsAnalysis
+  - deleteAzureAnalysisAudit
+  - deleteGcpAnalysisAudit
+  remediation: Use a method the path supports; the operation set per path is fixed.
+- status: 415
+  title: Unsupported Media Type
+  descriptions:
+  - Unsupported media type.
+  media_types:
+  - (declared without a response body)
+  occurrences: 9
+  example_operations:
+  - addSubscriptionTags
+  - deleteSubscriptionTag
+  - deleteSubscriptionTags
+  - getSubscriptionResults
+  - getSubscriptionStatus
+  - getSubscriptionTag
+  remediation: 'Send Content-Type: application/json (or the documented representation for content-negotiated
+    result endpoints).'
+- status: 429
+  title: Too Many Requests
+  descriptions:
+  - Too Many Requests (rate limiting / progressive delay)
+  media_types:
+  - application/json
+  occurrences: 1
+  example_operations:
+  - authorize-user
+  remediation: Back off and retry. Repeated authorization failures attract a progressive delay, so retry
+    the credential exchange more slowly rather than immediately.
+- status: 500
+  title: Internal Server Error
+  descriptions:
+  - Internal server error
+  - Internal server error (e.g., data collection in progress).
+  - Internal server error (or web server/connectivity issues)
+  - Internal server error.
+  - Server error
+  - Server error connecting to the API subsystem.
+  - Server error.
+  media_types:
+  - application/json
+  occurrences: 42
+  example_operations:
+  - addSubscriptionTags
+  - analyzeAws
+  - analyzeAzure
+  - analyzeGcp
+  - authorize-user
+  - createSubscriptions
+  remediation: Transient server or connectivity failure. Retry with backoff; if it persists contact support@kubex.ai.
