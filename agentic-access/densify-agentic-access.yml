@@ -1,19 +1,95 @@
-generated: '2026-07-15'
+generated: '2026-09-16'
 method: generated
-source: openapi/densify-openapi.yml
+source: openapi/densify-analysis-webhook-api-openapi.yml, openapi/densify-authentication-api-openapi.yml,
+  openapi/densify-aws-analysis-api-openapi.yml, openapi/densify-aws-analyze-api-openapi.yml,
+  openapi/densify-azure-analysis-api-openapi.yml, openapi/densify-cloud-analysis-api-openapi.yml,
+  openapi/densify-gcp-analysis-api-openapi.yml, openapi/densify-kubernetes-api-openapi.yml,
+  openapi/densify-kubernetes-cluster-results-api-openapi.yml, openapi/densify-kubernetes-clusters-api-openapi.yml,
+  openapi/densify-recommendations-api-openapi.yml, openapi/densify-subscriptions-api-openapi.yml,
+  openapi/densify-subscriptions-properties-api-openapi.yml, openapi/densify-subscriptions-suppressions-api-openapi.yml,
+  openapi/densify-subscriptions-tags-api-openapi.yml, openapi/densify-system-api-openapi.yml,
+  openapi/densify-systems-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 10
+  operations: 73
   by_action_class:
-    acting: 4
-    connected: 6
+    connected: 37
+    acting: 36
   by_consequence:
-    write: 4
-    read: 6
+    read: 37
+    write: 36
   human_in_the_loop_required: 0
 operations:
+- path: /webhook/analysis/{platformType}
+  method: get
+  operationId: listAnalysisWebhooksByPlatform
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+  method: get
+  operationId: getAnalysisWebhook
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+  method: post
+  operationId: addAnalysisWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+  method: put
+  operationId: updateAnalysisWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhook/analysis/{platformType}/{platformSubType}/{analysisId}
+  method: delete
+  operationId: deleteAnalysisWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /authorize
   method: post
   operationId: authorize
@@ -30,9 +106,113 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /ping
+- path: /analysis/cloud/aws/{analysisId}
+  method: delete
+  operationId: deleteAwsAnalysis
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /analysis/cloud/aws/{analysisId}/results
   method: get
-  operationId: ping
+  operationId: getAwsRecommendations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /analysis/cloud/aws/analyze
+  method: post
+  operationId: analyzeAws
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /analysis/cloud/aws
+  method: get
+  operationId: listAwsAnalyses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /analysis/azure/analyze
+  method: post
+  operationId: analyzeAzure
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /analysis/cloud/azure
+  method: get
+  operationId: listAzureAnalyses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /analysis/azure/{subscriptionId}/status
+  method: get
+  operationId: getAzureAnalysisStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /analysis/cloud/azure/{analysisId}
+  method: delete
+  operationId: deleteAzureAnalysisAudit
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /analysis/cloud/azure/{analysisId}/results
+  method: get
+  operationId: listAzureRecommendations
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -88,6 +268,134 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /analysis/gcp/analyze
+  method: post
+  operationId: analyzeGcp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /analysis/cloud/gcp/analyze
+  method: post
+  operationId: historicalAuditGcp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /analysis/cloud/gcp
+  method: get
+  operationId: listGcpAnalyses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /analysis/cloud/gcp/{analysisId}
+  method: delete
+  operationId: deleteGcpAnalysisAudit
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /analysis/cloud/gcp/{analysisId}/results
+  method: get
+  operationId: listGcpRecommendations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /kubernetes/clusters
+  method: get
+  operationId: listKubernetesClusters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /kubernetes/clusters/{clusterName}/containers
+  method: get
+  operationId: getKubernetesContainers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /kubernetes/clusters/{clusterName}/containers
+  method: get
+  operationId: getKubernetesClusterContainers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /kubernetes/clusters/{clusterName}/containers?details=true
+  method: get
+  operationId: getKubernetesClusterContainersDetailed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /kubernetes/clusters
+  method: get
+  operationId: listKubernetesClusters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /kubernetes/clusters/{clusterName}
+  method: get
+  operationId: getKubernetesClusterDetails
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /analysis/aws/{analysisId}/recommendations
   method: get
   operationId: getAwsRecommendations
@@ -118,9 +426,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /kubernetes/clusters
+- path: /subscriptions
   method: get
-  operationId: listKubernetesClusters
+  operationId: listSubscriptionsDefaultPlatform
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -128,9 +436,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /kubernetes/clusters/{clusterName}/containers
+- path: /subscriptions/{platformType}
   method: get
-  operationId: getKubernetesContainers
+  operationId: listSubscriptions
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -138,3 +446,525 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /subscriptions/{platformType}
+  method: post
+  operationId: createSubscriptions
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}
+  method: delete
+  operationId: deleteSubscriptions
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/{subscriptionRef}
+  method: put
+  operationId: replaceSubscription
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/{subscriptionRef}
+  method: delete
+  operationId: deleteSubscription
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/{subscriptionRef}
+  method: get
+  operationId: getSubscriptionResults
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{subscriptionRef}
+  method: get
+  operationId: getSubscriptionResultsDefaultPlatform
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/{subscriptionRef}/status
+  method: get
+  operationId: getSubscriptionStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{subscriptionRef}/status
+  method: get
+  operationId: getSubscriptionStatusDefaultPlatform
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/properties
+  method: get
+  operationId: listSubscriptionProperties
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/properties
+  method: post
+  operationId: addSubscriptionProperties
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/properties
+  method: put
+  operationId: replaceSubscriptionProperties
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/properties
+  method: delete
+  operationId: deleteSubscriptionProperties
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/properties/{propertyRef}
+  method: get
+  operationId: getSubscriptionProperty
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/properties/{propertyRef}
+  method: put
+  operationId: replaceSubscriptionProperty
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/properties/{propertyRef}
+  method: delete
+  operationId: deleteSubscriptionProperty
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/properties
+  method: get
+  operationId: listSubscriptionPropertiesDefaultPlatform
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/suppressions
+  method: get
+  operationId: listSuppressions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/suppressions
+  method: post
+  operationId: createSuppressions
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/suppressions
+  method: put
+  operationId: replaceSuppressions
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/suppressions
+  method: delete
+  operationId: deleteSuppressions
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/suppressions/{suppressionRef}
+  method: get
+  operationId: getSuppression
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/suppressions/{suppressionRef}
+  method: put
+  operationId: replaceSuppression
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/suppressions/{suppressionRef}
+  method: delete
+  operationId: deleteSuppression
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/suppressions
+  method: get
+  operationId: listSuppressionsDefaultPlatform
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/tags
+  method: get
+  operationId: listSubscriptionTags
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/tags
+  method: post
+  operationId: addSubscriptionTags
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/tags
+  method: put
+  operationId: replaceSubscriptionTags
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/tags
+  method: delete
+  operationId: deleteSubscriptionTags
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/tags/{tagRef}
+  method: get
+  operationId: getSubscriptionTag
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{platformType}/tags/{tagRef}
+  method: put
+  operationId: replaceSubscriptionTag
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{platformType}/tags/{tagRef}
+  method: delete
+  operationId: deleteSubscriptionTag
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/tags
+  method: get
+  operationId: listSubscriptionTagsDefaultPlatform
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ping
+  method: get
+  operationId: ping
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /systems
+  method: get
+  operationId: listSystems
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /systems/{id}
+  method: get
+  operationId: getSystem
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /systems/{id}/analysis-details
+  method: post
+  operationId: getSystemAnalysisDetails
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /systems/{id}/analysis-report
+  method: get
+  operationId: downloadAnalysisReport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /systems/{id}/attributes
+  method: put
+  operationId: modifySystemAttributes
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /systems/{id}/attributes
+  method: delete
+  operationId: deleteSystemAttributes
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
