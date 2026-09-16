@@ -70,161 +70,493 @@ kind: company
 position: Producing
 access: 3rd-Party
 apis:
-- aid: densify:public-cloud-api
-  name: Kubex (Densify) Public Cloud API
-  description: The Kubex (formerly Densify) Public Cloud REST API onboards AWS accounts, Azure subscriptions
-    and GCP projects for machine-learning optimization analysis and returns right-sizing recommendations
-    for EC2/RDS/ASG, Azure VM and VM Scale Set, and GCE resources. It also covers the system inventory,
-    catalog map, analysis webhooks and the customizable Subscriptions surface (properties, tags, suppressions,
-    results and status). JSON over HTTPS under /api/v2, authenticated with a 60-minute JWT bearer token
-    obtained from POST /authorize. Recommendation endpoints content-negotiate to application/terraform-map
-    for direct consumption by infrastructure-as-code.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: densify:densify-analysis-webhook-api
+  name: Densify Analysis Webhook API
+  description: The Analysis Webhook API from Densify — 2 operation(s) for analysis webhook.
   humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
   baseURL: https://{host}/api/v2
   tags:
-  - Cloud
-  - FinOps
-  - Optimization
-  - Recommendations
-  - Rightsizing
-  tags_raw:
-  - Cloud
-  - FinOps
-  - Optimization
-  - Recommendations
-  - Right-Sizing
+  - Analysis Webhook
   properties:
+  - type: OpenAPI
+    url: openapi/densify-analysis-webhook-api-openapi.yml
   - type: Documentation
     url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
   - type: APIReference
-    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
   - type: Postman
-    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
   - type: PostmanCollection
     url: collections/densify-kubex-api.postman_collection.yaml
-  - type: OpenAPI
-    url: openapi/densify-authorize-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-authorize-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-ping-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-ping-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-aws-analyze-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-aws-analyze-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-aws-delete-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-aws-delete-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-aws-results-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-aws-results-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-azure-analyze-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-azure-analyze-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-azure-delete-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-azure-delete-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-azure-results-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-azure-results-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-gcp-analyze-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-gcp-analyze-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-gcp-delete-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-gcp-delete-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-gcp-results-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-gcp-results-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-analysis-webhook-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-analysis-webhook-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-subscriptions-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-subscriptions-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-subscriptions-properties-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-subscriptions-properties-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-subscriptions-results-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-subscriptions-results-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-subscriptions-status-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-subscriptions-status-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-subscriptions-suppressions-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-subscriptions-suppressions-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-public-cloud-subscriptions-tags-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-public-cloud-subscriptions-tags-overlay.yaml
-  - type: OpenAPI
-    url: openapi/densify-systems-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-systems-overlay.yaml
-  contact:
-  - FN: Kubex Support
-    email: Support@Kubex.ai
-    url: https://kubex.ai/contact/
-- aid: densify:container-api
-  name: Kubex (Densify) Container Optimization API
-  description: 'The Kubex (formerly Densify) Container Optimization REST API returns machine-learned right-sizing
-    recommendations for Kubernetes container manifests across EKS, AKS, GKE, OKE, OpenShift, NKP, RKE2,
-    K3S and self-managed clusters. It lists the clusters Kubex is collecting from, walks the namespace/pod/container
-    tree for one cluster, and returns recommended CPU and memory requests and limits — with a detailed
-    representation that adds predicted uptime, OOM-kill counts over the last seven days, node group and
-    audit history. Read-only with respect to the cluster: changes are applied by the in-cluster Kubex
-    Automation Engine under its own policy CRDs.'
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-authentication-api
+  name: Densify Authentication API
+  description: The Authentication API from Densify — 1 operation(s) for authentication.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
   baseURL: https://{host}/api/v2
   tags:
-  - Containers
-  - Kubernetes
-  - Optimization
-  - Recommendations
-  - Rightsizing
-  tags_raw:
-  - Containers
-  - Kubernetes
-  - Optimization
-  - Recommendations
-  - Right-Sizing
+  - Authentication
   properties:
+  - type: OpenAPI
+    url: openapi/densify-authentication-api-openapi.yml
   - type: Documentation
-    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
   - type: APIReference
-    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-aws-analysis-api
+  name: Densify AWS Analysis API
+  description: The AWS Analysis API from Densify — 2 operation(s) for aws analysis.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - AWS Analysis
+  properties:
   - type: OpenAPI
-    url: openapi/densify-kubernetes-kubernetes-clusters-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-kubernetes-kubernetes-clusters-overlay.yaml
+    url: openapi/densify-aws-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-aws-analyze-api
+  name: Densify AWS Analyze API
+  description: The AWS Analyze API from Densify — 2 operation(s) for aws analyze.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - AWS Analyze
+  properties:
   - type: OpenAPI
-    url: openapi/densify-kubernetes-kubernetes-clusters-results-openapi.yaml
-  - type: Overlay
-    url: overlays/densify-kubernetes-kubernetes-clusters-results-overlay.yaml
-  contact:
-  - FN: Kubex Support
-    email: Support@Kubex.ai
-    url: https://kubex.ai/contact/
+    url: openapi/densify-aws-analyze-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-azure-analysis-api
+  name: Densify Azure Analysis API
+  description: The Azure Analysis API from Densify — 5 operation(s) for azure analysis.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Azure Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-azure-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-cloud-analysis-api
+  name: Densify Cloud Analysis API
+  description: The Cloud Analysis API from Densify — 3 operation(s) for cloud analysis.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Cloud Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-cloud-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-gcp-analysis-api
+  name: Densify GCP Analysis API
+  description: The GCP Analysis API from Densify — 5 operation(s) for gcp analysis.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - GCP Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-gcp-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-kubernetes-api
+  name: Densify Kubernetes API
+  description: The Kubernetes API from Densify — 2 operation(s) for kubernetes.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Kubernetes
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-kubernetes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-kubernetes-cluster-results-api
+  name: Densify Kubernetes Cluster Results API
+  description: Container recommendations for a given cluster
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Kubernetes Cluster Results
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-kubernetes-cluster-results-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-kubernetes-clusters-api
+  name: Densify Kubernetes Clusters API
+  description: Clusters discovered via the data forwarder
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Kubernetes Clusters
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-kubernetes-clusters-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-recommendations-api
+  name: Densify Recommendations API
+  description: The Recommendations API from Densify — 3 operation(s) for recommendations.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Recommendations
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-recommendations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-subscriptions-api
+  name: Densify Subscriptions API
+  description: The Subscriptions API from Densify — 6 operation(s) for subscriptions.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-subscriptions-properties-api
+  name: Densify Subscriptions Properties API
+  description: >-
+    The Subscriptions Properties API from Densify — 3 operation(s) for subscriptions properties.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Subscriptions Properties
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-subscriptions-properties-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-subscriptions-suppressions-api
+  name: Densify Subscriptions Suppressions API
+  description: >-
+    The Subscriptions Suppressions API from Densify — 3 operation(s) for subscriptions suppressions.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Subscriptions Suppressions
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-subscriptions-suppressions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-subscriptions-tags-api
+  name: Densify Subscriptions Tags API
+  description: The Subscriptions Tags API from Densify — 3 operation(s) for subscriptions tags.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Subscriptions Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-subscriptions-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-system-api
+  name: Densify System API
+  description: The System API from Densify — 1 operation(s) for system.
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-system-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
+- aid: densify:densify-systems-api
+  name: Densify Systems API
+  description: Systems collection and single-system resources
+  humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  baseURL: https://{host}/api/v2
+  tags:
+  - Systems
+  properties:
+  - type: OpenAPI
+    url: openapi/densify-systems-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/API_Reference_Public_Cloud
+  - type: Postman
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Postman_Collection
+  - type: PostmanCollection
+    url: collections/densify-kubex-api.postman_collection.yaml
+  - type: Documentation
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters
+  - type: APIReference
+    url: >-
+      https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
 common:
+- type: Overlay
+  url: overlays/densify-authorize-overlay.yaml
+- type: Overlay
+  url: overlays/densify-ping-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-aws-analyze-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-aws-delete-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-aws-results-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-azure-analyze-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-azure-delete-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-azure-results-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-gcp-analyze-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-gcp-delete-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-gcp-results-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-analysis-webhook-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-subscriptions-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-subscriptions-properties-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-subscriptions-results-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-subscriptions-status-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-subscriptions-suppressions-overlay.yaml
+- type: Overlay
+  url: overlays/densify-public-cloud-subscriptions-tags-overlay.yaml
+- type: Overlay
+  url: overlays/densify-systems-overlay.yaml
+- type: Overlay
+  url: overlays/densify-kubernetes-kubernetes-clusters-overlay.yaml
+- type: Overlay
+  url: overlays/densify-kubernetes-kubernetes-clusters-results-overlay.yaml
 - type: Website
   url: https://kubex.ai/
 - type: DeveloperPortal
