@@ -362,6 +362,8 @@ apis:
   humanURL: https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Introduction
   baseURL: https://{host}/api/v2
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
