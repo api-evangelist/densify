@@ -1,3 +1,5 @@
+# x-archived-from: densify-public-cloud-analysis-gcp-results-openapi.yaml
+# x-archived-on: 2026-09-16
 openapi: 3.1.0
 info:
   title: Kubex – GCP Recommendations API

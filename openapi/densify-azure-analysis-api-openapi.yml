@@ -1,0 +1,696 @@
+openapi: 3.2.0
+info:
+  title: Densify Azure Analysis API
+  version: 1.0.0
+  description: 'Operations tagged Azure Analysis across 3 of this provider''s published API definitions: densify-public-cloud-analysis-azure-analyze-openapi.yaml, densify-public-cloud-analysis-azure-delete-openapi.yaml, densify-public-cloud-analysis-azure-results-openapi.yaml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://{host}
+  description: Your Kubex API host
+  variables:
+    host:
+      default: api.example.com
+- url: https://{host}/api/v2
+  variables:
+    host:
+      default: hostname.kubex.ai
+tags:
+- name: Azure Analysis
+paths:
+  /analysis/azure/analyze:
+    post:
+      tags:
+      - Azure Analysis
+      operationId: analyzeAzure
+      summary: Onboard Azure Subscription
+      description: '- **Initial run**: provide subscription and credentials; schedules nightly collection and analysis.
+
+        - **Re-run analysis**: provide subscription and (optionally) a new webhook; does **not** collect data.
+
+        - **Historical audit**: set `triggerAdhocAudit=true` and optionally `startDayOffset` / `endDayOffset` to collect up to 30 days of historical data.
+
+        Notes: request is rejected if collection/analysis is in progress or within ~30 minutes of scheduled time.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyzeRequest'
+            examples:
+              initialRun:
+                summary: Creating new Azure data collection and analysis
+                value:
+                  subscriptionId: cc377154-9605-4cb0-8b41-1b39e1c4ac0f
+                  applicationId: bd6529bf-85d8-410d-a207-ce963b4dd398
+                  secretKey: REDACTED
+                  tenantId: 6c9190a7-bca6-4fcd-b35e-36378aadc695
+                  connectionName: AzureEnvTest
+                  webHook:
+                    uri: https://example.test/webhook/results
+                    authType: basic
+                    authValue: user:pass
+              rerun:
+                summary: Re-run existing analysis (no collection)
+                value:
+                  subscriptionId: cc377154-9605-4cb0-8b41-1b39e1c4ac0f
+                  applicationId: bd6529bf-85d8-410d-a207-ce963b4dd398
+                  secretKey: REDACTED
+                  tenantId: 6c9190a7-bca6-4fcd-b35e-36378aadc695
+                  webHook:
+                    uri: https://example.test/webhook/results
+              historicalAudit:
+                summary: Trigger a one-time historical audit (up to 30 days)
+                value:
+                  subscriptionId: cc377154-9605-4cb0-8b41-1b39e1c4ac0f
+                  applicationId: bd6529bf-85d8-410d-a207-ce963b4dd398
+                  secretKey: REDACTED
+                  tenantId: 6c9190a7-bca6-4fcd-b35e-36378aadc695
+                  triggerAdhocAudit: true
+                  startDayOffset: '10'
+                  endDayOffset: '5'
+      responses:
+        '200':
+          description: Accepted / analysis initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyzeResponse'
+              examples:
+                inProgress:
+                  value:
+                    href: Not available
+                    message: Analysis in progress
+                    status: 200
+        '400':
+          description: Invalid parameters.
+        '401':
+          description: Authentication failed.
+        '404':
+          description: Resource not found.
+        '500':
+          description: Internal server error.
+    servers:
+    - url: https://{host}
+      description: Your Kubex API host
+      variables:
+        host:
+          default: api.example.com
+  /analysis/cloud/azure:
+    get:
+      tags:
+      - Azure Analysis
+      operationId: listAzureAnalyses
+      summary: List Azure subscriptions being analyzed
+      description: Returns analyses created for Azure subscriptions; obtain `analysisId` for other operations.
+      responses:
+        '200':
+          description: Array of analyses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnalysisItem'
+        '401':
+          description: Authentication failed.
+        '500':
+          description: Internal server error.
+    servers:
+    - url: https://{host}
+      description: Your Kubex API host
+      variables:
+        host:
+          default: api.example.com
+  /analysis/azure/{subscriptionId}/status:
+    get:
+      tags:
+      - Azure Analysis
+      operationId: getAzureAnalysisStatus
+      summary: Get analysis status by subscription
+      description: Check the status of collection/analysis for a given Azure subscription.
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        description: Azure subscription ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Status information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisStatus'
+        '404':
+          description: Analysis not found.
+        '500':
+          description: Internal server error.
+    servers:
+    - url: https://{host}
+      description: Your Kubex API host
+      variables:
+        host:
+          default: api.example.com
+  /analysis/cloud/azure/{analysisId}:
+    delete:
+      tags:
+      - Azure Analysis
+      operationId: deleteAzureAnalysisAudit
+      summary: Delete Azure Cloud Connection and Analysis
+      description: 'Deletes the Cloud Connection and Analysis for the specified Azure subscription.
+
+
+        This API only supports deletion for Azure subscriptions that have a valid analysisId. If the Azure
+
+        subscription was not analyzed (for example, unsupported resources or insufficient data), no
+
+        analysisId exists and this API cannot be used. In those cases, delete the cloud connection
+
+        manually and contact support@kubex.ai if assistance is required.'
+      parameters:
+      - name: analysisId
+        in: path
+        required: true
+        description: The unique referenced ID of the Azure analysis.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Delete accepted/completed; audit removed.
+        '400':
+          description: Invalid parameter or conflicting in-progress operation
+        '401':
+          description: Authentication failed.
+        '404':
+          description: Analysis not found.
+        '405':
+          description: Method not allowed.
+        '500':
+          description: Internal server error (e.g., data collection in progress).
+    servers:
+    - url: https://{host}/api/v2
+      variables:
+        host:
+          default: hostname.kubex.ai
+  /analysis/cloud/azure/{analysisId}/results:
+    get:
+      tags:
+      - Azure Analysis
+      operationId: listAzureRecommendations
+      summary: List recommendations for an Azure analysis
+      description: 'Returns Azure recommendations for a completed analysis.
+
+
+        **Content negotiation**
+
+        - `Accept: application/json` → JSON recommendation objects
+
+        - `Accept: application/terraform-map` → Terraform-map objects
+
+
+        **Filtering**
+
+        - Element-based filters are supplied as ordinary query pairs named after fields
+
+        (e.g., `recommendationType=Upsize`). Not all fields are filterable.
+
+
+        **Attributes/data quality**
+
+        - `includeAttributes=true` returns the `attributes` array.
+
+        - `dataQuality` accepts a quoted, comma-separated list of workload names.'
+      parameters:
+      - name: analysisId
+        in: path
+        required: true
+        description: Unique ID of the Azure analysis.
+        schema:
+          type: string
+      - name: includeAttributes
+        in: query
+        required: false
+        description: Return system attributes when `true`.
+        schema:
+          type: boolean
+          default: false
+      - name: dataQuality
+        in: query
+        required: false
+        description: 'Quoted, comma-separated workload type names to include in the `dataQuality` block (e.g., `"CPU Utilization (CINT2006 Rate),Memory Utilization in Percent"`).
+
+          '
+        schema:
+          type: string
+      - name: recommendationType
+        in: query
+        required: false
+        description: Filter by recommendation action (e.g., `Upsize`, `Downsize`, `Modernize`, `Just Right`, `Terminate`, etc.).
+        schema:
+          type: string
+      - name: region
+        in: query
+        required: false
+        description: Filter by Azure region.
+        schema:
+          type: string
+      - name: currentType
+        in: query
+        required: false
+        description: Filter by current instance type.
+        schema:
+          type: string
+      - name: serviceType
+        in: query
+        required: false
+        description: Filter by service type (`Virtual Machine` or `VM Scale Set`).
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: false
+        description: Filter by system name.
+        schema:
+          type: string
+      - name: entityId
+        in: query
+        required: false
+        description: Filter by Kubex entity ID.
+        schema:
+          type: string
+      - name: accountIdRef
+        in: query
+        required: false
+        description: Filter by Azure subscription ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection of recommendations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AzureRecommendation'
+              examples:
+                jsonExample:
+                  summary: JSON example (abbrev.)
+                  value:
+                  - entityId: '12345'
+                    resourceId: /subscriptions/cc377154.../resourceGroups/rg/providers/Microsoft.Compute/virtualMachines/vm01
+                    accountIdRef: cc377154-9605-4cb0-8b41-1b39e1c4ac0f
+                    region: eastus
+                    currentType: Standard_D2s_v3
+                    recommendationType: Downsize
+                    recommendedType: Standard_B2s
+                    implementationMethod: Manual
+                    predictedUptime: '98.5'
+                    totalHoursRunning: '712'
+                    totalHours: '720'
+                    name: vm01
+                    rptHref: https://{host}/reports/impact?entityId=12345
+                    approvalType: na
+                    densifyPolicy: Default Azure Policy
+                    savingsEstimate: '24.50'
+                    serviceType: Virtual Machine
+                    currentHourlyRate: '0.096'
+                    recommendedHourlyRate: '0.062'
+                    recommFirstSeen: 1715731200000
+                    recommLastSeen: 1718323200000
+                    recommSeenCount: 4
+                    auditInfo:
+                      dataCollection:
+                        dateFirstAudited: 1713312000000
+                        dateLastAudited: 1718323200000
+                        auditCount: 31
+                      workloadDataLast30:
+                        firstDate: 1715731200000
+                        lastDate: 1718323200000
+                        totalDays: 30
+                        seenDays: 29
+                    dataQuality:
+                    - workloadName: CPU Utilization (CINT2006 Rate)
+                      firstSeen: 1715731200000
+                      lastSeen: 1718323200000
+                      completeDays: 28
+                      partialDays: 1
+                    attributes:
+                    - id: attr-1
+                      name: Environment
+                      value: prod
+            application/terraform-map:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TerraformMapRecommendation'
+              examples:
+                tfExample:
+                  summary: Terraform-map example (abbrev.)
+                  value:
+                  - provisioningId: vm01
+                    approvalType: na
+                    currentType: Standard_D2s_v3
+                    densifyPolicy: Default Azure Policy
+                    effortEstimate: Low
+                    implementationMethod: Manual
+                    powerState: running
+                    recommendationType: Downsize
+                    predictedUptime: '98.5'
+                    recommendedType: Standard_B2s
+                    savingsEstimate: '24.50'
+                    avgInstanceCountCurrent: 1
+                    avgInstanceCountRecommended: 1
+                    minGroupCurrent: 1
+                    minGroupRecommended: 1
+                    maxGroupCurrent: 1
+                    maxGroupRecommended: 1
+        '400':
+          description: Bad Request (e.g., unsupported workload type in `dataQuality`)
+        '401':
+          description: Authentication failed
+        '404':
+          description: Analysis not found
+        '500':
+          description: Server error
+    servers:
+    - url: https://{host}
+      description: Your Kubex API host
+      variables:
+        host:
+          default: api.example.com
+components:
+  schemas:
+    AnalyzeRequest:
+      type: object
+      description: 'Supply subscription and credentials. For historical audit, set `triggerAdhocAudit=true` and optionally set `startDayOffset`/`endDayOffset`. Only one subscription is processed per request.
+
+        '
+      properties:
+        subscriptionId:
+          type: string
+          description: Azure Subscription ID.
+        applicationId:
+          type: string
+          description: Azure AD application (client) ID.
+        secretKey:
+          type: string
+          description: Client secret for the application.
+        tenantId:
+          type: string
+          description: Azure AD tenant ID.
+        serviceAcctJSON:
+          type: string
+          description: 'Credentials provided as a JSON file, supplied here as a string (implementation-specific).
+
+            '
+        connectionName:
+          type: string
+          description: Optional display name (<= 32 chars) for this connection. Must be unique within Azure connections.
+          maxLength: 32
+        webHook:
+          $ref: '#/components/schemas/WebHook'
+        triggerAdhocAudit:
+          type: boolean
+          description: Trigger a one-time historical audit (requires an existing connection).
+        startDayOffset:
+          type: string
+          description: Offset from 30 days in the past to set the start of the historical range.
+        endDayOffset:
+          type: string
+          description: Offset from yesterday to set the end of the historical range.
+      required:
+      - subscriptionId
+      - applicationId
+      - secretKey
+      - tenantId
+    AnalyzeResponse:
+      type: object
+      properties:
+        href:
+          type: string
+          description: Link to analysis recommendations (if available).
+        message:
+          type: string
+        status:
+          type: integer
+          format: int32
+          description: HTTP-like status code (200, 400, 401, 404, 500).
+      required:
+      - message
+      - status
+    AnalysisItem:
+      type: object
+      description: Entry describing an Azure analysis.
+      properties:
+        analysisName:
+          type: string
+          description: Typically the Azure subscription ID.
+        href:
+          type: string
+          description: Link to recommendations for this analysis.
+        completed:
+          type: string
+          description: Milliseconds timestamp when last analysis completed.
+        analysisId:
+          type: string
+          description: Kubex-internal analysis ID.
+        phase:
+          type: string
+          description: 'Current phase, e.g., `analyzing: 42%` or `not analyzing`.'
+        message:
+          type: string
+        status:
+          type: integer
+          format: int32
+      required:
+      - analysisName
+      - analysisId
+      - status
+    AnalysisStatus:
+      allOf:
+      - $ref: '#/components/schemas/AnalysisItem'
+      description: Same shape commonly used to report status for an analysis.
+    WebHook:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+        authType:
+          type: string
+          description: Authentication type used by the webhook endpoint.
+          examples:
+          - basic
+          - bearer
+        authValue:
+          type: string
+          description: Credential value (e.g., `user:pass` for basic, or token for bearer).
+      required:
+      - uri
+    AzureRecommendation:
+      type: object
+      description: Azure recommendation object (JSON representation).
+      properties:
+        accountIdRef:
+          type: string
+          description: Azure subscription identifier.
+        approvalType:
+          type: string
+          description: Approval setting for the recommendation.
+        attributes:
+          type: array
+          description: Only returned when `includeAttributes=true`.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              value:
+                type: string
+        auditInfo:
+          type: object
+          properties:
+            dataCollection:
+              type: object
+              properties:
+                dateFirstAudited:
+                  type: integer
+                  format: int64
+                dateLastAudited:
+                  type: integer
+                  format: int64
+                auditCount:
+                  type: integer
+            workloadDataLast30:
+              type: object
+              properties:
+                firstDate:
+                  type: integer
+                  format: int64
+                lastDate:
+                  type: integer
+                  format: int64
+                totalDays:
+                  type: integer
+                seenDays:
+                  type: integer
+        currentCost:
+          type: string
+        currentHourlyRate:
+          type: string
+        currentType:
+          type: string
+        dataQuality:
+          type: array
+          items:
+            type: object
+            properties:
+              workloadName:
+                type: string
+              firstSeen:
+                type: integer
+                format: int64
+              lastSeen:
+                type: integer
+                format: int64
+              completeDays:
+                type: integer
+              partialDays:
+                type: integer
+        densifyPolicy:
+          type: string
+        effortEstimate:
+          type: string
+          enum:
+          - Moderate
+          - Low
+          - Very Low
+          - None
+          - Impossible
+        entityId:
+          type: string
+        implementationMethod:
+          type: string
+          description: Self-Optimization status. Not returned for VMSS with more than one VM instance.
+        name:
+          type: string
+        powerState:
+          type: string
+          description: Not available for VMSS.
+        predictedUptime:
+          type: string
+        region:
+          type: string
+        resourceId:
+          type: string
+        recommendationType:
+          type: string
+          description: Recommended action (e.g., Just Right, Upsize, Downsize, Modernize, Terminate, Not Analyzed; for VMSS also Upscale/Downscale).
+        recommendedCost:
+          type: string
+        recommendedHostEntityId:
+          type: string
+        recommendedType:
+          type: string
+        recommFirstSeen:
+          type: integer
+          format: int64
+        recommLastSeen:
+          type: integer
+          format: int64
+        recommSeenCount:
+          type: integer
+        rptHref:
+          type: string
+          format: uri
+          description: 'Link to Impact Analysis and Recommendation Report PDF. Use `Accept: application/octet-stream` to download.
+
+            '
+        savingsEstimate:
+          type: string
+        serviceType:
+          type: string
+          enum:
+          - Virtual Machine
+          - VM Scale Set
+        totalHours:
+          type: string
+        totalHoursRunning:
+          type: string
+        autoScaling:
+          type: object
+          additionalProperties: true
+        avgInstanceCountCurrent:
+          type: number
+        avgInstanceCountRecommended:
+          type: number
+        minGroupCurrent:
+          type: integer
+        minGroupRecommended:
+          type: integer
+        maxGroupCurrent:
+          type: integer
+        maxGroupRecommended:
+          type: integer
+        orchestrationMode:
+          type: string
+        profiles:
+          type: array
+          items:
+            type: object
+        scalingPolicies:
+          type: array
+          items:
+            type: object
+    TerraformMapRecommendation:
+      type: object
+      description: Terraform-map representation of a recommendation.
+      properties:
+        provisioningId:
+          type: string
+          description: Label for the terraform-map recommendation (often taken from a resource tag).
+        approvalType:
+          type: string
+        currentType:
+          type: string
+        densifyPolicy:
+          type: string
+        effortEstimate:
+          type: string
+          enum:
+          - Moderate
+          - Low
+          - Very Low
+          - None
+          - Impossible
+        implementationMethod:
+          type: string
+        powerState:
+          type: string
+        recommendationType:
+          type: string
+        predictedUptime:
+          type: string
+        recommendedType:
+          type: string
+        savingsEstimate:
+          type: string
+        avgInstanceCountCurrent:
+          type: number
+        avgInstanceCountRecommended:
+          type: number
+        minGroupCurrent:
+          type: integer
+        minGroupRecommended:
+          type: integer
+        maxGroupCurrent:
+          type: integer
+        maxGroupRecommended:
+          type: integer
+x-refined-from:
+- densify-public-cloud-analysis-azure-analyze-openapi.yaml
+- densify-public-cloud-analysis-azure-delete-openapi.yaml
+- densify-public-cloud-analysis-azure-results-openapi.yaml

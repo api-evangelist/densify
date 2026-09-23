@@ -1,24 +1,22 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kubex API – AWS Analyze
-  version: "1.0"
+  title: Kubex AWS Analyze API
+  version: '1.0'
 servers:
-  - url: https://{host}/api/v2
-    variables:
-      host:
-        default: api.example.com
-
+- url: https://{host}/api/v2
+  variables:
+    host:
+      default: api.example.com
+tags:
+- name: AWS Analyze
 paths:
   /analysis/cloud/aws/analyze:
     post:
       summary: Onboard AWS account
       operationId: analyzeAws
-      description: >
-        Initiates AWS CloudWatch data collection and runs optimization analysis.
-        Subsequent data collection and analysis are scheduled nightly.
-        If an analysis already exists, this endpoint re-runs analysis and can update 
-        the webhook for result delivery.
-      tags: [AWS Analyze]
+      description: Initiates AWS CloudWatch data collection and runs optimization analysis. Subsequent data collection and analysis are scheduled nightly. If an analysis already exists, this endpoint re-runs analysis and can update the webhook for result delivery.
+      tags:
+      - AWS Analyze
       requestBody:
         required: true
         content:
@@ -26,29 +24,29 @@ paths:
             schema:
               $ref: '#/components/schemas/AwsAnalyzeRequest'
       responses:
-        "200":
+        '200':
           description: Acknowledge request / analysis state
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AwsAnalyzeResponse'
-        "400":
+        '400':
           description: Invalid parameters
-        "401":
+        '401':
           description: Authentication failed
-        "404":
+        '404':
           description: Resource not found
-        "500":
+        '500':
           description: Internal server error
-
   /analysis/cloud/aws:
     get:
       operationId: listAwsAnalyses
       summary: List AWS accounts being analyzed
       description: Returns the set of analyses that have been created, with details needed to reference them elsewhere.
-      tags: [AWS Analyze]
+      tags:
+      - AWS Analyze
       responses:
-        "200":
+        '200':
           description: List of analyses
           content:
             application/json:
@@ -56,13 +54,37 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AwsAnalysisSummary'
-        "401":
+        '401':
           description: Authentication failed
-        "500":
+        '500':
           description: Internal server error
-
 components:
   schemas:
+    AwsAnalyzeResponse:
+      type: object
+      properties:
+        href:
+          type: string
+          description: Referenced resource to the analysis entity or status endpoint.
+        message:
+          type: string
+          description: Human-readable message describing the result.
+        status:
+          type: integer
+          description: HTTP response code of the request.
+    WebHook:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+          description: Destination URI to receive results when analysis completes.
+        authType:
+          type: string
+          description: Authentication type for the webhook (e.g., basic, bearer).
+        authValue:
+          type: string
+          description: Authentication credentials/value corresponding to authType.
     AwsAnalyzeRequest:
       type: object
       properties:
@@ -90,37 +112,9 @@ components:
         webHook:
           $ref: '#/components/schemas/WebHook'
       required:
-        - accountId
-        - roleArnName
-        - roleExternalId
-
-    WebHook:
-      type: object
-      properties:
-        uri:
-          type: string
-          format: uri
-          description: Destination URI to receive results when analysis completes.
-        authType:
-          type: string
-          description: Authentication type for the webhook (e.g., basic, bearer).
-        authValue:
-          type: string
-          description: Authentication credentials/value corresponding to authType.
-
-    AwsAnalyzeResponse:
-      type: object
-      properties:
-        href:
-          type: string
-          description: Referenced resource to the analysis entity or status endpoint.
-        message:
-          type: string
-          description: Human-readable message describing the result.
-        status:
-          type: integer
-          description: HTTP response code of the request.
-
+      - accountId
+      - roleArnName
+      - roleExternalId
     AwsAnalysisSummary:
       type: object
       description: Minimal representation of an AWS analysis created by the system.
@@ -156,4 +150,3 @@ components:
           type: integer
           format: int64
           description: Unix epoch timestamp (ms) of the latest completed analysis run.
-

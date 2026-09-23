@@ -7,10 +7,7 @@ discovery:
   path: /.well-known/agent-card.json
   canonical: true
   host: docs.kubex.ai
-  note: >-
-    Served from the Kubex documentation host. Densify now trades as Kubex — www.densify.com
-    301s to kubex.ai and docs.densify.com 301s to docs.kubex.ai — so docs.kubex.ai is a host
-    this company controls. The legacy /.well-known/agent.json path returns 404 on every host.
+  note: Served from the Kubex documentation host. Densify now trades as Kubex — www.densify.com 301s to kubex.ai and docs.densify.com 301s to docs.kubex.ai — so docs.kubex.ai is a host this company controls. The legacy /.well-known/agent.json path returns 404 on every host.
 x-evidence:
   fetched: '2026-09-06'
   url: https://docs.kubex.ai/.well-known/agent-card.json
@@ -31,7 +28,7 @@ card:
   - id: kubex
     name: Kubex
     url: https://docs.kubex.ai/.well-known/agent-skills/kubex/skill.md
-grade: near-conformant
+  file: a2a/densify-agent-card.json
 grade_basis:
   spec: A2A 1.0.0
   hard_checks:
@@ -45,17 +42,14 @@ grade_basis:
 deviations:
 - field: protocolVersion
   observed: '0.3'
-  note: >-
-    Declares A2A protocol 0.3, not 1.0.0 — the card is valid for the version it claims but
-    predates the 1.0.0 release, so it is graded near-conformant rather than conformant.
+  note: Declares A2A protocol 0.3, not 1.0.0 — the card is valid for the version it claims but predates the 1.0.0 release, so it is graded near-conformant rather than conformant.
 - field: skills[0].tags
   observed: []
   note: skills[0].tags is an empty array, so the skill carries no discovery tags.
 - field: scope
   observed: documentation agent
-  note: >-
-    The card describes the DOCUMENTATION agent (name "Kubex Docs"), not the Kubex product API
-    or the tenant MCP server. Its declared skill points at a markdown Agent Skill file rather
-    than at an executable A2A endpoint, and supportedInterfaces[0].url is the docs site root.
+  note: The card describes the DOCUMENTATION agent (name "Kubex Docs"), not the Kubex product API or the tenant MCP server. Its declared skill points at a markdown Agent Skill file rather than at an executable A2A endpoint, and supportedInterfaces[0].url is the docs site root.
 files:
   card: densify-agent-card.json
+conformance:
+  grade: near-conformant
