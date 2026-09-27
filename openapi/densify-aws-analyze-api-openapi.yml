@@ -72,19 +72,6 @@ components:
         status:
           type: integer
           description: HTTP response code of the request.
-    WebHook:
-      type: object
-      properties:
-        uri:
-          type: string
-          format: uri
-          description: Destination URI to receive results when analysis completes.
-        authType:
-          type: string
-          description: Authentication type for the webhook (e.g., basic, bearer).
-        authValue:
-          type: string
-          description: Authentication credentials/value corresponding to authType.
     AwsAnalyzeRequest:
       type: object
       properties:
@@ -115,6 +102,19 @@ components:
       - accountId
       - roleArnName
       - roleExternalId
+    WebHook:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+          description: Destination URI to receive results when analysis completes.
+        authType:
+          type: string
+          description: Authentication type for the webhook (e.g., basic, bearer).
+        authValue:
+          type: string
+          description: Authentication credentials/value corresponding to authType.
     AwsAnalysisSummary:
       type: object
       description: Minimal representation of an AWS analysis created by the system.

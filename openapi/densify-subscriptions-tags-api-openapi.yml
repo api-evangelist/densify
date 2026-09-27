@@ -255,16 +255,28 @@ paths:
                   $ref: '#/components/schemas/SubscriptionTag'
 components:
   schemas:
-    DeleteResult:
+    SubscriptionTagPut:
       type: object
       properties:
-        tagRef:
+        tagName:
           type: string
-        message:
+        attributeName:
           type: string
-        status:
-          type: integer
-          description: HTTP-like code (e.g., 200, 204, 404).
+        aliasName:
+          type: string
+        key:
+          type: string
+        technology:
+          type: string
+          enum:
+          - AWS
+          - CONTAINER
+        owner:
+          type: string
+      required:
+      - tagName
+      - attributeName
+      description: Supply **all** parameters; PUT is delete+replace.
     UpdateResult:
       type: object
       properties:
@@ -273,6 +285,13 @@ components:
         tagName:
           type: string
         message:
+          type: string
+    CreateResult:
+      type: object
+      properties:
+        tagRef:
+          type: string
+        tagName:
           type: string
     SubscriptionTagCreate:
       type: object
@@ -300,13 +319,6 @@ components:
       description: 'For "Resource Tags"/"Container Labels", specify both `key` and `technology`.
 
         '
-    CreateResult:
-      type: object
-      properties:
-        tagRef:
-          type: string
-        tagName:
-          type: string
     SubscriptionTag:
       type: object
       description: Subscriptions attribute tag entry.
@@ -341,6 +353,16 @@ components:
         status:
           type: integer
           description: HTTP-like status code (200, 204, 400, 401, 404, 415, 500).
+    DeleteResult:
+      type: object
+      properties:
+        tagRef:
+          type: string
+        message:
+          type: string
+        status:
+          type: integer
+          description: HTTP-like code (e.g., 200, 204, 404).
     SubscriptionTagUpdate:
       type: object
       properties:
@@ -366,28 +388,6 @@ components:
       - tagName
       - attributeName
       description: Supply **all** parameters; PUT is delete+replace.
-    SubscriptionTagPut:
-      type: object
-      properties:
-        tagName:
-          type: string
-        attributeName:
-          type: string
-        aliasName:
-          type: string
-        key:
-          type: string
-        technology:
-          type: string
-          enum:
-          - AWS
-          - CONTAINER
-        owner:
-          type: string
-      required:
-      - tagName
-      - attributeName
-      description: Supply **all** parameters; PUT is delete+replace.
   parameters:
     type:
       name: type
@@ -400,6 +400,13 @@ components:
         - all
         - global
         - owner
+    tagRef:
+      name: tagRef
+      in: path
+      required: true
+      description: Unique tag identifier.
+      schema:
+        type: string
     platformType:
       name: platformType
       in: path
@@ -415,12 +422,5 @@ components:
       in: query
       required: false
       description: Username to scope `type=owner` queries (admins only for others).
-      schema:
-        type: string
-    tagRef:
-      name: tagRef
-      in: path
-      required: true
-      description: Unique tag identifier.
       schema:
         type: string

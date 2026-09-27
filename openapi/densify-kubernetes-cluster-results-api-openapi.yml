@@ -113,6 +113,43 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+    ContainerRecommendationDetailed:
+      allOf:
+      - $ref: '#/components/schemas/ContainerRecommendation'
+      - type: object
+        description: Container recommendation entry with additional detail fields (returned when details=true).
+        properties:
+          predictedUptime:
+            type: number
+            format: float
+            description: Predicted uptime percentage for the container.
+          configLastChangedOn:
+            type: string
+            format: date-time
+            description: Timestamp of the most recent change to requests/limits.
+          nodeGroup:
+            type: array
+            items:
+              type: string
+            description: Names of associated node groups.
+          oomKills_last7days:
+            type: integer
+            description: Number of OOM events in the last 7 days.
+          dateFirstAudited:
+            type: string
+            format: date-time
+            description: When this container was first audited (from workload history).
+          dateLastAudited:
+            type: string
+            format: date-time
+            description: When this container was last audited (from workload history).
     ContainerRecommendation:
       type: object
       description: Container recommendation entry (base fields). Fields without values may be omitted.
@@ -226,43 +263,6 @@ components:
               type: number
               format: float
               description: Recommended GPU request (fractional GPU units).
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-    ContainerRecommendationDetailed:
-      allOf:
-      - $ref: '#/components/schemas/ContainerRecommendation'
-      - type: object
-        description: Container recommendation entry with additional detail fields (returned when details=true).
-        properties:
-          predictedUptime:
-            type: number
-            format: float
-            description: Predicted uptime percentage for the container.
-          configLastChangedOn:
-            type: string
-            format: date-time
-            description: Timestamp of the most recent change to requests/limits.
-          nodeGroup:
-            type: array
-            items:
-              type: string
-            description: Names of associated node groups.
-          oomKills_last7days:
-            type: integer
-            description: Number of OOM events in the last 7 days.
-          dateFirstAudited:
-            type: string
-            format: date-time
-            description: When this container was first audited (from workload history).
-          dateLastAudited:
-            type: string
-            format: date-time
-            description: When this container was last audited (from workload history).
   parameters:
     k8s_clusterName:
       name: clusterName

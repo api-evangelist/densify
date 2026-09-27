@@ -381,6 +381,66 @@ paths:
           default: api.example.com
 components:
   schemas:
+    WebHook:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+        authType:
+          type: string
+          description: Authentication type used by the webhook endpoint.
+          examples:
+          - basic
+          - bearer
+        authValue:
+          type: string
+          description: Credential value (e.g., `user:pass` for basic, or token for bearer).
+      required:
+      - uri
+    AnalysisItem:
+      type: object
+      description: Entry describing an Azure analysis.
+      properties:
+        analysisName:
+          type: string
+          description: Typically the Azure subscription ID.
+        href:
+          type: string
+          description: Link to recommendations for this analysis.
+        completed:
+          type: string
+          description: Milliseconds timestamp when last analysis completed.
+        analysisId:
+          type: string
+          description: Kubex-internal analysis ID.
+        phase:
+          type: string
+          description: 'Current phase, e.g., `analyzing: 42%` or `not analyzing`.'
+        message:
+          type: string
+        status:
+          type: integer
+          format: int32
+      required:
+      - analysisName
+      - analysisId
+      - status
+    AnalyzeResponse:
+      type: object
+      properties:
+        href:
+          type: string
+          description: Link to analysis recommendations (if available).
+        message:
+          type: string
+        status:
+          type: integer
+          format: int32
+          description: HTTP-like status code (200, 400, 401, 404, 500).
+      required:
+      - message
+      - status
     AnalyzeRequest:
       type: object
       description: 'Supply subscription and credentials. For historical audit, set `triggerAdhocAudit=true` and optionally set `startDayOffset`/`endDayOffset`. Only one subscription is processed per request.
@@ -424,70 +484,55 @@ components:
       - applicationId
       - secretKey
       - tenantId
-    AnalyzeResponse:
-      type: object
-      properties:
-        href:
-          type: string
-          description: Link to analysis recommendations (if available).
-        message:
-          type: string
-        status:
-          type: integer
-          format: int32
-          description: HTTP-like status code (200, 400, 401, 404, 500).
-      required:
-      - message
-      - status
-    AnalysisItem:
-      type: object
-      description: Entry describing an Azure analysis.
-      properties:
-        analysisName:
-          type: string
-          description: Typically the Azure subscription ID.
-        href:
-          type: string
-          description: Link to recommendations for this analysis.
-        completed:
-          type: string
-          description: Milliseconds timestamp when last analysis completed.
-        analysisId:
-          type: string
-          description: Kubex-internal analysis ID.
-        phase:
-          type: string
-          description: 'Current phase, e.g., `analyzing: 42%` or `not analyzing`.'
-        message:
-          type: string
-        status:
-          type: integer
-          format: int32
-      required:
-      - analysisName
-      - analysisId
-      - status
     AnalysisStatus:
       allOf:
       - $ref: '#/components/schemas/AnalysisItem'
       description: Same shape commonly used to report status for an analysis.
-    WebHook:
+    TerraformMapRecommendation:
       type: object
+      description: Terraform-map representation of a recommendation.
       properties:
-        uri:
+        provisioningId:
           type: string
-          format: uri
-        authType:
+          description: Label for the terraform-map recommendation (often taken from a resource tag).
+        approvalType:
           type: string
-          description: Authentication type used by the webhook endpoint.
-          examples:
-          - basic
-          - bearer
-        authValue:
+        currentType:
           type: string
-          description: Credential value (e.g., `user:pass` for basic, or token for bearer).
-      required:
-      - uri
+        densifyPolicy:
+          type: string
+        effortEstimate:
+          type: string
+          enum:
+          - Moderate
+          - Low
+          - Very Low
+          - None
+          - Impossible
+        implementationMethod:
+          type: string
+        powerState:
+          type: string
+        recommendationType:
+          type: string
+        predictedUptime:
+          type: string
+        recommendedType:
+          type: string
+        savingsEstimate:
+          type: string
+        avgInstanceCountCurrent:
+          type: number
+        avgInstanceCountRecommended:
+          type: number
+        minGroupCurrent:
+          type: integer
+        minGroupRecommended:
+          type: integer
+        maxGroupCurrent:
+          type: integer
+        maxGroupRecommended:
+          type: integer
     AzureRecommendation:
       type: object
       description: Azure recommendation object (JSON representation).
@@ -645,51 +690,6 @@ components:
           type: array
           items:
             type: object
-    TerraformMapRecommendation:
-      type: object
-      description: Terraform-map representation of a recommendation.
-      properties:
-        provisioningId:
-          type: string
-          description: Label for the terraform-map recommendation (often taken from a resource tag).
-        approvalType:
-          type: string
-        currentType:
-          type: string
-        densifyPolicy:
-          type: string
-        effortEstimate:
-          type: string
-          enum:
-          - Moderate
-          - Low
-          - Very Low
-          - None
-          - Impossible
-        implementationMethod:
-          type: string
-        powerState:
-          type: string
-        recommendationType:
-          type: string
-        predictedUptime:
-          type: string
-        recommendedType:
-          type: string
-        savingsEstimate:
-          type: string
-        avgInstanceCountCurrent:
-          type: number
-        avgInstanceCountRecommended:
-          type: number
-        minGroupCurrent:
-          type: integer
-        minGroupRecommended:
-          type: integer
-        maxGroupCurrent:
-          type: integer
-        maxGroupRecommended:
-          type: integer
 x-refined-from:
 - densify-public-cloud-analysis-azure-analyze-openapi.yaml
 - densify-public-cloud-analysis-azure-delete-openapi.yaml

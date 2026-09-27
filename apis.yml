@@ -46,14 +46,19 @@ accessModel:
   generated: '2026-09-06'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/densify.png
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-25
+x-docs-hosting: vercel
 tags:
 - Cloud Cost
 - Container Optimization
 - FinOps
 - Kubernetes
-- Machine-Learning
+- Machine Learning
 - Recommendations
 - Rightsizing
+- A2A
 tags_raw:
 - Cloud Cost
 - Container Optimization
@@ -62,6 +67,8 @@ tags_raw:
 - Machine Learning
 - Recommendations
 - Right-Sizing
+- Machine-Learning
+- A2A
 url: https://raw.githubusercontent.com/api-evangelist/densify/refs/heads/main/apis.yml
 created: '2026-03-16'
 modified: '2026-09-06'
@@ -653,3 +660,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 87
   pass: local-v3
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.kubex.ai/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

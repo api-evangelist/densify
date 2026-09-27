@@ -451,58 +451,32 @@ paths:
         '500':
           description: Internal server error
 components:
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Zero-based page index (page=0 is the first page)
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    Details:
+      name: details
+      in: query
+      description: Include extra details for applicable elements (e.g., `children`, `manufacturer`, `os`)
+      schema:
+        type: boolean
+        default: false
+    PageSize:
+      name: page_size
+      in: query
+      description: Page size when paging is enabled
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+        default: 25
   schemas:
-    AttributeTriple:
-      type: object
-      description: Attribute entry stored as [id, name, value]
-      required:
-      - id
-      - name
-      - value
-      properties:
-        id:
-          type: string
-          description: Unique attribute ID (e.g., attr_ObservedUptime)
-        name:
-          type: string
-          description: Human-readable attribute name
-        value:
-          type: string
-          description: Attribute value
-    ControlEnvironmentRef:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        platform_category:
-          type: string
-          description: Control environment category
-          enum:
-          - External Cloud
-          - Internal Virtual
-        href:
-          type: string
-        icon:
-          type: string
-          description: Path to icon resource
-    IoBenchmark:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - Maximum Disk Throughput (bytes/s)
-          - Maximum Network Throughput (bytes/s)
-        score_type:
-          type: string
-          enum:
-          - disk
-          - net
-        value:
-          type: number
-          description: A value of -1 means no value specified
     CpuBenchmark:
       type: object
       properties:
@@ -524,6 +498,66 @@ components:
         value:
           type: number
           format: float
+    InfrastructureGroupRef:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        href:
+          type: string
+    AttributeTriple:
+      type: object
+      description: Attribute entry stored as [id, name, value]
+      required:
+      - id
+      - name
+      - value
+      properties:
+        id:
+          type: string
+          description: Unique attribute ID (e.g., attr_ObservedUptime)
+        name:
+          type: string
+          description: Human-readable attribute name
+        value:
+          type: string
+          description: Attribute value
+    IoBenchmark:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - Maximum Disk Throughput (bytes/s)
+          - Maximum Network Throughput (bytes/s)
+        score_type:
+          type: string
+          enum:
+          - disk
+          - net
+        value:
+          type: number
+          description: A value of -1 means no value specified
+    ControlEnvironmentRef:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        platform_category:
+          type: string
+          description: Control environment category
+          enum:
+          - External Cloud
+          - Internal Virtual
+        href:
+          type: string
+        icon:
+          type: string
+          description: Path to icon resource
     System:
       type: object
       description: A discovered system
@@ -622,40 +656,6 @@ components:
       - id
       - name
       - href
-    InfrastructureGroupRef:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        href:
-          type: string
-  parameters:
-    Page:
-      name: page
-      in: query
-      description: Zero-based page index (page=0 is the first page)
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
-    PageSize:
-      name: page_size
-      in: query
-      description: Page size when paging is enabled
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 500
-        default: 25
-    Details:
-      name: details
-      in: query
-      description: Include extra details for applicable elements (e.g., `children`, `manufacturer`, `os`)
-      schema:
-        type: boolean
-        default: false
   securitySchemes:
     bearerAuth:
       type: http

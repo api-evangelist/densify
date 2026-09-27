@@ -319,15 +319,36 @@ paths:
           default: api.example.com
 components:
   schemas:
-    GcpAnalysisItem:
+    WebHook:
+      type: object
+      additionalProperties: false
+      properties:
+        uri:
+          type: string
+          format: uri
+        authType:
+          type: string
+          description: Authentication scheme used by the webhook endpoint (e.g., basic, bearer).
+        authValue:
+          type: string
+          description: Credential value (e.g., user:pass for basic, or token).
+      required:
+      - uri
+    AnalyzeStatusMessage:
       type: object
       properties:
-        analysisName:
-          type: string
-          description: GCP project ID associated with the analysis.
         href:
           type: string
-          description: Link
+          description: Link to recommendations (if available).
+        message:
+          type: string
+        status:
+          type: integer
+          format: int32
+          description: One of 200, 400, 401, 404, 500.
+      required:
+      - message
+      - status
     GcpAnalyzeRequest:
       type: object
       properties:
@@ -369,21 +390,15 @@ components:
       - projectId
       - credential
       - triggerAdhocAudit
-    WebHook:
+    GcpAnalysisItem:
       type: object
-      additionalProperties: false
       properties:
-        uri:
+        analysisName:
           type: string
-          format: uri
-        authType:
+          description: GCP project ID associated with the analysis.
+        href:
           type: string
-          description: Authentication scheme used by the webhook endpoint (e.g., basic, bearer).
-        authValue:
-          type: string
-          description: Credential value (e.g., user:pass for basic, or token).
-      required:
-      - uri
+          description: Link
     CredentialStringOrObject:
       description: GCP service account credential (inline JSON). Docs show both string and object usage.
       oneOf:
@@ -392,21 +407,6 @@ components:
       - type: object
         additionalProperties: true
         description: Parsed JSON object of the keyfile
-    AnalyzeStatusMessage:
-      type: object
-      properties:
-        href:
-          type: string
-          description: Link to recommendations (if available).
-        message:
-          type: string
-        status:
-          type: integer
-          format: int32
-          description: One of 200, 400, 401, 404, 500.
-      required:
-      - message
-      - status
     GcpRecommendation:
       type: object
       description: GCP recommendation object (JSON representation).

@@ -71,6 +71,16 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
+    Namespace:
+      type: object
+      properties:
+        namespace:
+          type: string
+          description: Namespace name.
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pod'
     ClusterDetails:
       allOf:
       - $ref: '#/components/schemas/ClusterSummary'
@@ -92,6 +102,13 @@ components:
           description: Container names in the pod.
           items:
             type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
     ClusterSummary:
       type: object
       properties:
@@ -124,32 +141,15 @@ components:
         prometheusVersion:
           type: string
           description: Prometheus version.
-    Namespace:
-      type: object
-      properties:
-        namespace:
-          type: string
-          description: Namespace name.
-        pods:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pod'
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
   responses:
-    ServerError:
-      description: Internal server error
+    Unauthorized:
+      description: Unauthorized
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized
+    ServerError:
+      description: Internal server error
       content:
         application/json:
           schema:
