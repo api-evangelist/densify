@@ -381,23 +381,10 @@ paths:
           default: api.example.com
 components:
   schemas:
-    WebHook:
-      type: object
-      properties:
-        uri:
-          type: string
-          format: uri
-        authType:
-          type: string
-          description: Authentication type used by the webhook endpoint.
-          examples:
-          - basic
-          - bearer
-        authValue:
-          type: string
-          description: Credential value (e.g., `user:pass` for basic, or token for bearer).
-      required:
-      - uri
+    AnalysisStatus:
+      allOf:
+      - $ref: '#/components/schemas/AnalysisItem'
+      description: Same shape commonly used to report status for an analysis.
     AnalysisItem:
       type: object
       description: Entry describing an Azure analysis.
@@ -426,6 +413,23 @@ components:
       - analysisName
       - analysisId
       - status
+    WebHook:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+        authType:
+          type: string
+          description: Authentication type used by the webhook endpoint.
+          examples:
+          - basic
+          - bearer
+        authValue:
+          type: string
+          description: Credential value (e.g., `user:pass` for basic, or token for bearer).
+      required:
+      - uri
     AnalyzeResponse:
       type: object
       properties:
@@ -484,10 +488,6 @@ components:
       - applicationId
       - secretKey
       - tenantId
-    AnalysisStatus:
-      allOf:
-      - $ref: '#/components/schemas/AnalysisItem'
-      description: Same shape commonly used to report status for an analysis.
     TerraformMapRecommendation:
       type: object
       description: Terraform-map representation of a recommendation.

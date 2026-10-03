@@ -71,13 +71,6 @@ paths:
                 $ref: '#/components/schemas/RecommendationList'
 components:
   schemas:
-    RecommendationList:
-      type: object
-      properties:
-        recommendations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Recommendation'
     Recommendation:
       type: object
       properties:
@@ -93,6 +86,13 @@ components:
           type: number
         savingsEstimate:
           type: number
+    RecommendationList:
+      type: object
+      properties:
+        recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recommendation'
   parameters:
     AnalysisId:
       name: analysisId

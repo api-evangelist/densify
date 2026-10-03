@@ -65,9 +65,9 @@ paths:
         schema:
           type: string
           enum:
-          - true
-          - false
-          default: true
+          - 'On'
+          - 'Off'
+          default: 'On'
       - name: setdisplay_category
         in: query
         description: 'Comma-separated list of attribute categories to return (e.g., `Business,Transformation,Public Cloud`).
@@ -452,6 +452,13 @@ paths:
           description: Internal server error
 components:
   parameters:
+    Details:
+      name: details
+      in: query
+      description: Include extra details for applicable elements (e.g., `children`, `manufacturer`, `os`)
+      schema:
+        type: boolean
+        default: false
     Page:
       name: page
       in: query
@@ -460,13 +467,6 @@ components:
         type: integer
         minimum: 0
         default: 0
-    Details:
-      name: details
-      in: query
-      description: Include extra details for applicable elements (e.g., `children`, `manufacturer`, `os`)
-      schema:
-        type: boolean
-        default: false
     PageSize:
       name: page_size
       in: query
@@ -477,87 +477,6 @@ components:
         maximum: 500
         default: 25
   schemas:
-    CpuBenchmark:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Benchmark label
-          enum:
-          - CINT2000
-          - CINT2000 Rate
-          - CINT2006 Rate
-          - RPE2
-        score_type:
-          type: string
-          enum:
-          - cint2000
-          - cint2000rate
-          - cint2006rate
-          - rpe2
-        value:
-          type: number
-          format: float
-    InfrastructureGroupRef:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        href:
-          type: string
-    AttributeTriple:
-      type: object
-      description: Attribute entry stored as [id, name, value]
-      required:
-      - id
-      - name
-      - value
-      properties:
-        id:
-          type: string
-          description: Unique attribute ID (e.g., attr_ObservedUptime)
-        name:
-          type: string
-          description: Human-readable attribute name
-        value:
-          type: string
-          description: Attribute value
-    IoBenchmark:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - Maximum Disk Throughput (bytes/s)
-          - Maximum Network Throughput (bytes/s)
-        score_type:
-          type: string
-          enum:
-          - disk
-          - net
-        value:
-          type: number
-          description: A value of -1 means no value specified
-    ControlEnvironmentRef:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        platform_category:
-          type: string
-          description: Control environment category
-          enum:
-          - External Cloud
-          - Internal Virtual
-        href:
-          type: string
-        icon:
-          type: string
-          description: Path to icon resource
     System:
       type: object
       description: A discovered system
@@ -656,6 +575,87 @@ components:
       - id
       - name
       - href
+    AttributeTriple:
+      type: object
+      description: Attribute entry stored as [id, name, value]
+      required:
+      - id
+      - name
+      - value
+      properties:
+        id:
+          type: string
+          description: Unique attribute ID (e.g., attr_ObservedUptime)
+        name:
+          type: string
+          description: Human-readable attribute name
+        value:
+          type: string
+          description: Attribute value
+    ControlEnvironmentRef:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        platform_category:
+          type: string
+          description: Control environment category
+          enum:
+          - External Cloud
+          - Internal Virtual
+        href:
+          type: string
+        icon:
+          type: string
+          description: Path to icon resource
+    IoBenchmark:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - Maximum Disk Throughput (bytes/s)
+          - Maximum Network Throughput (bytes/s)
+        score_type:
+          type: string
+          enum:
+          - disk
+          - net
+        value:
+          type: number
+          description: A value of -1 means no value specified
+    CpuBenchmark:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Benchmark label
+          enum:
+          - CINT2000
+          - CINT2000 Rate
+          - CINT2006 Rate
+          - RPE2
+        score_type:
+          type: string
+          enum:
+          - cint2000
+          - cint2000rate
+          - cint2006rate
+          - rpe2
+        value:
+          type: number
+          format: float
+    InfrastructureGroupRef:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        href:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

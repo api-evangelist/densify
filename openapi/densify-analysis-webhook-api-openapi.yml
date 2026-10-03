@@ -221,24 +221,6 @@ paths:
           description: Analysis webhook not found.
 components:
   schemas:
-    WebhookDefinition:
-      type: object
-      properties:
-        analysisId:
-          type: string
-        analysisName:
-          type: string
-        href:
-          type: string
-        uri:
-          type: string
-          format: uri
-        webHookStatus:
-          type: string
-      required:
-      - analysisId
-      - href
-      - uri
     StatusMessage:
       type: object
       properties:
@@ -263,4 +245,22 @@ components:
           type: string
           description: Credential (user:pass or token).
       required:
+      - uri
+    WebhookDefinition:
+      type: object
+      properties:
+        analysisId:
+          type: string
+        analysisName:
+          type: string
+        href:
+          type: string
+        uri:
+          type: string
+          format: uri
+        webHookStatus:
+          type: string
+      required:
+      - analysisId
+      - href
       - uri

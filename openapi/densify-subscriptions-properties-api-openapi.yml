@@ -228,26 +228,6 @@ paths:
                   $ref: '#/components/schemas/SubscriptionProperty'
 components:
   schemas:
-    SubscriptionProperty:
-      type: object
-      properties:
-        propertyRef:
-          type: string
-          description: Unique referenced ID.
-        propertyName:
-          type: string
-          description: 'Recommendation element name (must exist in the applicable Recommendations response schema).
-
-            '
-        aliasName:
-          type: string
-          description: Display alias (scope-unique per rules).
-        owner:
-          type: string
-          description: Empty = global; otherwise username (private).
-      required:
-      - propertyRef
-      - propertyName
     SubscriptionPropertyPut:
       type: object
       properties:
@@ -273,6 +253,36 @@ components:
       required:
       - propertyRef
       - propertyName
+    SubscriptionProperty:
+      type: object
+      properties:
+        propertyRef:
+          type: string
+          description: Unique referenced ID.
+        propertyName:
+          type: string
+          description: 'Recommendation element name (must exist in the applicable Recommendations response schema).
+
+            '
+        aliasName:
+          type: string
+          description: Display alias (scope-unique per rules).
+        owner:
+          type: string
+          description: Empty = global; otherwise username (private).
+      required:
+      - propertyRef
+      - propertyName
+    DeleteResult:
+      type: object
+      properties:
+        propertyRef:
+          type: string
+        message:
+          type: string
+        status:
+          type: integer
+          description: HTTP-like code (200, 204, 400, 404, 500).
     SubscriptionPropertyCreate:
       type: object
       properties:
@@ -285,17 +295,17 @@ components:
           description: Omit or empty for global (admins only); otherwise username for private.
       required:
       - propertyName
-    DeleteResult:
-      type: object
-      properties:
-        propertyRef:
-          type: string
-        message:
-          type: string
-        status:
-          type: integer
-          description: HTTP-like code (200, 204, 400, 404, 500).
   parameters:
+    platformType:
+      name: platformType
+      in: path
+      required: true
+      description: Platform catalog (cloud or containers).
+      schema:
+        type: string
+        enum:
+        - cloud
+        - containers
     type:
       name: type
       in: query
@@ -307,16 +317,6 @@ components:
         - all
         - global
         - owner
-    platformType:
-      name: platformType
-      in: path
-      required: true
-      description: Platform catalog (cloud or containers).
-      schema:
-        type: string
-        enum:
-        - cloud
-        - containers
     owner:
       name: owner
       in: query

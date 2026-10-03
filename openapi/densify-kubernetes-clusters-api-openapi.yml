@@ -71,44 +71,6 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
-    Namespace:
-      type: object
-      properties:
-        namespace:
-          type: string
-          description: Namespace name.
-        pods:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pod'
-    ClusterDetails:
-      allOf:
-      - $ref: '#/components/schemas/ClusterSummary'
-      - type: object
-        properties:
-          namespaces:
-            type: array
-            description: Namespaces discovered in the cluster.
-            items:
-              $ref: '#/components/schemas/Namespace'
-    Pod:
-      type: object
-      properties:
-        podOwnerName:
-          type: string
-          description: The owner (controller) name for the pod.
-        containers:
-          type: array
-          description: Container names in the pod.
-          items:
-            type: string
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
     ClusterSummary:
       type: object
       properties:
@@ -141,15 +103,53 @@ components:
         prometheusVersion:
           type: string
           description: Prometheus version.
+    ClusterDetails:
+      allOf:
+      - $ref: '#/components/schemas/ClusterSummary'
+      - type: object
+        properties:
+          namespaces:
+            type: array
+            description: Namespaces discovered in the cluster.
+            items:
+              $ref: '#/components/schemas/Namespace'
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+    Pod:
+      type: object
+      properties:
+        podOwnerName:
+          type: string
+          description: The owner (controller) name for the pod.
+        containers:
+          type: array
+          description: Container names in the pod.
+          items:
+            type: string
+    Namespace:
+      type: object
+      properties:
+        namespace:
+          type: string
+          description: Namespace name.
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pod'
   responses:
-    Unauthorized:
-      description: Unauthorized
+    ServerError:
+      description: Internal server error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    ServerError:
-      description: Internal server error
+    Unauthorized:
+      description: Unauthorized
       content:
         application/json:
           schema:

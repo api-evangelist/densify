@@ -272,70 +272,6 @@ paths:
           default: api.example.com
 components:
   schemas:
-    AuditInfo:
-      type: object
-      properties:
-        dataCollection:
-          type: object
-          properties:
-            dateFirstAudited:
-              type: integer
-              format: int64
-            dateLastAudited:
-              type: integer
-              format: int64
-            auditCount:
-              type: integer
-        workloadDataLast30:
-          type: object
-          properties:
-            firstDate:
-              type: integer
-              format: int64
-            lastDate:
-              type: integer
-              format: int64
-            totalDays:
-              type: integer
-            seenDays:
-              type: integer
-    TerraformRecommendation:
-      type: object
-      properties:
-        currentType:
-          type: string
-        recommendedType:
-          type: string
-        approvalType:
-          type: string
-        predictedUptime:
-          type: string
-        recommendationType:
-          type: string
-        powerState:
-          type: string
-        savingsEstimate:
-          type: string
-        effortEstimate:
-          type: string
-        densifyPolicy:
-          type: string
-        deferRecommendation:
-          type: string
-        minGroupCurrent:
-          type: string
-        minGroupRecommended:
-          type: string
-        maxGroupCurrent:
-          type: string
-        maxGroupRecommended:
-          type: string
-        currentDesiredCapacity:
-          type: string
-        avgInstanceCountCurrent:
-          type: string
-        avgInstanceCountRecommended:
-          type: string
     Recommendation:
       type: object
       properties:
@@ -461,6 +397,70 @@ components:
           type: integer
         partialDays:
           type: integer
+    AuditInfo:
+      type: object
+      properties:
+        dataCollection:
+          type: object
+          properties:
+            dateFirstAudited:
+              type: integer
+              format: int64
+            dateLastAudited:
+              type: integer
+              format: int64
+            auditCount:
+              type: integer
+        workloadDataLast30:
+          type: object
+          properties:
+            firstDate:
+              type: integer
+              format: int64
+            lastDate:
+              type: integer
+              format: int64
+            totalDays:
+              type: integer
+            seenDays:
+              type: integer
+    TerraformRecommendation:
+      type: object
+      properties:
+        currentType:
+          type: string
+        recommendedType:
+          type: string
+        approvalType:
+          type: string
+        predictedUptime:
+          type: string
+        recommendationType:
+          type: string
+        powerState:
+          type: string
+        savingsEstimate:
+          type: string
+        effortEstimate:
+          type: string
+        densifyPolicy:
+          type: string
+        deferRecommendation:
+          type: string
+        minGroupCurrent:
+          type: string
+        minGroupRecommended:
+          type: string
+        maxGroupCurrent:
+          type: string
+        maxGroupRecommended:
+          type: string
+        currentDesiredCapacity:
+          type: string
+        avgInstanceCountCurrent:
+          type: string
+        avgInstanceCountRecommended:
+          type: string
     TerraformMapRecommendations:
       type: object
       description: 'Terraform-map representation. Each key under `densify_recommendations` is the provisioningId (or system name when the tag is absent).

@@ -234,47 +234,49 @@ paths:
                 items:
                   $ref: '#/components/schemas/Suppression'
 components:
-  parameters:
-    suppressionRef:
-      name: suppressionRef
-      in: path
-      required: true
-      description: Unique suppression identifier.
-      schema:
-        type: string
-    owner:
-      name: owner
-      in: query
-      required: false
-      description: Username used with `type=owner` (admins can query any user; non-admins only themselves; others → 400 “Current login user cannot query for owner”).
-      schema:
-        type: string
-    type:
-      name: type
-      in: query
-      required: false
-      description: 'Which suppressions to return: `all` (default), `global`, or `owner`. Non-admins
-
-        only see their own private entries with `owner`.
-
-        '
-      schema:
-        type: string
-        enum:
-        - all
-        - global
-        - owner
-    platformType:
-      name: platformType
-      in: path
-      required: true
-      description: Platform catalog to target (`cloud` or `containers`).
-      schema:
-        type: string
-        enum:
-        - cloud
-        - containers
   schemas:
+    Suppression:
+      type: object
+      properties:
+        suppressionRef:
+          type: string
+          description: Unique reference ID.
+        suppressionName:
+          type: string
+          description: Suppression name.
+        aliasName:
+          type: string
+          description: Alias for display.
+        attributeName:
+          type: string
+          description: 'Attribute name (e.g., “Business Applications”, “Resource Tags”, “Container Labels”). For “Resource Tags”/“Container Labels”, supply `key` and `technology`. Must exist in Kubex standard attributes.
+
+            '
+        key:
+          type: string
+          description: Resource tag/label key (with technology).
+        technology:
+          type: string
+          description: 'Technology for resource attribute (supported: AWS, CONTAINER).'
+          enum:
+          - AWS
+          - CONTAINER
+        propertyName:
+          type: string
+          description: 'Recommendation element name (must exist in Recommendations schema for the platform).
+
+            '
+        owner:
+          type: string
+          description: 'Empty = global; otherwise username for private entry. Admins can set empty (global); non-admins limited to self.
+
+            '
+        message:
+          type: string
+          description: Error/status message (on error).
+        status:
+          type: integer
+          description: HTTP-like status code (200, 204, 400, 401, 404, 415, 500).
     SuppressionCreate:
       type: object
       properties:
@@ -320,48 +322,18 @@ components:
           type: string
       required:
       - suppressionName
-    Suppression:
+    DeleteResult:
       type: object
       properties:
         suppressionRef:
           type: string
-          description: Unique reference ID.
         suppressionName:
           type: string
-          description: Suppression name.
-        aliasName:
-          type: string
-          description: Alias for display.
-        attributeName:
-          type: string
-          description: 'Attribute name (e.g., “Business Applications”, “Resource Tags”, “Container Labels”). For “Resource Tags”/“Container Labels”, supply `key` and `technology`. Must exist in Kubex standard attributes.
-
-            '
-        key:
-          type: string
-          description: Resource tag/label key (with technology).
-        technology:
-          type: string
-          description: 'Technology for resource attribute (supported: AWS, CONTAINER).'
-          enum:
-          - AWS
-          - CONTAINER
-        propertyName:
-          type: string
-          description: 'Recommendation element name (must exist in Recommendations schema for the platform).
-
-            '
-        owner:
-          type: string
-          description: 'Empty = global; otherwise username for private entry. Admins can set empty (global); non-admins limited to self.
-
-            '
         message:
           type: string
-          description: Error/status message (on error).
         status:
           type: integer
-          description: HTTP-like status code (200, 204, 400, 401, 404, 415, 500).
+          description: HTTP-like code (e.g., 200, 204, 404).
     SuppressionUpdate:
       type: object
       properties:
@@ -387,15 +359,43 @@ components:
       required:
       - suppressionRef
       - suppressionName
-    DeleteResult:
-      type: object
-      properties:
-        suppressionRef:
-          type: string
-        suppressionName:
-          type: string
-        message:
-          type: string
-        status:
-          type: integer
-          description: HTTP-like code (e.g., 200, 204, 404).
+  parameters:
+    platformType:
+      name: platformType
+      in: path
+      required: true
+      description: Platform catalog to target (`cloud` or `containers`).
+      schema:
+        type: string
+        enum:
+        - cloud
+        - containers
+    type:
+      name: type
+      in: query
+      required: false
+      description: 'Which suppressions to return: `all` (default), `global`, or `owner`. Non-admins
+
+        only see their own private entries with `owner`.
+
+        '
+      schema:
+        type: string
+        enum:
+        - all
+        - global
+        - owner
+    owner:
+      name: owner
+      in: query
+      required: false
+      description: Username used with `type=owner` (admins can query any user; non-admins only themselves; others → 400 “Current login user cannot query for owner”).
+      schema:
+        type: string
+    suppressionRef:
+      name: suppressionRef
+      in: path
+      required: true
+      description: Unique suppression identifier.
+      schema:
+        type: string

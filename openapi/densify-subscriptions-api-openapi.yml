@@ -383,6 +383,32 @@ paths:
           default: api.example.com
 components:
   schemas:
+    PropertyCondition:
+      type: object
+      properties:
+        propertyID:
+          type: string
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+      required:
+      - propertyID
+      - operator
+      - values
+      description: Filter on recommendation fields. Requires at least one **core** property overall.
+    Schedule:
+      type: object
+      properties:
+        frequency:
+          type: string
+          description: Implementation-defined frequency (e.g., NIGHTLY, WEEKLY).
+        at:
+          type: string
+          description: HH:mm (24h) time string for trigger.
+      description: If omitted, notifications typically trigger nightly after analysis/reporting.
     SubscriptionUpsert:
       type: object
       properties:
@@ -426,19 +452,6 @@ components:
         schedule:
           $ref: '#/components/schemas/Schedule'
       description: "Provide at least **one** of: `propertyReferences`, `tagReferences`, or `suppressionReferences`. \n"
-    WebHook:
-      type: object
-      properties:
-        uri:
-          type: string
-          format: uri
-        authType:
-          type: string
-        authValue:
-          type: string
-      required:
-      - uri
-      description: Webhook destination for delivering subscription notifications.
     SuppressionCondition:
       type: object
       properties:
@@ -458,6 +471,35 @@ components:
       - operator
       - values
       description: Exclude systems/recommendations from the output.
+    WebHook:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+        authType:
+          type: string
+        authValue:
+          type: string
+      required:
+      - uri
+      description: Webhook destination for delivering subscription notifications.
+    TagCondition:
+      type: object
+      properties:
+        tagID:
+          type: string
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+      required:
+      - tagID
+      - operator
+      - values
+      description: Filter on system attributes (e.g., account, BU, app).
     Subscription:
       type: object
       properties:
@@ -511,32 +553,6 @@ components:
       required:
       - subscriptionRef
       - subscriptionName
-    TagCondition:
-      type: object
-      properties:
-        tagID:
-          type: string
-        operator:
-          type: string
-        values:
-          type: array
-          items:
-            type: string
-      required:
-      - tagID
-      - operator
-      - values
-      description: Filter on system attributes (e.g., account, BU, app).
-    Schedule:
-      type: object
-      properties:
-        frequency:
-          type: string
-          description: Implementation-defined frequency (e.g., NIGHTLY, WEEKLY).
-        at:
-          type: string
-          description: HH:mm (24h) time string for trigger.
-      description: If omitted, notifications typically trigger nightly after analysis/reporting.
     ReturnStructure:
       type: object
       properties:
@@ -549,22 +565,28 @@ components:
           items:
             type: string
           description: Fields to include in returned dataset.
-    PropertyCondition:
+    SubscriptionResultItem:
       type: object
+      description: "One system recommendation as shaped by the subscription `returnStructure`.  \nMay include `properties`, optional `divider`, and optional `tags`. \n"
       properties:
-        propertyID:
+        divider:
           type: string
-        operator:
-          type: string
-        values:
+        tags:
           type: array
           items:
             type: string
+      additionalProperties: true
+    StatusMessage:
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: integer
+          description: 200, 204, 400, 401, 404, 415, 500.
       required:
-      - propertyID
-      - operator
-      - values
-      description: Filter on recommendation fields. Requires at least one **core** property overall.
+      - message
+      - status
     SubscriptionResults:
       type: object
       properties:
@@ -604,28 +626,6 @@ components:
         owner:
           type: string
           description: Empty = global subscription; otherwise username.
-    StatusMessage:
-      type: object
-      properties:
-        message:
-          type: string
-        status:
-          type: integer
-          description: 200, 204, 400, 401, 404, 415, 500.
-      required:
-      - message
-      - status
-    SubscriptionResultItem:
-      type: object
-      description: "One system recommendation as shaped by the subscription `returnStructure`.  \nMay include `properties`, optional `divider`, and optional `tags`. \n"
-      properties:
-        divider:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      additionalProperties: true
     SubscriptionStatus:
       type: object
       properties:
@@ -642,13 +642,16 @@ components:
           type: integer
           description: One of 200, 204, 400, 401, 404, 415, 500.
   parameters:
-    subscriptionRefQuery:
-      name: subscriptionRef
-      in: query
-      required: false
-      description: Return details for a single subscription by ID.
+    platformType:
+      name: platformType
+      in: path
+      required: true
+      description: Technology platform (`cloud` or `containers`).
       schema:
         type: string
+        enum:
+        - cloud
+        - containers
     type:
       name: type
       in: query
@@ -661,23 +664,6 @@ components:
         - global
         - owner
       example: owner
-    platformType:
-      name: platformType
-      in: path
-      required: true
-      description: Technology platform (`cloud` or `containers`).
-      schema:
-        type: string
-        enum:
-        - cloud
-        - containers
-    owner:
-      name: owner
-      in: query
-      required: false
-      description: Kubex username to scope `type=owner` queries (admins only for others).
-      schema:
-        type: string
     subscriptionRef:
       name: subscriptionRef
       in: path
@@ -685,16 +671,20 @@ components:
       description: Unique subscription identifier.
       schema:
         type: string
-    limit:
-      name: limit
+    owner:
+      name: owner
       in: query
       required: false
-      description: "Maximum number of results to return. Default 3000; valid range 1–30000.\nOnly applies to on-demand queries (no limit for scheduled webhook pushes). \n"
+      description: Kubex username to scope `type=owner` queries (admins only for others).
       schema:
-        type: integer
-        minimum: 1
-        maximum: 30000
-        default: 3000
+        type: string
+    subscriptionRefQuery:
+      name: subscriptionRef
+      in: query
+      required: false
+      description: Return details for a single subscription by ID.
+      schema:
+        type: string
     platformType_2:
       name: platformType
       in: path
@@ -705,6 +695,16 @@ components:
         enum:
         - cloud
         - containers
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: "Maximum number of results to return. Default 3000; valid range 1–30000.\nOnly applies to on-demand queries (no limit for scheduled webhook pushes). \n"
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 30000
+        default: 3000
     divider:
       name: divider
       in: query

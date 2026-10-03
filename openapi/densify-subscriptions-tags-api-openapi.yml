@@ -254,29 +254,43 @@ paths:
                 items:
                   $ref: '#/components/schemas/SubscriptionTag'
 components:
+  parameters:
+    platformType:
+      name: platformType
+      in: path
+      required: true
+      description: Platform catalog (`cloud` or `containers`).
+      schema:
+        type: string
+        enum:
+        - cloud
+        - containers
+    type:
+      name: type
+      in: query
+      required: false
+      description: "Which tags to return:\n- `all` (default) → global + your private (admins see all)\n- `global` → all global\n- `owner` → user-specific; combine with `owner=` (admins can query any user) \n"
+      schema:
+        type: string
+        enum:
+        - all
+        - global
+        - owner
+    tagRef:
+      name: tagRef
+      in: path
+      required: true
+      description: Unique tag identifier.
+      schema:
+        type: string
+    owner:
+      name: owner
+      in: query
+      required: false
+      description: Username to scope `type=owner` queries (admins only for others).
+      schema:
+        type: string
   schemas:
-    SubscriptionTagPut:
-      type: object
-      properties:
-        tagName:
-          type: string
-        attributeName:
-          type: string
-        aliasName:
-          type: string
-        key:
-          type: string
-        technology:
-          type: string
-          enum:
-          - AWS
-          - CONTAINER
-        owner:
-          type: string
-      required:
-      - tagName
-      - attributeName
-      description: Supply **all** parameters; PUT is delete+replace.
     UpdateResult:
       type: object
       properties:
@@ -293,6 +307,31 @@ components:
           type: string
         tagName:
           type: string
+    SubscriptionTagUpdate:
+      type: object
+      properties:
+        tagRef:
+          type: string
+        tagName:
+          type: string
+        attributeName:
+          type: string
+        aliasName:
+          type: string
+        key:
+          type: string
+        technology:
+          type: string
+          enum:
+          - AWS
+          - CONTAINER
+        owner:
+          type: string
+      required:
+      - tagRef
+      - tagName
+      - attributeName
+      description: Supply **all** parameters; PUT is delete+replace.
     SubscriptionTagCreate:
       type: object
       properties:
@@ -319,6 +358,16 @@ components:
       description: 'For "Resource Tags"/"Container Labels", specify both `key` and `technology`.
 
         '
+    DeleteResult:
+      type: object
+      properties:
+        tagRef:
+          type: string
+        message:
+          type: string
+        status:
+          type: integer
+          description: HTTP-like code (e.g., 200, 204, 404).
     SubscriptionTag:
       type: object
       description: Subscriptions attribute tag entry.
@@ -353,21 +402,9 @@ components:
         status:
           type: integer
           description: HTTP-like status code (200, 204, 400, 401, 404, 415, 500).
-    DeleteResult:
+    SubscriptionTagPut:
       type: object
       properties:
-        tagRef:
-          type: string
-        message:
-          type: string
-        status:
-          type: integer
-          description: HTTP-like code (e.g., 200, 204, 404).
-    SubscriptionTagUpdate:
-      type: object
-      properties:
-        tagRef:
-          type: string
         tagName:
           type: string
         attributeName:
@@ -384,43 +421,6 @@ components:
         owner:
           type: string
       required:
-      - tagRef
       - tagName
       - attributeName
       description: Supply **all** parameters; PUT is delete+replace.
-  parameters:
-    type:
-      name: type
-      in: query
-      required: false
-      description: "Which tags to return:\n- `all` (default) → global + your private (admins see all)\n- `global` → all global\n- `owner` → user-specific; combine with `owner=` (admins can query any user) \n"
-      schema:
-        type: string
-        enum:
-        - all
-        - global
-        - owner
-    tagRef:
-      name: tagRef
-      in: path
-      required: true
-      description: Unique tag identifier.
-      schema:
-        type: string
-    platformType:
-      name: platformType
-      in: path
-      required: true
-      description: Platform catalog (`cloud` or `containers`).
-      schema:
-        type: string
-        enum:
-        - cloud
-        - containers
-    owner:
-      name: owner
-      in: query
-      required: false
-      description: Username to scope `type=owner` queries (admins only for others).
-      schema:
-        type: string

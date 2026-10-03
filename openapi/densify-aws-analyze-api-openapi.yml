@@ -60,48 +60,6 @@ paths:
           description: Internal server error
 components:
   schemas:
-    AwsAnalyzeResponse:
-      type: object
-      properties:
-        href:
-          type: string
-          description: Referenced resource to the analysis entity or status endpoint.
-        message:
-          type: string
-          description: Human-readable message describing the result.
-        status:
-          type: integer
-          description: HTTP response code of the request.
-    AwsAnalyzeRequest:
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: The AWS account ID with the CloudWatch data to collect.
-        roleArnName:
-          type: string
-          description: ARN for the IAM role created in AWS for data collection.
-        roleExternalId:
-          type: string
-          description: External ID specified for Kubex when the IAM role was created.
-        connectionName:
-          type: string
-          description: Optional friendly name for this connection (max 32 chars; must be unique within type).
-        triggerAdhocAudit:
-          type: string
-          description: Optional flag to trigger a one-time 60-day historical audit.
-        startDayOffset:
-          type: string
-          description: Optional start offset from the 60-day maximum for historical collection.
-        endDayOffset:
-          type: string
-          description: Optional end offset from “yesterday” for historical collection.
-        webHook:
-          $ref: '#/components/schemas/WebHook'
-      required:
-      - accountId
-      - roleArnName
-      - roleExternalId
     WebHook:
       type: object
       properties:
@@ -115,6 +73,18 @@ components:
         authValue:
           type: string
           description: Authentication credentials/value corresponding to authType.
+    AwsAnalyzeResponse:
+      type: object
+      properties:
+        href:
+          type: string
+          description: Referenced resource to the analysis entity or status endpoint.
+        message:
+          type: string
+          description: Human-readable message describing the result.
+        status:
+          type: integer
+          description: HTTP response code of the request.
     AwsAnalysisSummary:
       type: object
       description: Minimal representation of an AWS analysis created by the system.
@@ -150,3 +120,33 @@ components:
           type: integer
           format: int64
           description: Unix epoch timestamp (ms) of the latest completed analysis run.
+    AwsAnalyzeRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The AWS account ID with the CloudWatch data to collect.
+        roleArnName:
+          type: string
+          description: ARN for the IAM role created in AWS for data collection.
+        roleExternalId:
+          type: string
+          description: External ID specified for Kubex when the IAM role was created.
+        connectionName:
+          type: string
+          description: Optional friendly name for this connection (max 32 chars; must be unique within type).
+        triggerAdhocAudit:
+          type: string
+          description: Optional flag to trigger a one-time 60-day historical audit.
+        startDayOffset:
+          type: string
+          description: Optional start offset from the 60-day maximum for historical collection.
+        endDayOffset:
+          type: string
+          description: Optional end offset from “yesterday” for historical collection.
+        webHook:
+          $ref: '#/components/schemas/WebHook'
+      required:
+      - accountId
+      - roleArnName
+      - roleExternalId

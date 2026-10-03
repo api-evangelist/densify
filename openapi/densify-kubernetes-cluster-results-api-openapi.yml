@@ -100,26 +100,19 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   responses:
-    Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     ServerError:
       description: Internal server error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
     ContainerRecommendationDetailed:
       allOf:
       - $ref: '#/components/schemas/ContainerRecommendation'
@@ -150,6 +143,13 @@ components:
             type: string
             format: date-time
             description: When this container was last audited (from workload history).
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
     ContainerRecommendation:
       type: object
       description: Container recommendation entry (base fields). Fields without values may be omitted.
