@@ -1,0 +1,36 @@
+slug: densify
+provider: Densify
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: AWS Analyze
+  spec_file: densify-aws-analyze-api-openapi.yml
+  capability_id: BC-600
+  capability_id_l1: BC-600
+  capability_name: Information Technology Management
+  confidence: 0.7
+  evidence: POST /analysis/cloud/aws/analyze  analyzeAws  Onboard AWS account; GET /analysis/cloud/aws  listAwsAnalyses  List
+    AWS accounts being analyzed
+  reason: Onboarding and listing of cloud accounts under optimisation analysis — management of the buyer's
+    cloud IT estate. Operations are account onboarding rather than clearly cost or infrastructure sub-capability,
+    so only the L1 is asserted.
+- tag: Cloud Analysis
+  spec_file: densify-cloud-analysis-api-openapi.yml
+  capability_id: BC-600
+  capability_id_l1: BC-600
+  capability_name: Information Technology Management
+  confidence: 0.7
+  evidence: POST /analysis/aws  startAwsAnalysis  Start AWS data collection / analysis; POST /analysis/gcp  startGcpAnalysis  Start
+    GCP data collection / analysis
+  reason: Triggers data collection and optimisation analysis across the buyer's public cloud estate. Clearly
+    IT management; the operations only start jobs, so no L2 is asserted.

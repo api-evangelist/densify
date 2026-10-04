@@ -524,6 +524,9 @@ apis:
     url: >-
       https://docs.kubex.ai/docs-api/WebHelp_Densify_API_Cloud/Content/API_Guide/Kubernetes_Clusters_Results
 common:
+- type: CapabilityMap
+  url: capabilities/densify-capability-edges.yml
+  name: Densify Business Capability Map
 - type: Overlay
   url: overlays/densify-authorize-overlay.yaml
 - type: Overlay
