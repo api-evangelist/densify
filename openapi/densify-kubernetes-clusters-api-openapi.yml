@@ -71,6 +71,16 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
+    Namespace:
+      type: object
+      properties:
+        namespace:
+          type: string
+          description: Namespace name.
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pod'
     ClusterSummary:
       type: object
       properties:
@@ -103,16 +113,6 @@ components:
         prometheusVersion:
           type: string
           description: Prometheus version.
-    ClusterDetails:
-      allOf:
-      - $ref: '#/components/schemas/ClusterSummary'
-      - type: object
-        properties:
-          namespaces:
-            type: array
-            description: Namespaces discovered in the cluster.
-            items:
-              $ref: '#/components/schemas/Namespace'
     Error:
       type: object
       properties:
@@ -131,16 +131,16 @@ components:
           description: Container names in the pod.
           items:
             type: string
-    Namespace:
-      type: object
-      properties:
-        namespace:
-          type: string
-          description: Namespace name.
-        pods:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pod'
+    ClusterDetails:
+      allOf:
+      - $ref: '#/components/schemas/ClusterSummary'
+      - type: object
+        properties:
+          namespaces:
+            type: array
+            description: Namespaces discovered in the cluster.
+            items:
+              $ref: '#/components/schemas/Namespace'
   responses:
     ServerError:
       description: Internal server error

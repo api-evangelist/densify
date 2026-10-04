@@ -255,16 +255,6 @@ paths:
                   $ref: '#/components/schemas/SubscriptionTag'
 components:
   parameters:
-    platformType:
-      name: platformType
-      in: path
-      required: true
-      description: Platform catalog (`cloud` or `containers`).
-      schema:
-        type: string
-        enum:
-        - cloud
-        - containers
     type:
       name: type
       in: query
@@ -290,7 +280,24 @@ components:
       description: Username to scope `type=owner` queries (admins only for others).
       schema:
         type: string
+    platformType:
+      name: platformType
+      in: path
+      required: true
+      description: Platform catalog (`cloud` or `containers`).
+      schema:
+        type: string
+        enum:
+        - cloud
+        - containers
   schemas:
+    CreateResult:
+      type: object
+      properties:
+        tagRef:
+          type: string
+        tagName:
+          type: string
     UpdateResult:
       type: object
       properties:
@@ -300,13 +307,72 @@ components:
           type: string
         message:
           type: string
-    CreateResult:
+    SubscriptionTagPut:
+      type: object
+      properties:
+        tagName:
+          type: string
+        attributeName:
+          type: string
+        aliasName:
+          type: string
+        key:
+          type: string
+        technology:
+          type: string
+          enum:
+          - AWS
+          - CONTAINER
+        owner:
+          type: string
+      required:
+      - tagName
+      - attributeName
+      description: Supply **all** parameters; PUT is delete+replace.
+    DeleteResult:
       type: object
       properties:
         tagRef:
           type: string
+        message:
+          type: string
+        status:
+          type: integer
+          description: HTTP-like code (e.g., 200, 204, 404).
+    SubscriptionTag:
+      type: object
+      description: Subscriptions attribute tag entry.
+      properties:
+        tagRef:
+          type: string
+          description: Unique reference ID.
         tagName:
           type: string
+          description: Tag name (unique per scope).
+        attributeName:
+          type: string
+          description: Must be a Kubex standard attribute or technology-specific ('Resource Tags' / 'Container Labels').
+        aliasName:
+          type: string
+          description: Display alias (scope-unique per rules).
+        technology:
+          type: string
+          description: Technology for resource attributes.
+          enum:
+          - AWS
+          - CONTAINER
+        key:
+          type: string
+          description: Key used with technology-specific resource attributes.
+        owner:
+          type: string
+          description: Empty = global; otherwise username for private tag.
+        message:
+          type: string
+          description: Status message (on error).
+        status:
+          type: integer
+          description: HTTP-like status code (200, 204, 400, 401, 404, 415, 500).
     SubscriptionTagUpdate:
       type: object
       properties:
@@ -358,69 +424,3 @@ components:
       description: 'For "Resource Tags"/"Container Labels", specify both `key` and `technology`.
 
         '
-    DeleteResult:
-      type: object
-      properties:
-        tagRef:
-          type: string
-        message:
-          type: string
-        status:
-          type: integer
-          description: HTTP-like code (e.g., 200, 204, 404).
-    SubscriptionTag:
-      type: object
-      description: Subscriptions attribute tag entry.
-      properties:
-        tagRef:
-          type: string
-          description: Unique reference ID.
-        tagName:
-          type: string
-          description: Tag name (unique per scope).
-        attributeName:
-          type: string
-          description: Must be a Kubex standard attribute or technology-specific ('Resource Tags' / 'Container Labels').
-        aliasName:
-          type: string
-          description: Display alias (scope-unique per rules).
-        technology:
-          type: string
-          description: Technology for resource attributes.
-          enum:
-          - AWS
-          - CONTAINER
-        key:
-          type: string
-          description: Key used with technology-specific resource attributes.
-        owner:
-          type: string
-          description: Empty = global; otherwise username for private tag.
-        message:
-          type: string
-          description: Status message (on error).
-        status:
-          type: integer
-          description: HTTP-like status code (200, 204, 400, 401, 404, 415, 500).
-    SubscriptionTagPut:
-      type: object
-      properties:
-        tagName:
-          type: string
-        attributeName:
-          type: string
-        aliasName:
-          type: string
-        key:
-          type: string
-        technology:
-          type: string
-          enum:
-          - AWS
-          - CONTAINER
-        owner:
-          type: string
-      required:
-      - tagName
-      - attributeName
-      description: Supply **all** parameters; PUT is delete+replace.

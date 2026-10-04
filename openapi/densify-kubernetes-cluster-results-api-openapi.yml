@@ -112,6 +112,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    k8s_clusterName:
+      name: clusterName
+      in: path
+      required: true
+      description: Unique cluster name from `/kubernetes/clusters` or the Kubex UI Connections tab.
+      schema:
+        type: string
   schemas:
     ContainerRecommendationDetailed:
       allOf:
@@ -143,13 +151,6 @@ components:
             type: string
             format: date-time
             description: When this container was last audited (from workload history).
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
     ContainerRecommendation:
       type: object
       description: Container recommendation entry (base fields). Fields without values may be omitted.
@@ -263,14 +264,13 @@ components:
               type: number
               format: float
               description: Recommended GPU request (fractional GPU units).
-  parameters:
-    k8s_clusterName:
-      name: clusterName
-      in: path
-      required: true
-      description: Unique cluster name from `/kubernetes/clusters` or the Kubex UI Connections tab.
-      schema:
-        type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

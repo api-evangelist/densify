@@ -328,6 +328,14 @@ components:
         href:
           type: string
           description: Link
+    CredentialStringOrObject:
+      description: GCP service account credential (inline JSON). Docs show both string and object usage.
+      oneOf:
+      - type: string
+        description: Raw JSON string of the `.json` keyfile
+      - type: object
+        additionalProperties: true
+        description: Parsed JSON object of the keyfile
     GcpAnalyzeRequest:
       type: object
       properties:
@@ -348,44 +356,6 @@ components:
       required:
       - projectId
       - credential
-    WebHook:
-      type: object
-      additionalProperties: false
-      properties:
-        uri:
-          type: string
-          format: uri
-        authType:
-          type: string
-          description: Authentication scheme used by the webhook endpoint (e.g., basic, bearer).
-        authValue:
-          type: string
-          description: Credential value (e.g., user:pass for basic, or token).
-      required:
-      - uri
-    CredentialStringOrObject:
-      description: GCP service account credential (inline JSON). Docs show both string and object usage.
-      oneOf:
-      - type: string
-        description: Raw JSON string of the `.json` keyfile
-      - type: object
-        additionalProperties: true
-        description: Parsed JSON object of the keyfile
-    AnalyzeStatusMessage:
-      type: object
-      properties:
-        href:
-          type: string
-          description: Link to recommendations (if available).
-        message:
-          type: string
-        status:
-          type: integer
-          format: int32
-          description: One of 200, 400, 401, 404, 500.
-      required:
-      - message
-      - status
     GcpHistoricalAuditRequest:
       type: object
       properties:
@@ -407,6 +377,36 @@ components:
       - projectId
       - credential
       - triggerAdhocAudit
+    AnalyzeStatusMessage:
+      type: object
+      properties:
+        href:
+          type: string
+          description: Link to recommendations (if available).
+        message:
+          type: string
+        status:
+          type: integer
+          format: int32
+          description: One of 200, 400, 401, 404, 500.
+      required:
+      - message
+      - status
+    WebHook:
+      type: object
+      additionalProperties: false
+      properties:
+        uri:
+          type: string
+          format: uri
+        authType:
+          type: string
+          description: Authentication scheme used by the webhook endpoint (e.g., basic, bearer).
+        authValue:
+          type: string
+          description: Credential value (e.g., user:pass for basic, or token).
+      required:
+      - uri
     TerraformMapRecommendation:
       type: object
       description: Terraform-map recommendation representation.

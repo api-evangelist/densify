@@ -221,16 +221,6 @@ paths:
           description: Analysis webhook not found.
 components:
   schemas:
-    StatusMessage:
-      type: object
-      properties:
-        message:
-          type: string
-        status:
-          type: integer
-      required:
-      - message
-      - status
     WebhookRequest:
       type: object
       properties:
@@ -246,6 +236,16 @@ components:
           description: Credential (user:pass or token).
       required:
       - uri
+    StatusMessage:
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: integer
+      required:
+      - message
+      - status
     WebhookDefinition:
       type: object
       properties:

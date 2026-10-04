@@ -62,6 +62,15 @@ paths:
                   $ref: '#/components/schemas/ContainerRecommendation'
 components:
   schemas:
+    Cluster:
+      type: object
+      properties:
+        name:
+          type: string
+        provider:
+          type: string
+        nodes:
+          type: integer
     ContainerRecommendation:
       type: object
       properties:
@@ -83,15 +92,6 @@ components:
           type: string
         recommendedMemoryRequest:
           type: string
-    Cluster:
-      type: object
-      properties:
-        name:
-          type: string
-        provider:
-          type: string
-        nodes:
-          type: integer
   securitySchemes:
     bearerAuth:
       type: http

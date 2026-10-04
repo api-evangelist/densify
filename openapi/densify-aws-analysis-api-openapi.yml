@@ -382,21 +382,16 @@ components:
                 type: string
               value:
                 type: string
-    DataQualityItem:
+    TerraformMapRecommendations:
       type: object
+      description: 'Terraform-map representation. Each key under `densify_recommendations` is the provisioningId (or system name when the tag is absent).
+
+        '
       properties:
-        workloadName:
-          type: string
-        firstSeen:
-          type: integer
-          format: int64
-        lastSeen:
-          type: integer
-          format: int64
-        completeDays:
-          type: integer
-        partialDays:
-          type: integer
+        densify_recommendations:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TerraformRecommendation'
     AuditInfo:
       type: object
       properties:
@@ -424,6 +419,21 @@ components:
               type: integer
             seenDays:
               type: integer
+    DataQualityItem:
+      type: object
+      properties:
+        workloadName:
+          type: string
+        firstSeen:
+          type: integer
+          format: int64
+        lastSeen:
+          type: integer
+          format: int64
+        completeDays:
+          type: integer
+        partialDays:
+          type: integer
     TerraformRecommendation:
       type: object
       properties:
@@ -461,16 +471,6 @@ components:
           type: string
         avgInstanceCountRecommended:
           type: string
-    TerraformMapRecommendations:
-      type: object
-      description: 'Terraform-map representation. Each key under `densify_recommendations` is the provisioningId (or system name when the tag is absent).
-
-        '
-      properties:
-        densify_recommendations:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TerraformRecommendation'
 x-refined-from:
 - densify-public-cloud-analysis-aws-delete-openapi.yaml
 - densify-public-cloud-analysis-aws-results-openapi.yaml

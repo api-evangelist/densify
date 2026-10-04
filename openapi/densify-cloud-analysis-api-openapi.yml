@@ -83,6 +83,13 @@ paths:
                 $ref: '#/components/schemas/AnalysisAccepted'
 components:
   schemas:
+    AnalysisAccepted:
+      type: object
+      properties:
+        analysisId:
+          type: string
+        status:
+          type: string
     AnalysisRequest:
       type: object
       properties:
@@ -93,13 +100,6 @@ components:
         secretKey:
           type: string
         connection:
-          type: string
-    AnalysisAccepted:
-      type: object
-      properties:
-        analysisId:
-          type: string
-        status:
           type: string
   securitySchemes:
     bearerAuth:
