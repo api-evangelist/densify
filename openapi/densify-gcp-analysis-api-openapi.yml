@@ -319,15 +319,6 @@ paths:
           default: api.example.com
 components:
   schemas:
-    GcpAnalysisItem:
-      type: object
-      properties:
-        analysisName:
-          type: string
-          description: GCP project ID associated with the analysis.
-        href:
-          type: string
-          description: Link
     CredentialStringOrObject:
       description: GCP service account credential (inline JSON). Docs show both string and object usage.
       oneOf:
@@ -336,26 +327,6 @@ components:
       - type: object
         additionalProperties: true
         description: Parsed JSON object of the keyfile
-    GcpAnalyzeRequest:
-      type: object
-      properties:
-        connectionName:
-          type: string
-          maxLength: 32
-          description: Unique within GCP connections; defaults to the project ID.
-        policyInstanceId:
-          type: string
-          description: Policy instance to use for analysis (optional, shown in example).
-        projectId:
-          type: string
-          description: GCP project ID to analyze (required even if the credential maps to multiple projects).
-        credential:
-          $ref: '#/components/schemas/CredentialStringOrObject'
-        webHook:
-          $ref: '#/components/schemas/WebHook'
-      required:
-      - projectId
-      - credential
     GcpHistoricalAuditRequest:
       type: object
       properties:
@@ -377,21 +348,6 @@ components:
       - projectId
       - credential
       - triggerAdhocAudit
-    AnalyzeStatusMessage:
-      type: object
-      properties:
-        href:
-          type: string
-          description: Link to recommendations (if available).
-        message:
-          type: string
-        status:
-          type: integer
-          format: int32
-          description: One of 200, 400, 401, 404, 500.
-      required:
-      - message
-      - status
     WebHook:
       type: object
       additionalProperties: false
@@ -407,39 +363,50 @@ components:
           description: Credential value (e.g., user:pass for basic, or token).
       required:
       - uri
-    TerraformMapRecommendation:
+    GcpAnalyzeRequest:
       type: object
-      description: Terraform-map recommendation representation.
       properties:
-        provisioningId:
+        connectionName:
           type: string
-          description: Label for the terraform-map recommendation (often from a resource label).
-        currentType:
+          maxLength: 32
+          description: Unique within GCP connections; defaults to the project ID.
+        policyInstanceId:
           type: string
-        recommendedType:
+          description: Policy instance to use for analysis (optional, shown in example).
+        projectId:
           type: string
-        approvalType:
+          description: GCP project ID to analyze (required even if the credential maps to multiple projects).
+        credential:
+          $ref: '#/components/schemas/CredentialStringOrObject'
+        webHook:
+          $ref: '#/components/schemas/WebHook'
+      required:
+      - projectId
+      - credential
+    AnalyzeStatusMessage:
+      type: object
+      properties:
+        href:
           type: string
-        predictedUptime:
+          description: Link to recommendations (if available).
+        message:
           type: string
-        recommendationType:
+        status:
+          type: integer
+          format: int32
+          description: One of 200, 400, 401, 404, 500.
+      required:
+      - message
+      - status
+    GcpAnalysisItem:
+      type: object
+      properties:
+        analysisName:
           type: string
-        powerState:
+          description: GCP project ID associated with the analysis.
+        href:
           type: string
-        implementationMethod:
-          type: string
-        savingsEstimate:
-          type: string
-        effortEstimate:
-          type: string
-          enum:
-          - Moderate
-          - Low
-          - Very Low
-          - None
-          - Impossible
-        densifyPolicy:
-          type: string
+          description: Link
     GcpRecommendation:
       type: object
       description: GCP recommendation object (JSON representation).
@@ -574,6 +541,39 @@ components:
                 type: integer
               partialDays:
                 type: integer
+    TerraformMapRecommendation:
+      type: object
+      description: Terraform-map recommendation representation.
+      properties:
+        provisioningId:
+          type: string
+          description: Label for the terraform-map recommendation (often from a resource label).
+        currentType:
+          type: string
+        recommendedType:
+          type: string
+        approvalType:
+          type: string
+        predictedUptime:
+          type: string
+        recommendationType:
+          type: string
+        powerState:
+          type: string
+        implementationMethod:
+          type: string
+        savingsEstimate:
+          type: string
+        effortEstimate:
+          type: string
+          enum:
+          - Moderate
+          - Low
+          - Very Low
+          - None
+          - Impossible
+        densifyPolicy:
+          type: string
 x-refined-from:
 - densify-public-cloud-analysis-gcp-analyze-openapi.yaml
 - densify-public-cloud-analysis-gcp-delete-openapi.yaml

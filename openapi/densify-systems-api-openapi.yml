@@ -452,31 +452,6 @@ paths:
           description: Internal server error
 components:
   schemas:
-    IoBenchmark:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - Maximum Disk Throughput (bytes/s)
-          - Maximum Network Throughput (bytes/s)
-        score_type:
-          type: string
-          enum:
-          - disk
-          - net
-        value:
-          type: number
-          description: A value of -1 means no value specified
-    InfrastructureGroupRef:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        href:
-          type: string
     ControlEnvironmentRef:
       type: object
       properties:
@@ -495,6 +470,31 @@ components:
         icon:
           type: string
           description: Path to icon resource
+    InfrastructureGroupRef:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        href:
+          type: string
+    IoBenchmark:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - Maximum Disk Throughput (bytes/s)
+          - Maximum Network Throughput (bytes/s)
+        score_type:
+          type: string
+          enum:
+          - disk
+          - net
+        value:
+          type: number
+          description: A value of -1 means no value specified
     System:
       type: object
       description: A discovered system
@@ -593,23 +593,6 @@ components:
       - id
       - name
       - href
-    AttributeTriple:
-      type: object
-      description: Attribute entry stored as [id, name, value]
-      required:
-      - id
-      - name
-      - value
-      properties:
-        id:
-          type: string
-          description: Unique attribute ID (e.g., attr_ObservedUptime)
-        name:
-          type: string
-          description: Human-readable attribute name
-        value:
-          type: string
-          description: Attribute value
     CpuBenchmark:
       type: object
       properties:
@@ -631,7 +614,31 @@ components:
         value:
           type: number
           format: float
+    AttributeTriple:
+      type: object
+      description: Attribute entry stored as [id, name, value]
+      required:
+      - id
+      - name
+      - value
+      properties:
+        id:
+          type: string
+          description: Unique attribute ID (e.g., attr_ObservedUptime)
+        name:
+          type: string
+          description: Human-readable attribute name
+        value:
+          type: string
+          description: Attribute value
   parameters:
+    Details:
+      name: details
+      in: query
+      description: Include extra details for applicable elements (e.g., `children`, `manufacturer`, `os`)
+      schema:
+        type: boolean
+        default: false
     PageSize:
       name: page_size
       in: query
@@ -649,13 +656,6 @@ components:
         type: integer
         minimum: 0
         default: 0
-    Details:
-      name: details
-      in: query
-      description: Include extra details for applicable elements (e.g., `children`, `manufacturer`, `os`)
-      schema:
-        type: boolean
-        default: false
   securitySchemes:
     bearerAuth:
       type: http

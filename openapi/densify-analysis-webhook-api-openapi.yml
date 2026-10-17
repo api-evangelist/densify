@@ -221,31 +221,6 @@ paths:
           description: Analysis webhook not found.
 components:
   schemas:
-    WebhookRequest:
-      type: object
-      properties:
-        uri:
-          type: string
-          format: uri
-          description: Fully-qualified webhook URI reachable by Kubex.
-        authType:
-          type: string
-          description: e.g., "Basic", "Bearer".
-        authValue:
-          type: string
-          description: Credential (user:pass or token).
-      required:
-      - uri
-    StatusMessage:
-      type: object
-      properties:
-        message:
-          type: string
-        status:
-          type: integer
-      required:
-      - message
-      - status
     WebhookDefinition:
       type: object
       properties:
@@ -263,4 +238,29 @@ components:
       required:
       - analysisId
       - href
+      - uri
+    StatusMessage:
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: integer
+      required:
+      - message
+      - status
+    WebhookRequest:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+          description: Fully-qualified webhook URI reachable by Kubex.
+        authType:
+          type: string
+          description: e.g., "Basic", "Bearer".
+        authValue:
+          type: string
+          description: Credential (user:pass or token).
+      required:
       - uri

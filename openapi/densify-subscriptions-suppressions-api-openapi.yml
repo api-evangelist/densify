@@ -234,47 +234,42 @@ paths:
                 items:
                   $ref: '#/components/schemas/Suppression'
 components:
-  parameters:
-    type:
-      name: type
-      in: query
-      required: false
-      description: 'Which suppressions to return: `all` (default), `global`, or `owner`. Non-admins
-
-        only see their own private entries with `owner`.
-
-        '
-      schema:
-        type: string
-        enum:
-        - all
-        - global
-        - owner
-    suppressionRef:
-      name: suppressionRef
-      in: path
-      required: true
-      description: Unique suppression identifier.
-      schema:
-        type: string
-    owner:
-      name: owner
-      in: query
-      required: false
-      description: Username used with `type=owner` (admins can query any user; non-admins only themselves; others → 400 “Current login user cannot query for owner”).
-      schema:
-        type: string
-    platformType:
-      name: platformType
-      in: path
-      required: true
-      description: Platform catalog to target (`cloud` or `containers`).
-      schema:
-        type: string
-        enum:
-        - cloud
-        - containers
   schemas:
+    SuppressionCreate:
+      type: object
+      properties:
+        suppressionName:
+          type: string
+        aliasName:
+          type: string
+        attributeName:
+          type: string
+        key:
+          type: string
+        technology:
+          type: string
+          enum:
+          - AWS
+          - CONTAINER
+        propertyName:
+          type: string
+        owner:
+          type: string
+          description: Omit or "" for global (admin only); otherwise username for private.
+      required:
+      - suppressionName
+    DeleteResult:
+      type: object
+      properties:
+        suppressionRef:
+          type: string
+        suppressionName:
+          type: string
+        message:
+          type: string
+        status:
+          type: integer
+          description: HTTP-like code (e.g., 200, 204, 404).
     SuppressionPut:
       type: object
       properties:
@@ -296,43 +291,6 @@ components:
         owner:
           type: string
       required:
-      - suppressionName
-    DeleteResult:
-      type: object
-      properties:
-        suppressionRef:
-          type: string
-        suppressionName:
-          type: string
-        message:
-          type: string
-        status:
-          type: integer
-          description: HTTP-like code (e.g., 200, 204, 404).
-    SuppressionUpdate:
-      type: object
-      properties:
-        suppressionRef:
-          type: string
-        suppressionName:
-          type: string
-        aliasName:
-          type: string
-        attributeName:
-          type: string
-        key:
-          type: string
-        technology:
-          type: string
-          enum:
-          - AWS
-          - CONTAINER
-        propertyName:
-          type: string
-        owner:
-          type: string
-      required:
-      - suppressionRef
       - suppressionName
     Suppression:
       type: object
@@ -376,9 +334,11 @@ components:
         status:
           type: integer
           description: HTTP-like status code (200, 204, 400, 401, 404, 415, 500).
-    SuppressionCreate:
+    SuppressionUpdate:
       type: object
       properties:
+        suppressionRef:
+          type: string
         suppressionName:
           type: string
         aliasName:
@@ -396,6 +356,46 @@ components:
           type: string
         owner:
           type: string
-          description: Omit or "" for global (admin only); otherwise username for private.
       required:
+      - suppressionRef
       - suppressionName
+  parameters:
+    owner:
+      name: owner
+      in: query
+      required: false
+      description: Username used with `type=owner` (admins can query any user; non-admins only themselves; others → 400 “Current login user cannot query for owner”).
+      schema:
+        type: string
+    suppressionRef:
+      name: suppressionRef
+      in: path
+      required: true
+      description: Unique suppression identifier.
+      schema:
+        type: string
+    platformType:
+      name: platformType
+      in: path
+      required: true
+      description: Platform catalog to target (`cloud` or `containers`).
+      schema:
+        type: string
+        enum:
+        - cloud
+        - containers
+    type:
+      name: type
+      in: query
+      required: false
+      description: 'Which suppressions to return: `all` (default), `global`, or `owner`. Non-admins
+
+        only see their own private entries with `owner`.
+
+        '
+      schema:
+        type: string
+        enum:
+        - all
+        - global
+        - owner
