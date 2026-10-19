@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.kubex.ai/openapi.yaml",
+ "final": "https://docs.kubex.ai/openapi.yaml",
+ "status": 200,
+ "content_type": "text/yaml",
+ "bytes": 7214794,
+ "sha256": "1a7727ef3b5aa6d303524f581af7250cfcc812759bb8920f7306ddde86bf0992",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

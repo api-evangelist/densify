@@ -381,21 +381,6 @@ paths:
           default: api.example.com
 components:
   schemas:
-    AnalyzeResponse:
-      type: object
-      properties:
-        href:
-          type: string
-          description: Link to analysis recommendations (if available).
-        message:
-          type: string
-        status:
-          type: integer
-          format: int32
-          description: HTTP-like status code (200, 400, 401, 404, 500).
-      required:
-      - message
-      - status
     WebHook:
       type: object
       properties:
@@ -417,33 +402,20 @@ components:
       allOf:
       - $ref: '#/components/schemas/AnalysisItem'
       description: Same shape commonly used to report status for an analysis.
-    AnalysisItem:
+    AnalyzeResponse:
       type: object
-      description: Entry describing an Azure analysis.
       properties:
-        analysisName:
-          type: string
-          description: Typically the Azure subscription ID.
         href:
           type: string
-          description: Link to recommendations for this analysis.
-        completed:
-          type: string
-          description: Milliseconds timestamp when last analysis completed.
-        analysisId:
-          type: string
-          description: Kubex-internal analysis ID.
-        phase:
-          type: string
-          description: 'Current phase, e.g., `analyzing: 42%` or `not analyzing`.'
+          description: Link to analysis recommendations (if available).
         message:
           type: string
         status:
           type: integer
           format: int32
+          description: HTTP-like status code (200, 400, 401, 404, 500).
       required:
-      - analysisName
-      - analysisId
+      - message
       - status
     AnalyzeRequest:
       type: object
@@ -488,51 +460,34 @@ components:
       - applicationId
       - secretKey
       - tenantId
-    TerraformMapRecommendation:
+    AnalysisItem:
       type: object
-      description: Terraform-map representation of a recommendation.
+      description: Entry describing an Azure analysis.
       properties:
-        provisioningId:
+        analysisName:
           type: string
-          description: Label for the terraform-map recommendation (often taken from a resource tag).
-        approvalType:
+          description: Typically the Azure subscription ID.
+        href:
           type: string
-        currentType:
+          description: Link to recommendations for this analysis.
+        completed:
           type: string
-        densifyPolicy:
+          description: Milliseconds timestamp when last analysis completed.
+        analysisId:
           type: string
-        effortEstimate:
+          description: Kubex-internal analysis ID.
+        phase:
           type: string
-          enum:
-          - Moderate
-          - Low
-          - Very Low
-          - None
-          - Impossible
-        implementationMethod:
+          description: 'Current phase, e.g., `analyzing: 42%` or `not analyzing`.'
+        message:
           type: string
-        powerState:
-          type: string
-        recommendationType:
-          type: string
-        predictedUptime:
-          type: string
-        recommendedType:
-          type: string
-        savingsEstimate:
-          type: string
-        avgInstanceCountCurrent:
-          type: number
-        avgInstanceCountRecommended:
-          type: number
-        minGroupCurrent:
+        status:
           type: integer
-        minGroupRecommended:
-          type: integer
-        maxGroupCurrent:
-          type: integer
-        maxGroupRecommended:
-          type: integer
+          format: int32
+      required:
+      - analysisName
+      - analysisId
+      - status
     AzureRecommendation:
       type: object
       description: Azure recommendation object (JSON representation).
@@ -690,6 +645,51 @@ components:
           type: array
           items:
             type: object
+    TerraformMapRecommendation:
+      type: object
+      description: Terraform-map representation of a recommendation.
+      properties:
+        provisioningId:
+          type: string
+          description: Label for the terraform-map recommendation (often taken from a resource tag).
+        approvalType:
+          type: string
+        currentType:
+          type: string
+        densifyPolicy:
+          type: string
+        effortEstimate:
+          type: string
+          enum:
+          - Moderate
+          - Low
+          - Very Low
+          - None
+          - Impossible
+        implementationMethod:
+          type: string
+        powerState:
+          type: string
+        recommendationType:
+          type: string
+        predictedUptime:
+          type: string
+        recommendedType:
+          type: string
+        savingsEstimate:
+          type: string
+        avgInstanceCountCurrent:
+          type: number
+        avgInstanceCountRecommended:
+          type: number
+        minGroupCurrent:
+          type: integer
+        minGroupRecommended:
+          type: integer
+        maxGroupCurrent:
+          type: integer
+        maxGroupRecommended:
+          type: integer
 x-refined-from:
 - densify-public-cloud-analysis-azure-analyze-openapi.yaml
 - densify-public-cloud-analysis-azure-delete-openapi.yaml

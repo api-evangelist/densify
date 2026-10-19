@@ -451,25 +451,70 @@ paths:
         '500':
           description: Internal server error
 components:
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Zero-based page index (page=0 is the first page)
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    Details:
+      name: details
+      in: query
+      description: Include extra details for applicable elements (e.g., `children`, `manufacturer`, `os`)
+      schema:
+        type: boolean
+        default: false
+    PageSize:
+      name: page_size
+      in: query
+      description: Page size when paging is enabled
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+        default: 25
   schemas:
-    ControlEnvironmentRef:
+    CpuBenchmark:
       type: object
+      properties:
+        name:
+          type: string
+          description: Benchmark label
+          enum:
+          - CINT2000
+          - CINT2000 Rate
+          - CINT2006 Rate
+          - RPE2
+        score_type:
+          type: string
+          enum:
+          - cint2000
+          - cint2000rate
+          - cint2006rate
+          - rpe2
+        value:
+          type: number
+          format: float
+    AttributeTriple:
+      type: object
+      description: Attribute entry stored as [id, name, value]
+      required:
+      - id
+      - name
+      - value
       properties:
         id:
           type: string
+          description: Unique attribute ID (e.g., attr_ObservedUptime)
         name:
           type: string
-        platform_category:
+          description: Human-readable attribute name
+        value:
           type: string
-          description: Control environment category
-          enum:
-          - External Cloud
-          - Internal Virtual
-        href:
-          type: string
-        icon:
-          type: string
-          description: Path to icon resource
+          description: Attribute value
     InfrastructureGroupRef:
       type: object
       properties:
@@ -479,22 +524,6 @@ components:
           type: string
         href:
           type: string
-    IoBenchmark:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - Maximum Disk Throughput (bytes/s)
-          - Maximum Network Throughput (bytes/s)
-        score_type:
-          type: string
-          enum:
-          - disk
-          - net
-        value:
-          type: number
-          description: A value of -1 means no value specified
     System:
       type: object
       description: A discovered system
@@ -593,69 +622,40 @@ components:
       - id
       - name
       - href
-    CpuBenchmark:
+    IoBenchmark:
       type: object
       properties:
         name:
           type: string
-          description: Benchmark label
           enum:
-          - CINT2000
-          - CINT2000 Rate
-          - CINT2006 Rate
-          - RPE2
+          - Maximum Disk Throughput (bytes/s)
+          - Maximum Network Throughput (bytes/s)
         score_type:
           type: string
           enum:
-          - cint2000
-          - cint2000rate
-          - cint2006rate
-          - rpe2
+          - disk
+          - net
         value:
           type: number
-          format: float
-    AttributeTriple:
+          description: A value of -1 means no value specified
+    ControlEnvironmentRef:
       type: object
-      description: Attribute entry stored as [id, name, value]
-      required:
-      - id
-      - name
-      - value
       properties:
         id:
           type: string
-          description: Unique attribute ID (e.g., attr_ObservedUptime)
         name:
           type: string
-          description: Human-readable attribute name
-        value:
+        platform_category:
           type: string
-          description: Attribute value
-  parameters:
-    Details:
-      name: details
-      in: query
-      description: Include extra details for applicable elements (e.g., `children`, `manufacturer`, `os`)
-      schema:
-        type: boolean
-        default: false
-    PageSize:
-      name: page_size
-      in: query
-      description: Page size when paging is enabled
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 500
-        default: 25
-    Page:
-      name: page
-      in: query
-      description: Zero-based page index (page=0 is the first page)
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
+          description: Control environment category
+          enum:
+          - External Cloud
+          - Internal Virtual
+        href:
+          type: string
+        icon:
+          type: string
+          description: Path to icon resource
   securitySchemes:
     bearerAuth:
       type: http

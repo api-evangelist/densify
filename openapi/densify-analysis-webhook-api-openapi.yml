@@ -221,6 +221,16 @@ paths:
           description: Analysis webhook not found.
 components:
   schemas:
+    StatusMessage:
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: integer
+      required:
+      - message
+      - status
     WebhookDefinition:
       type: object
       properties:
@@ -239,16 +249,6 @@ components:
       - analysisId
       - href
       - uri
-    StatusMessage:
-      type: object
-      properties:
-        message:
-          type: string
-        status:
-          type: integer
-      required:
-      - message
-      - status
     WebhookRequest:
       type: object
       properties:

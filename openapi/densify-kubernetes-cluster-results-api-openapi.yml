@@ -100,13 +100,6 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
     ContainerRecommendation:
       type: object
       description: Container recommendation entry (base fields). Fields without values may be omitted.
@@ -250,19 +243,13 @@ components:
             type: string
             format: date-time
             description: When this container was last audited (from workload history).
-  responses:
-    ServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
   parameters:
     k8s_clusterName:
       name: clusterName
@@ -271,6 +258,19 @@ components:
       description: Unique cluster name from `/kubernetes/clusters` or the Kubex UI Connections tab.
       schema:
         type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

@@ -71,13 +71,16 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
+    ClusterDetails:
+      allOf:
+      - $ref: '#/components/schemas/ClusterSummary'
+      - type: object
+        properties:
+          namespaces:
+            type: array
+            description: Namespaces discovered in the cluster.
+            items:
+              $ref: '#/components/schemas/Namespace'
     ClusterSummary:
       type: object
       properties:
@@ -110,16 +113,6 @@ components:
         prometheusVersion:
           type: string
           description: Prometheus version.
-    Namespace:
-      type: object
-      properties:
-        namespace:
-          type: string
-          description: Namespace name.
-        pods:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pod'
     Pod:
       type: object
       properties:
@@ -131,29 +124,23 @@ components:
           description: Container names in the pod.
           items:
             type: string
-    ClusterDetails:
-      allOf:
-      - $ref: '#/components/schemas/ClusterSummary'
-      - type: object
-        properties:
-          namespaces:
-            type: array
-            description: Namespaces discovered in the cluster.
-            items:
-              $ref: '#/components/schemas/Namespace'
-  responses:
-    ServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+    Namespace:
+      type: object
+      properties:
+        namespace:
+          type: string
+          description: Namespace name.
+        pods:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pod'
   parameters:
     k8s_clusterName:
       name: clusterName
@@ -162,6 +149,19 @@ components:
       description: Unique cluster name from /kubernetes/clusters or the Kubex UI Connections tab.
       schema:
         type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

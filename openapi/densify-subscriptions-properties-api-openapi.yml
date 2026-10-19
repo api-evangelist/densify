@@ -227,42 +227,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/SubscriptionProperty'
 components:
-  parameters:
-    owner:
-      name: owner
-      in: query
-      required: false
-      description: Username to combine with `type=owner` (admins can query any user; non-admins only themselves).
-      schema:
-        type: string
-    propertyRef:
-      name: propertyRef
-      in: path
-      required: true
-      description: Unique property identifier.
-      schema:
-        type: string
-    platformType:
-      name: platformType
-      in: path
-      required: true
-      description: Platform catalog (cloud or containers).
-      schema:
-        type: string
-        enum:
-        - cloud
-        - containers
-    type:
-      name: type
-      in: query
-      required: false
-      description: "Which properties to return:  \n`all` (default), `global`, or `owner`. Non-admins only see their own private when `owner`.\n"
-      schema:
-        type: string
-        enum:
-        - all
-        - global
-        - owner
   schemas:
     SubscriptionPropertyPut:
       type: object
@@ -273,42 +237,6 @@ components:
           type: string
         owner:
           type: string
-      required:
-      - propertyName
-    DeleteResult:
-      type: object
-      properties:
-        propertyRef:
-          type: string
-        message:
-          type: string
-        status:
-          type: integer
-          description: HTTP-like code (200, 204, 400, 404, 500).
-    SubscriptionPropertyUpdate:
-      type: object
-      properties:
-        propertyRef:
-          type: string
-        propertyName:
-          type: string
-        aliasName:
-          type: string
-        owner:
-          type: string
-      required:
-      - propertyRef
-      - propertyName
-    SubscriptionPropertyCreate:
-      type: object
-      properties:
-        propertyName:
-          type: string
-        aliasName:
-          type: string
-        owner:
-          type: string
-          description: Omit or empty for global (admins only); otherwise username for private.
       required:
       - propertyName
     SubscriptionProperty:
@@ -331,3 +259,75 @@ components:
       required:
       - propertyRef
       - propertyName
+    SubscriptionPropertyCreate:
+      type: object
+      properties:
+        propertyName:
+          type: string
+        aliasName:
+          type: string
+        owner:
+          type: string
+          description: Omit or empty for global (admins only); otherwise username for private.
+      required:
+      - propertyName
+    SubscriptionPropertyUpdate:
+      type: object
+      properties:
+        propertyRef:
+          type: string
+        propertyName:
+          type: string
+        aliasName:
+          type: string
+        owner:
+          type: string
+      required:
+      - propertyRef
+      - propertyName
+    DeleteResult:
+      type: object
+      properties:
+        propertyRef:
+          type: string
+        message:
+          type: string
+        status:
+          type: integer
+          description: HTTP-like code (200, 204, 400, 404, 500).
+  parameters:
+    owner:
+      name: owner
+      in: query
+      required: false
+      description: Username to combine with `type=owner` (admins can query any user; non-admins only themselves).
+      schema:
+        type: string
+    platformType:
+      name: platformType
+      in: path
+      required: true
+      description: Platform catalog (cloud or containers).
+      schema:
+        type: string
+        enum:
+        - cloud
+        - containers
+    propertyRef:
+      name: propertyRef
+      in: path
+      required: true
+      description: Unique property identifier.
+      schema:
+        type: string
+    type:
+      name: type
+      in: query
+      required: false
+      description: "Which properties to return:  \n`all` (default), `global`, or `owner`. Non-admins only see their own private when `owner`.\n"
+      schema:
+        type: string
+        enum:
+        - all
+        - global
+        - owner
