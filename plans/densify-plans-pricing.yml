@@ -1,0 +1,99 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Densify
+providerId: densify
+generated: '2026-09-06'
+created: '2026-05-04'
+modified: '2026-09-06'
+method: probed
+source: https://kubex.ai/kubex-pricing.md
+docs: https://kubex.ai/pricing/
+note: >-
+  Read from the machine-readable pricing document Kubex publishes for AI agents at
+  https://kubex.ai/kubex-pricing.md (linked from the pricing page as "See machine-readable
+  pricing (for AI agents)", HTTP 200, text/markdown, self-dated 2026-07-07). This REPLACES the
+  2026-05-04 bulk-sweep scaffold that previously occupied this file, whose Free/Pro/Enterprise
+  tiers and per-request quotas were invented defaults and bore no relation to how Kubex is sold.
+  Kubex is not priced per API call at all — it is priced per vCPU and per GPU of managed
+  infrastructure, and API access is included rather than metered.
+pricing_model: per-resource subscription (vCPU / GPU), not per-API-call
+currency: USD
+plan_count: 2
+trial:
+  free_days: 60
+  self_serve: true
+  credit_card_required: unknown
+  url: https://kubex.ai/product/trial/
+plans:
+- id: kubernetes-resource-optimization
+  name: Kubernetes Resource Optimization
+  type: usage-based
+  price: '1.00'
+  currency: USD
+  unit: vCPU
+  billing_period: month
+  price_label: $1/vCPU/month
+  signup: https://kubex.ai/product/trial/
+  included:
+  - Automated Pod Scaler, Node Optimizer, Node Pre-Warmer, Predictive Pod Scaler, Bin Packer, HPA Optimizer, New Container Sizer
+  - Conversational AI Agent
+  - Cloud infrastructure optimization — Predictive Instance Selection, ASG/VMSS scaling with instance-family optimization, RDS optimization
+  - IaC-framework-based automation (Terraform, Pulumi and others)
+  - AWS, Azure, GCP and Oracle across AKS, EKS, GKE, OKE, ECS, NKP, OpenShift, RKE2 and K3S, cloud or on-prem
+  - Helm deployed, SaaS delivered
+  - On-prem automation policies (localized read/write control; read-only via SaaS)
+  - Agent interfaces — UI, CLI and MCP
+  - Data collection via Prometheus and cloud-provider instrumentation
+  - Support via email, Slack or live
+  excluded:
+  - GPU/AI infrastructure optimization
+  - SSO
+  api_access: included; no separate API charge and no published call quota
+- id: enterprise-k8s-and-gpu-optimization
+  name: Enterprise K8s and GPU Optimization
+  type: custom
+  price: null
+  price_label: Custom pricing
+  billing_period: month
+  units:
+  - vCPU (Kubernetes and cloud infrastructure)
+  - GPU (GPU/AI infrastructure)
+  contact: https://kubex.ai/contact/
+  included:
+  - Everything in Kubernetes Resource Optimization
+  - GPU Resource Optimizer, GPU Model Selector, NVIDIA MIG Planner, GPU Observer
+  - SSO with the customer's identity provider, where supported
+  - Third-party observability metrics ingestion in addition to Prometheus and CSP instrumentation
+  api_access: included; no separate API charge and no published call quota
+marketplaces:
+- name: AWS Marketplace
+  url: https://aws.amazon.com/marketplace/search/results?searchTerms=kubex
+- name: Azure Marketplace
+  url: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=kubex
+api_metering:
+  metered: false
+  note: >-
+    No API request quota, overage rate or per-call price is published on either plan. API and
+    MCP access are described as interfaces to the subscription, not as billable units.
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - metered
+  - negotiated
+  units: []
+  plans:
+  - name: Kubernetes Resource Optimization
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - other
+    periods: []
+  - name: Enterprise K8s and GPU Optimization
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units: []
+    periods: []
