@@ -22,28 +22,19 @@ deliveryModel:
   generated: '2026-08-28'
   method: derived
 accessModel:
-  pricing: freemium
-  onboarding: self-serve
-  trial: true
-  try_now: true
+  pricing: paid
+  onboarding: unknown
+  trial: false
+  try_now: false
   public: false
-  label: Freemium · Self-serve signup
-  confidence: medium
+  label: Paid
+  confidence: high
   source:
   - plans
   - authentication
+  - rate-limits
   - security
-  - url: https://www.densify.com
-    status: 301
-    note: 'densify.com 301s to kubex.ai across every path — CONFIRMED rename, not an acquisition: www.densify.com/llms.txt
-      is titled "Kubex", docs.densify.com 301s to docs.kubex.ai, the GitHub org is still densify-dev,
-      and the published specs are titled "Kubex API" (re-probed 2026-09-06, supersedes the 2026-09-03
-      roadmap#169 note)'
-  - url: https://kubex.ai/kubex-pricing.md
-    status: 200
-    note: 'machine-readable pricing: $1/vCPU/month plus a custom Enterprise plan, free for the first 60
-      days'
-  generated: '2026-09-06'
+  generated: '2026-11-02'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/densify.png
 x-docs-platform: mintlify
