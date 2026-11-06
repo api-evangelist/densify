@@ -77,19 +77,20 @@ api_metering:
     No API request quota, overage rate or per-call price is published on either plan. API and
     MCP access are described as interfaces to the subscription, not as billable units.
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - metered
   - negotiated
-  units: []
+  units:
+  - compute
   plans:
   - name: Kubernetes Resource Optimization
     access: other
     model: metered
     model_how: stated
     units:
-    - other
+    - compute
     periods: []
   - name: Enterprise K8s and GPU Optimization
     access: negotiated
